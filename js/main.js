@@ -1,9 +1,12 @@
+var isMobile = true;
 $(function() {
-    if (document.documentElement.clientWidth < 768 && (window.innerHeight > window.innerWidth)) {
+    if (document.documentElement.clientWidth < 800 && (window.innerHeight > window.innerWidth)) {
       mobileMenu();
+      isMobile = true;
     }
     else {
       laptopMenu();
+      isMobile = false;
     }
   });
 
@@ -17,42 +20,22 @@ var mobileMenu = function(){
 }
 
 var laptopMenu = function(){
-
-
     $("#accordion").accordion({
-      heightStyle: "content",
-      collapsible: "true"
+      heightStyle: "content"
     });
-
-  // $('#accordion > h3').contents().unwrap().wrap('<li />');
-  // $('#accordion .flex-container a').contents().wrap('<li />');
-  // // $('#accordion .flex-container a').replaceWith(function () {
-  // //     return $('<li />', {
-  // //         html: $(this).html()
-  // //     });
-  // // });
-  //
-  // // $("#accordion").html(replace("</ul>", "")
-  // // .html().replace('<div class="flex-container">', "")
-  // // .html().replace("</div>", "</ul>");
-  //
-  // var d = $('#accordion');
-  //  d.html(d.html().trim().replace(/\<\/ul\>/gi, ""));
-  //
-  //  d = $('#accordion');
-  //  d.html(d.html().trim().replace(/\<\/div\>/gi, "\<\/ul\>"));
-  //
-  //  d = $('#accordion');
-  //  d.html(d.html().trim().replace(/\<div class=\"flex-container\"\>/gi, "\<ul\>"));
-  //
-  //  $('#accordion').contents().unwrap().wrap('<ul />');
+    $(".menu").hide();
 }
 
 var showAccordionMenu = function(){
-  console.log ("Clicked : " + this);
-  $("nav").slideToggle(1000);
-  $("#contentTitle").fadeOut(2000);
-  $("#contentText").fadeOut(2000);
+  if (document.documentElement.clientWidth < 800 && (window.innerHeight > window.innerWidth)) {
+    isMobile = true;
+    $("nav").slideToggle(1000);
+    $("#contentTitle").fadeOut(2000);
+    $("#contentText").fadeOut(2000);
+  }
+  else {
+    isMobile = false;
+  }
 }
 
 var ShowContent = function(ev, element, contentName) {
@@ -70,9 +53,11 @@ var ShowContent = function(ev, element, contentName) {
     $("#contentText").innerHTML = "The requested content is unavailable right now. Please wait for sometime.<br /> <br />" + "Status : " + status + "<br /> Error : " + errorThrown;
   })
   .always(function(xhr, status){
-    $("nav").slideToggle(600);
-    $("#contentTitle").fadeIn(500);
-    $("#contentText").fadeIn(500);
+    if(isMobile){
+      $("nav").slideToggle(600);
+      $("#contentTitle").fadeIn(500);
+      $("#contentText").fadeIn(500);
+    }
   })
 
   // fetch(contentName)
