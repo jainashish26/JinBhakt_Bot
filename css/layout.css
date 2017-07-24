@@ -1,0 +1,50 @@
+/* ----------- iPad and tablets and laptops ----------- */
+
+/* Portrait */
+@media only screen
+  and (min-device-width: 768px)
+  and (orientation: portrait)  {
+
+}
+
+/* Landscape */
+@media only screen
+  and (min-device-width: 768px)
+  and (orientation: landscape)  {
+
+    nav{
+      width: 300px;
+      float:left;
+      position:absolute;
+      left:0px;
+      border:1px solid #00f;
+    }
+
+    #mainContent{
+      float:right;
+      width:auto;
+      border:1px solid #f00;
+      margin-left:300px;
+      position:absolute;
+      display:block;
+    }
+    /*h3 {
+      display:inline-block;
+      width:100px;
+      background: #333366;
+      border:1px solid #bbaaff;
+      margin-left:-5px;
+      color:#e8e8e8;
+      text-align:center;
+      background: -webkit-linear-gradient(left top, #333366, #9999cc);
+      background: -o-linear-gradient(bottom right, #333366, #9999cc);
+      background: -moz-linear-gradient(bottom right, #333366, #9999cc);
+      background: linear-gradient(to bottom right, #333366, #9999cc);
+    }
+
+    h3:hover{
+      color:#333366;
+      background:#ccbbff;
+      cursor:pointer;
+    }*/
+}
