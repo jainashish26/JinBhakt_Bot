@@ -5,11 +5,22 @@
   /* We invert order of first sidebar and main
    * And tell the main element to take twice as much width as the other two sidebars
    */
-  #wrapper nav { flex: 1 auto; }
-  #wrapper main { flex: 5 0px; }
+  #wrapper nav { flex: 1 1 auto; }
+  #wrapper main { flex: 5 1 auto; }
 
-  #wrapper header     { order: 1; }
+  #wrapper .header{
+    order: 1;
+    background: -webkit-radial-gradient(10% 40% 10% 45%, farthest-corner,#ff9922,#ffaf44,#ffbf66,#ffcf88); /* Safari 5.1 to 6.0 */
+    background: -o-radial-gradient(20% 30% 20% 35%, farthest-corner,#ff9922,#ffaf44,#ffbf66,#ffcf88); /* For Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(15% 45% 15% 35%, farthest-corner,#ff9922,#ffaf44,#ffbf66,#ffcf88); /* For Firefox 3.6 to 15 */
+    background: radial-gradient(farthest-corner at 40% 25%,#ff9922,#ffaf44,#ffbf66,#ffcf88);
+  }
+
   #wrapper nav        { order: 2; }
   #wrapper main       { order: 2; }
   #wrapper footer     { order: 3; }
+
+  .menu{
+    display:none;
+  }
 }

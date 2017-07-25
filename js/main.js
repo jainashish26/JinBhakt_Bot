@@ -1,13 +1,14 @@
 var isMobile = true;
+
 $(function() {
-    if (document.documentElement.clientWidth < 800 && (window.innerHeight > window.innerWidth)) {
-      mobileMenu();
-      isMobile = true;
-    }
-    else {
-      laptopMenu();
-      isMobile = false;
-    }
+  if (document.documentElement.clientWidth < 800) {
+    isMobile = true;
+  }
+  else {
+    isMobile = false;
+  }
+    mobileMenu();
+    console.log(isMobile);
   });
 
 var mobileMenu = function(){
@@ -15,19 +16,16 @@ var mobileMenu = function(){
     heightStyle: "content",
     collapsible: "true"
   });
-  $("nav").slideToggle(1000);
-  $(".menu").fadeOut(1000).fadeIn(1500);
 }
 
 var laptopMenu = function(){
     $("#accordion").accordion({
       heightStyle: "content"
     });
-    $(".menu").hide();
 }
 
 var showAccordionMenu = function(){
-  if (document.documentElement.clientWidth < 800 && (window.innerHeight > window.innerWidth)) {
+  if (document.documentElement.clientWidth < 800) {
     isMobile = true;
     $("nav").slideToggle(1000);
     $("#contentTitle").fadeOut(2000);
@@ -53,6 +51,7 @@ var ShowContent = function(ev, element, contentName) {
     $("#contentText").innerHTML = "The requested content is unavailable right now. Please wait for sometime.<br /> <br />" + "Status : " + status + "<br /> Error : " + errorThrown;
   })
   .always(function(xhr, status){
+    console.log(isMobile);
     if(isMobile){
       $("nav").slideToggle(600);
       $("#contentTitle").fadeIn(500);
