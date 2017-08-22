@@ -3,8 +3,14 @@ var isMobile = true;
 /* Anonymous will be called as soon as the DOM is ready */
 $(function(){
 
-    generateMenu('stuti');
-    //Check the orientation of Device and Screen
+  generateMenu('pooja');
+  generateMenu('stotra');
+  generateMenu('aarti');
+  generateMenu('chalisa');
+  generateMenu('stuti');
+  generateMenu('bhakti');
+  generateMenu('misc');
+  //Check the orientation of Device and Screen
     if (document.documentElement.clientWidth < 800) {
       isMobile = true;
     }
@@ -37,7 +43,8 @@ var fnFetchUrl = function(){
 var mobileMenu = function(){
   $("#accordion").accordion({
     heightStyle: "content",
-    collapsible: "true"
+    collapsible: "true",
+    active:false
   });
 }
 
@@ -125,7 +132,7 @@ var getHomeTitle = function(){
   return 'जय जिनेन्द्र बन्धु';
 }
 var getHomeContent = function(){
-  return 'The requested content is not available right now. Please wait for sometime.';
+  return 'The requested content is not available right now. Please wait for sometime. <br /> ';
 }
 
 var showHomePage = function(){

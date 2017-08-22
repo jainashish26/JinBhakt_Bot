@@ -130,6 +130,11 @@ nav #accordion{
 #filter-records{
   width:100%;
   height:auto;
+  text-align:left;
+  background: -webkit-radial-gradient(60% 55%, farthest-corner,#efefff,#dfdfff,#cfcfff,#bfbfff); /* Safari 5.1 to 6.0 */
+  background: -o-radial-gradient(60% 55%, farthest-corner,#efefff,#dfdfff,#cfcfff,#bfbfff); /* For Opera 11.6 to 12.0 */
+  background: -moz-radial-gradient(60% 55%, farthest-corner,#efefff,#dfdfff,#cfcfff,#bfbfff); /* For Firefox 3.6 to 15 */
+  background: radial-gradient(farthest-corner at 25% 35% 55%,#efefff,#dfdfff,#cfcfff,#bfbfff);
 }
 
 #filter-records a{
@@ -139,6 +144,13 @@ nav #accordion{
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius:5px;
+  outline: none;
+  text-decoration: none;
+  background: rgba(200,200,200,0.2);
+}
+
+#filter-records a:hover{
+  background: rgba(200,200,255,0.75);
 }
 
 #contentTitle{
