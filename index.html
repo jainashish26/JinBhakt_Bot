@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi" manifest="/cache.manifest">
+<html lang="hi">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,15 +9,17 @@
   <link rel="stylesheet" href="css/layout.css">
   <script src="js/jQuery/jquery-3.2.1.min.js"></script>
   <script src="js/jQuery/jquery-ui.min.js"></script>
+  <script src="js/speech.js"></script>
   <script src="js/main.js"></script>
+
 </head>
 <body>
   <div id="wrapper">
     <header>
         <div class="header">
-          <h1>जिनभक्त</h1>
+          <h1><a href="/">जिनभक्त</a></h1>
           <img src="img/logo.png" alt="" />
-          <div class=menu>
+          <div class="menu">
               <a href="javascript:void(0);" onclick="showAccordionMenu()">&#9776;</a>
           </div>
         </div>
@@ -27,7 +29,7 @@
       <div id="accordion">
         <h3>पूजा</h3>
         <div class="flex-container">
-          <a href="#" onClick="ShowContent(event, this.innerHTML, '/content/pooja/test')">देव दर्शन पूजा</a>
+          <a href="#" onClick="ShowContent(this.innerHTML, "/content/pooja/test", event)">देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
@@ -42,9 +44,9 @@
           <a href="#" >देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
         </div>
-        <h3>स्तुति</h3>
+        <h3>स्तोत्र</h3>
         <div class="flex-container">
-          <a href="#" onClick="ShowContent(event, this.innerHTML, '/content/pooja/test')">देव दर्शन पूजा</a>
+          <a href="#" onClick="ShowContent(event, this.innerHTML, "/content/pooja/test")">देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
@@ -61,7 +63,7 @@
         </div>
         <h3>आरती</h3>
         <div class="flex-container">
-          <a href="#" onClick="ShowContent(event, this.innerHTML, '/content/pooja/test')">देव दर्शन पूजा</a>
+          <a href="#" onClick="ShowContent(event, this.innerHTML, "/content/pooja/test")">देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
@@ -76,6 +78,58 @@
           <a href="#" >देव दर्शन पूजा</a>
           <a href="#" >देव दर्शन पूजा</a>
         </div>
+        <h3>चालीसा</h3>
+        <div class="flex-container">
+          <a href="#" onClick="ShowContent(event, this.innerHTML, "/content/pooja/test")">देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+        </div>
+        <h3>स्तुति</h3>
+        <div class="flex-container">
+          <a href="#" onClick="showJSONContent("stuti", "Prabhu_Patit_Paavan", event)">प्रभु पतित पावन</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+        </div>
+        <h3>भक्ति</h3>
+        <div class="flex-container">
+          <a href="#" onClick="ShowContent(event, this.innerHTML, "/content/pooja/test")">देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+          <a href="#" >देव दर्शन पूजा</a>
+        </div>
+
       </div>
 
     </nav>
@@ -83,7 +137,11 @@
         <article>
             <h1 id="contentTitle">Article #1</h1>
             <section id="contentText">
-                This is the first article.
+                <a href="#" id="Author" class="top_buttons">Author Name</a><a href="#" id="Speak" class="top_buttons">सुनने के लिए</a>
+                <br/><br/>
+                <article id="message"></article>
+                <br/><br/>
+                <a href="#" id="btnPrev" class="bottom_buttons">Previous</a><a href="#" id="btnNext" class="bottom_buttons">Next</a>
             </section>
         </article>
     </main>

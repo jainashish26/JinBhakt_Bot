@@ -5,8 +5,8 @@
   /* We invert order of first sidebar and main
    * And tell the main element to take twice as much width as the other two sidebars
    */
-  #wrapper nav { flex: 1 1 auto; }
-  #wrapper main { flex: 5 1 auto; }
+  #wrapper nav { flex: 2 1 auto; }
+  #wrapper main { flex: 8 1 auto; }
 
   #wrapper .header{
     order: 1;

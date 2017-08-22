@@ -41,6 +41,11 @@
   align-content: stretch;
 }
 
+.header h1 a{
+  color:#aa5533;
+  text-decoration: none;
+}
+
 .header img{
   height:60px;
 }
@@ -117,13 +122,48 @@ nav #accordion{
 }
 
 #contentText {
-  text-align:left;
-  color: #252;
-  background: -webkit-radial-gradient(25% 25%, farthest-corner,#ccffaa,#acef9a,#9ccf8a,#8cc677); /* Safari 5.1 to 6.0 */
-  background: -o-radial-gradient(25% 25%, farthest-corner,#ccffaa,#acef9a,#9ccf8a,#8cc677); /* For Opera 11.6 to 12.0 */
-  background: -moz-radial-gradient(25% 25%, farthest-corner,#ccffaa,#acef9a,#9ccf8a,#8cc677); /* For Firefox 3.6 to 15 */
-  background: radial-gradient(farthest-corner at 25% 25% ,#ccffaa,#acef9a,#9ccf8a,#8cc677);
+  text-align:center;
+  color: #220;
+  /* background: -webkit-radial-gradient(25% 25%, farthest-corner,#ccffaa,#acef9a,#9ccf8a,#8cc677); /* Safari 5.1 to 6.0 */
+  /* background: -o-radial-gradient(25% 25%, farthest-corner,#ccffaa,#acef9a,#9ccf8a,#8cc677); /* For Opera 11.6 to 12.0 */
+  /* background: -moz-radial-gradient(25% 25%, farthest-corner,#ccffaa,#acef9a,#9ccf8a,#8cc677); /* For Firefox 3.6 to 15 */
+  /* background: radial-gradient(farthest-corner at 25% 25% ,#ccffaa,#acef9a,#9ccf8a,#8cc677); */
+  background: #cac531; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #cac531, #f3f9a7); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #cac531, #f3f9a7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   height:100%;
+}
+
+#Author, #btnPrev {
+  left:0;
+  float:left;
+  position:relative;
+  text-decoration: none;
+  border-radius:5px;
+  padding:0px 5px;
+}
+
+#Speak, #btnNext  {
+  right:0;
+  float:right;
+  position:relative;
+  text-decoration: none;
+  padding:0px 5px;
+  border-radius:5px;
+}
+
+.top_buttons{
+  background-color:#dbdcaf;
+  color:#462;
+  border-left:2px solid #462;
+  border-right:2px solid #462;
+}
+
+.bottom_buttons{
+  background-color:#aaebff;
+  color:#65A;
+  border-left:2px solid #65A;
+  border-right:2px solid #65A;
 }
 
 main {
