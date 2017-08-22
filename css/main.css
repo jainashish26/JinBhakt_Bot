@@ -82,9 +82,9 @@ nav #accordion{
   flex-direction: column;
   flex-wrap: wrap;
   justify-content:flex-start;
-  align-items:center;
+  align-items:left;
   align-content:stretch;
-  height:300px;
+  height:auto;
   background: -webkit-radial-gradient(60% 55%, farthest-corner,#efefff,#dfdfff,#cfcfff,#bfbfff); /* Safari 5.1 to 6.0 */
   background: -o-radial-gradient(60% 55%, farthest-corner,#efefff,#dfdfff,#cfcfff,#bfbfff); /* For Opera 11.6 to 12.0 */
   background: -moz-radial-gradient(60% 55%, farthest-corner,#efefff,#dfdfff,#cfcfff,#bfbfff); /* For Firefox 3.6 to 15 */
@@ -99,17 +99,46 @@ nav #accordion{
   text-decoration: none;
   text-align: center;
   background: rgba(200,200,200,0.2);
-
-  border-bottom: 1px solid #449;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 0px 0px 10px 10px;
+  padding: 0px 5px;
+  border-left: 2px solid #449;
+  border-right: 2px solid #449;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius:5px;
   margin-top:5px;
   line-height:1.4em;
 }
 
 .flex-container a:hover {
   background: rgba(200,200,255,0.75);
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 40px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+#filter-records{
+  width:100%;
+  height:auto;
+}
+
+#filter-records a{
+  padding: 0px 5px;
+  border-left: 2px solid #449;
+  border-right: 2px solid #449;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius:5px;
 }
 
 #contentTitle{
@@ -120,6 +149,8 @@ nav #accordion{
   background: radial-gradient(farthest-corner at 40% 25%,#242,#353,#464,#575);
   line-height:1.6em;
 }
+
+
 
 #contentText {
   text-align:center;
@@ -134,7 +165,7 @@ nav #accordion{
   height:100%;
 }
 
-#Author, #btnPrev {
+#author, #btnPrev {
   left:0;
   float:left;
   position:relative;
@@ -143,7 +174,7 @@ nav #accordion{
   padding:0px 5px;
 }
 
-#Speak, #btnNext  {
+#speak, #btnNext  {
   right:0;
   float:right;
   position:relative;

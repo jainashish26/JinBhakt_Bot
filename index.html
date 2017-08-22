@@ -26,6 +26,10 @@
 
     </header>
     <nav>
+      <div id="searchBar">
+        <input type="text" id="searchBox" class="searchTerm" onkeyup="fnSearch()" placeholder="Search..." />
+        <div id="filter-records"></div>
+      </div>
       <div id="accordion">
         <h3>पूजा</h3>
         <div class="flex-container">
@@ -45,72 +49,16 @@
           <a href="#" >देव दर्शन पूजा</a>
         </div>
         <h3>स्तोत्र</h3>
-        <div class="flex-container">
-          <a href="#" onClick="ShowContent(event, this.innerHTML, "/content/pooja/test")">देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
+        <div id="stotra" class="flex-container">
         </div>
         <h3>आरती</h3>
-        <div class="flex-container">
-          <a href="#" onClick="ShowContent(event, this.innerHTML, "/content/pooja/test")">देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
+        <div id="aarti" class="flex-container">
         </div>
         <h3>चालीसा</h3>
-        <div class="flex-container">
-          <a href="#" onClick="ShowContent(event, this.innerHTML, "/content/pooja/test")">देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
+        <div id="chalisa" class="flex-container">
         </div>
         <h3>स्तुति</h3>
-        <div class="flex-container">
-          <a href="#" onClick="showJSONContent("stuti", "Prabhu_Patit_Paavan", event)">प्रभु पतित पावन</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
-          <a href="#" >देव दर्शन पूजा</a>
+        <div id="stuti" class="flex-container">
         </div>
         <h3>भक्ति</h3>
         <div class="flex-container">
@@ -137,7 +85,7 @@
         <article>
             <h1 id="contentTitle">Article #1</h1>
             <section id="contentText">
-                <a href="#" id="Author" class="top_buttons">Author Name</a><a href="#" id="Speak" class="top_buttons">सुनने के लिए</a>
+                <a href="#" id="author" class="top_buttons">Author Name</a><a href="#" id="speak" class="top_buttons">सुनने के लिए</a>
                 <br/><br/>
                 <article id="message"></article>
                 <br/><br/>
