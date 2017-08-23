@@ -20,6 +20,10 @@
   #wrapper main       { order: 2; }
   #wrapper footer     { order: 3; }
 
+  #contentText {
+    text-align:left;
+    padding-left:100px;
+  }
   .menu{
     display:none;
   }

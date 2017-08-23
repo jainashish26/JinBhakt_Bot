@@ -4,9 +4,9 @@ var isMobile = true;
 $(function(){
 
   generateMenu('pooja');
-  generateMenu('stotra');
-  generateMenu('aarti');
+  generateMenu('stotra');  
   generateMenu('chalisa');
+  generateMenu('aarti');
   generateMenu('stuti');
   generateMenu('bhakti');
   generateMenu('misc');
@@ -34,7 +34,6 @@ var fnFetchUrl = function(){
           _name= _pair[0];
           _value = _pair[1];
           if (_value != '' && typeof(_value) != 'undefined'){
-            console.log('Name: ' + _name + " : Value: " + _value + "." )
           showJSONContent(decodeURI(_name), decodeURI(_value), event);
         }
     }
@@ -74,20 +73,24 @@ var showJSONContent = function(cat, id, ev){
     }
     var url = '/content/' + cat + '.json';
     var title = '';
+    var etitle = '';
     var ctext = '';
     var hAuth = '';
     var eNext = '';
     var ePrev = '';
+    var hCtg = '';
     hideButtons();
     $.getJSON(url)
     .done(function(data) {
         $.each(data, function(k, v) {
             if (v['_id'] === id || v['eName'].toLowerCase() == id.toLowerCase() || v['hName'] === id){
-                title = data[k].hName;
-                ctext = data[k].hCont;
-                hAuth = (data[k].hAuth === 'TBC#'?'':data[k].hAuth);
-                eNext = (data[k].eNext === 'TBC#'?'':data[k].eNext);
-                ePrev = (data[k].ePrev === 'TBC#'?'':data[k].ePrev);
+                title  = data[k].hName;
+                etitle = data[k].eName;
+                ctext  = data[k].hCont;
+                hCtg   = data[k].hCtg;
+                hAuth  = (data[k].hAuth === 'TBC#'?'':data[k].hAuth);
+                eNext  = (data[k].eNext === 'TBC#'?'':data[k].eNext);
+                ePrev  = (data[k].ePrev === 'TBC#'?'':data[k].ePrev);
             }
         });
         if (title === '' || ctext === '' || typeof(title) == 'undefined' || typeof(ctext) == 'undefined' || ctext === 'TBC#')
@@ -97,6 +100,10 @@ var showJSONContent = function(cat, id, ev){
         else {
             $("#contentTitle").html(title);
             $("#message").html(ctext);
+            document.title = title + ' - ' + etitle  + ' - जिनभक्त (A Jain Devotee)';
+            // Just replacing the value of the 'content' attribute will not work.
+            $('meta[name=description]').remove();
+            $('head').append( '<meta name="description" content="' + cat + '/' + hCtg + ": " + title + ' - ' + etitle + '">' );
             $("#speak").show(100);
             if (hAuth != '' && typeof(hAuth) != 'undefined' && hAuth != 'TBC#')
             {
