@@ -4,7 +4,7 @@ var isMobile = true;
 $(function(){
 
   generateMenu('pooja');
-  generateMenu('stotra');  
+  generateMenu('stotra');
   generateMenu('chalisa');
   generateMenu('aarti');
   generateMenu('stuti');
@@ -21,9 +21,22 @@ $(function(){
     showHomePage();
     //Check and process if any parameters passed along with parameters.
     fnFetchUrl();
+    service__worker();
 });
 
-
+var service__worker = function(){
+  // ServiceWorker is a progressive technology. Ignore unsupported browsers
+    if('serviceWorker' in navigator) {
+      console.log('CLIENT: service worker registration in progress.');
+      navigator.serviceWorker.register('/service-worker.js').then(function() {
+        console.log('CLIENT: service worker registration complete.');
+      }, function() {
+        console.log('CLIENT: service worker registration failure.');
+      });
+    } else {
+      console.log('CLIENT: service worker is not supported.');
+    }
+}
 
 var fnFetchUrl = function(){
   var _name, _value, _pair;
@@ -165,7 +178,10 @@ var generateMenu = function(cat){
   .done(function(data) {
       $.each(data, function(k, v) {
         //<a href="#" onClick="showJSONContent("stuti", "Prabhu_Patit_Paavan", event)">प्रभु पतित पावन</a>
-        list = list + pfx + v['_id'] + '\', event)">' + v['hName'] + sfx;
+        if (v['hCont'] != '' && typeof(v['hCont']) != 'undefined' && v['hCont'] != 'TBC#')
+        {
+          list = list + pfx + v['_id'] + '\', event)">' + v['hName'] + sfx;
+        }
       })
       $(('#' + cat)).html(list);
   })
