@@ -1,0 +1,119 @@
+/* ============================================
+   JinBhakt — Reset & Base Styles
+   Modern, mobile-first foundation
+   ============================================ */
+
+/* --- Reset --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Root --- */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* --- Body --- */
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--color-cream);
+  line-height: var(--line-height-normal);
+  min-height: 100vh;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+  color: var(--color-maroon);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-saffron);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input, textarea, select {
+  font: inherit;
+}
+
+/* --- Accessibility Utilities --- */
+/* (.sr-only lives in components.css) */
+
+/* --- Focus Visible --- */
+:focus-visible {
+  outline: 3px solid var(--color-saffron);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+/* --- Tables: never force horizontal page overflow --- */
+table { max-width: 100%; }
+
+/* --- Prevent iOS/Android text inflation on rotation --- */
+p, li, td, th, span, div { max-width: 100%; }
+
+/* --- Tap targets: comfortable on touch devices --- */
+@media (pointer: coarse) {
+  .link-pill, .btn, .nav-btn, .search-result-item, .category-header {
+    min-height: 40px;
+  }
+  .link-pill { display: inline-flex; align-items: center; }
+}
+

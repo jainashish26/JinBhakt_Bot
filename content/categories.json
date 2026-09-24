@@ -1,0 +1,42 @@
+[
+  {
+    "id": "pooja",
+    "label": "पूजा",
+    "icon": "🙏"
+  },
+  {
+    "id": "stotra",
+    "label": "स्तोत्र",
+    "icon": "📜"
+  },
+  {
+    "id": "aarti",
+    "label": "आरती",
+    "icon": "🪔"
+  },
+  {
+    "id": "chalisa",
+    "label": "चालीसा",
+    "icon": "📖"
+  },
+  {
+    "id": "stuti",
+    "label": "स्तुति",
+    "icon": "🎵"
+  },
+  {
+    "id": "bhakti",
+    "label": "भक्ति",
+    "icon": "🙏"
+  },
+  {
+    "id": "katha",
+    "label": "कथा-कहानी",
+    "icon": "📚"
+  },
+  {
+    "id": "misc",
+    "label": "अन्य पाठ्य क्रम",
+    "icon": "📋"
+  }
+]

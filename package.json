@@ -1,0 +1,17 @@
+{
+  "name": "jinbhakt-pwa",
+  "version": "3.0.0",
+  "private": true,
+  "description": "जिनभक्त — offline-first Jain devotional PWA (vanilla JS, no build step, no runtime dependencies)",
+  "scripts": {
+    "test": "node test/run.js",
+    "icons": "node tools/make-icons.js",
+    "verify:subpath": "node tools/verify-subpath.js",
+    "serve": "python -m http.server 8000",
+    "check": "node --check js/app.js && node --check js/speech.js && node --check service-worker.js && npm test && npm run verify:subpath"
+  },
+  "devDependencies": {
+    "jsdom": "^28.1.0",
+    "pngjs": "^7.0.0"
+  }
+}

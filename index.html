@@ -1,78 +1,70 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>जिनभक्त</title>
-  <link rel="stylesheet" href="js/jQuery/jquery-ui.min.css">
-  <link rel="stylesheet" href="css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="जैन धर्म की प्रार्थनाएं, आरती, स्तोत्र, चालीसा और अन्य भक्ति पाठ">
+  <meta name="theme-color" content="#E8800C">
+  <title>जय जिनेन्द्र बन्धु — जिनभक्त</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
-  <script src="js/jQuery/jquery-3.2.1.min.js"></script>
-  <script src="js/jQuery/jquery-ui.min.js"></script>
-  <script src="js/speech.js"></script>
-  <script src="js/main.js"></script>
-
+  <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
-  <div id="wrapper">
-    <header>
-        <div class="header">
-          <h1><a href="/">जिनभक्त</a></h1>
-          <img src="img/logo.png" alt="" />
-          <div class="menu">
-              <a href="javascript:void(0);" onclick="showAccordionMenu()">&#9776;</a>
-          </div>
-        </div>
+<div class="app-shell">
 
-    </header>
-    <nav>
-      <div id="searchBar">
-        <input type="text" id="searchBox" class="searchTerm" onkeyup="fnSearch()" placeholder="Search..." />
-        <div id="filter-records"></div>
+  <header class="site-header" role="banner">
+    <button id="menu-toggle" class="menu-toggle" type="button"
+            aria-label="मेन्यू खोलें" aria-expanded="false" aria-controls="nav-panel">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
+      </svg>
+    </button>
+    <h1 class="site-title"><a href="#/" data-nav="home" aria-label="जिनभक्त — मुख्य पृष्ठ">&#x2638; जिनभक्त</a></h1>
+    <img class="header-logo" src="img/logo.png" alt="" width="40" height="40">
+  </header>
+
+  <div id="body-overlay" class="body-overlay" aria-hidden="true"></div>
+
+  <nav id="nav-panel" class="nav-panel" aria-label="मुख्य नेविगेशन">
+    <div class="search-section">
+      <div class="search-wrapper">
+        <label for="search-input" class="sr-only">प्रार्थना खोजें</label>
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" aria-hidden="true" focusable="false">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="search" id="search-input" class="search-input"
+               placeholder="खोजें...  ( / )" autocomplete="off"
+               aria-label="प्रार्थना खोजें" role="combobox"
+               aria-expanded="false" aria-controls="search-results-box" aria-autocomplete="list">
       </div>
-      <div id="accordion">
-        <h3>पूजा</h3>
-        <div id="pooja" class="flex-container">
-        </div>
-        <h3>स्तोत्र</h3>
-        <div id="stotra" class="flex-container">
-        </div>
-        <h3>आरती</h3>
-        <div id="aarti" class="flex-container">
-        </div>
-        <h3>चालीसा</h3>
-        <div id="chalisa" class="flex-container">
-        </div>
-        <h3>स्तुति</h3>
-        <div id="stuti" class="flex-container">
-        </div>
-        <h3>भक्ति</h3>
-        <div id="bhakti" class="flex-container">
-        </div>
-        <h3>कथा-कहानी</h3>
-        <div id="katha" class="flex-container">
-        </div>
-        <h3>अन्य पाठ्य क्रम</h3>
-        <div id="misc" class="flex-container">
-        </div>
+      <div id="search-results-box" class="search-results-box hidden" role="listbox"
+           aria-label="खोज परिणाम"></div>
+    </div>
+    <div id="category-list" class="category-list">
+      <p class="nav-loading">विषय सूची लोड हो रही है&hellip;</p>
+    </div>
+  </nav>
 
-      </div>
+  <main id="main-content" class="main-content" role="main" tabindex="-1" aria-live="polite">
+    <div class="loading-indicator"><div class="spinner" role="status" aria-label="लोड हो रहा है"></div></div>
+  </main>
 
-    </nav>
-    <main id="mainContent">
-        <article>
-            <h1 id="contentTitle">Article #1</h1>
-            <section id="contentText">
-                <a href="#" id="author" class="top_buttons">Author Name</a><a href="#" id="speak" class="top_buttons">सुनने के लिए</a>
-                <br/><br/>
-                <article id="message"></article>
-                <br/><br/>
-                <a href="#" id="btnPrev" class="bottom_buttons">Previous</a><a href="#" id="btnNext" class="bottom_buttons">Next</a>
-            </section>
-        </article>
-    </main>
+  <footer class="site-footer" role="contentinfo">
+    <p>&copy; 2024 जिनभक्त &middot; जय जिनेन्द्र बन्धु</p>
+  </footer>
 
-    <!-- <footer>Developed By: ASHISH JAIN (Model Town)</footer> -->
-  </div>
+</div>
+<script src="js/speech.js" defer></script>
+<script src="js/app.js" defer></script>
 </body>
 </html>
+

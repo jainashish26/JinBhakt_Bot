@@ -1,0 +1,90 @@
+/* ============================================
+   JinBhakt — CSS Design Tokens / Variables
+   Sacred saffron + maroon palette (WCAG AA)
+   ============================================ */
+
+:root {
+  /* --- Colors --- */
+  --color-saffron:    #E8800C;     /* Primary brand color (headers, accents) */
+  --color-maroon:     #6D1B2F;     /* Deep maroon for contrast text */
+  --color-gold:       #C8860A;     /* Highlights, icons */
+  --color-cream:      #FFF8F0;     /* Page background */
+  --color-warm-white: #FFFBF5;     /* Card / panel backgrounds */
+  --color-text:       #2D1B06;     /* Body text — WCAG AAA on cream */
+  --color-text-light: #5C3D1E;     /* Secondary text */
+  --color-border:     #D4A574;     /* Borders, dividers */
+  --color-accent:     #8B5E3C;     /* Links, interactive elements */
+  --color-overlay:    rgba(45, 27, 6, 0.6);
+
+  /* Nav specific */
+  --color-nav-bg:     var(--color-cream);
+  --color-nav-hover:  rgba(232, 128, 12, 0.1);
+  --color-nav-active: rgba(232, 128, 12, 0.15);
+
+  /* Buttons */
+  --color-btn-primary-bg:   var(--color-saffron);
+  --color-btn-primary-text: #fff;
+  --color-btn-secondary-bg: var(--color-warm-white);
+  --color-btn-secondary-text: var(--color-maroon);
+
+  /* Status */
+  --color-success: #2E7D32;
+  --color-info:    #1565C0;
+
+  /* --- Typography --- */
+  --font-heading: 'Noto Serif Devanagari', Georgia, 'Times New Roman', serif;
+  --font-body:    'Noto Sans Devanagari', system-ui, -apple-system, sans-serif;
+  --font-size-xs:  0.75rem;
+  --font-size-sm:  0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md:  1.125rem;
+  --font-size-lg:  1.25rem;
+  --font-size-xl:  1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+  --line-height-tight: 1.3;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+
+  /* --- Spacing --- */
+  --space-xs:  0.25rem;   /* 4px */
+  --space-sm:  0.5rem;    /* 8px */
+  --space-md:  1rem;      /* 16px */
+  --space-lg:  1.5rem;    /* 24px */
+  --space-xl:  2rem;      /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+
+  /* --- Borders & Shadows --- */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-full: 9999px;
+  --shadow-sm:  0 1px 3px rgba(45, 27, 6, 0.08), 0 1px 2px rgba(45, 27, 6, 0.06);
+  --shadow-md:  0 4px 12px rgba(45, 27, 6, 0.1), 0 2px 4px rgba(45, 27, 6, 0.06);
+  --shadow-lg:  0 10px 25px rgba(45, 27, 6, 0.12), 0 4px 8px rgba(45, 27, 6, 0.06);
+
+  /* --- Transitions --- */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
+
+  /* --- Z-index Scale --- */
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+
+  /* --- Layout Metrics --- */
+  --header-h:   56px;      /* sticky header height */
+  --sidebar-w:  290px;     /* tablet / small desktop nav column */
+}
+
+/* Wider sidebar on large desktop screens */
+@media (min-width: 1400px) {
+  :root { --sidebar-w: 340px; }
+}
+
+/* Slightly taller header on large touch devices (iPad landscape etc.) */
+@media (min-width: 900px) {
+  :root { --header-h: 60px; }
+}
