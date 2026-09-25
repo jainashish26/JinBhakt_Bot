@@ -7,7 +7,7 @@
  *  - Lazy prayer bodies (content/text/*): cache-first (static, immutable)
  * ============================================================ */
 
-var CACHE_NAME = 'jinbhakt-v6';
+var CACHE_NAME = 'jinbhakt-v11';
 
 var SHELL_ASSETS = [
   './',
@@ -19,6 +19,7 @@ var SHELL_ASSETS = [
   './css/components.css',
   './js/app.js',
   './js/speech.js',
+  './js/translit.js',
   './img/logo.png',
   './img/favicon.ico',
   './img/icon-192.png',
@@ -37,7 +38,6 @@ var CONTENT_ASSETS = [
   './content/chalisa.json',
   './content/stuti.json',
   './content/bhakti.json',
-  './content/katha.json',
   './content/misc.json'
 ];
 

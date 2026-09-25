@@ -16,7 +16,19 @@ const SUB_LABEL = { teeka: 'टीका', gatha: 'गाथा', egranth: 'अ�
 const SUBS_KEEP = ['teeka', 'gatha', 'egranth'];   // shastra = selector stubs, excluded
 
 function subOf(href) { const p = href.split('/'); return p[2] || ''; }
-function flatName(href) { return href.replace(/\//g, '_'); }
+
+/**
+ * Cache filenames are the href with every "/" replaced by "_"; because hrefs
+ * start with "./" the result begins with "._". Accept all historical variants.
+ */
+function resolveCache(href) {
+  const flat = href.replace(/^\.\//, '').replace(/[\/\\]/g, '_');
+  for (const cand of ['._' + flat, '_' + flat, flat]) {
+    const p = path.join(cacheDir, cand);
+    if (fs.existsSync(p)) return p;
+  }
+  return null;
+}
 
 // --- helpers copied from 03-build.js (keep _id/transliteration stable) ---
 function transliterate(hindi) {
@@ -89,9 +101,9 @@ for (const item of granthItems) {
   perSub[sub] = perSub[sub] || { total: 0, readable: 0 };
   perSub[sub].total++;
 
-  const fp = path.join(cacheDir, flatName(item.href));
+  const fp = resolveCache(item.href);
   let content = null;
-  if (fs.existsSync(fp)) {
+  if (fp) {
     try {
       const html = fs.readFileSync(fp, 'utf8').replace(/^\uFEFF/, '');
       content = extractGranth(html);
@@ -127,7 +139,12 @@ out.forEach((it, idx) => {
   if (idx < out.length - 1) it.eNext = out[idx + 1]._id;
 });
 
-fs.writeFileSync(path.join(contentDir, 'granth.json'), JSON.stringify(out, null, 2), 'utf8');
+const granthJson = JSON.stringify(out, null, 2);
+fs.writeFileSync(path.join(contentDir, 'granth.json'), granthJson, 'utf8');
+// keep content_backup/ in sync so 04-split.js never resurrects a stale granth
+const backupDir = path.join(ROOT, 'content_backup');
+fs.mkdirSync(backupDir, { recursive: true });
+fs.writeFileSync(path.join(backupDir, 'granth.json'), granthJson, 'utf8');
 console.log('wrote content/granth.json (FULL):', out.length, 'items |', readable, 'readable |', missing, 'coming-soon');
 console.log('per subcategory:', JSON.stringify(perSub));
 console.log('sub labels:', JSON.stringify(SUB_LABEL));

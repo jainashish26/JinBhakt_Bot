@@ -34,6 +34,9 @@
   /* --- Typography --- */
   --font-heading: 'Noto Serif Devanagari', Georgia, 'Times New Roman', serif;
   --font-body:    'Noto Sans Devanagari', system-ui, -apple-system, sans-serif;
+  /* Used when the reader is switched to English (Roman) letters */
+  --font-latin:        'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-latin-serif:  Georgia, 'Times New Roman', 'Noto Serif', serif;
   --font-size-xs:  0.75rem;
   --font-size-sm:  0.875rem;
   --font-size-base: 1rem;

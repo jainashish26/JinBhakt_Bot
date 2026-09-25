@@ -17,6 +17,16 @@
 
   var LABEL_PLAY = '\uD83D\uDD0A  सुनें';
   var LABEL_STOP = '\u25A0  रोकें';
+  var LABEL_PLAY_EN = '\uD83D\uDD0A  Listen';
+  var LABEL_STOP_EN = '\u25A0  Stop';
+
+  /* The reader may be showing English (Roman) letters. The button wording
+   * follows the script the reader picked — the narration itself never does
+   * (see currentText(): it always speaks the Devanagari source). */
+  function inEnglish() {
+    var app = window.jinbhaktApp;
+    return !!(app && typeof app.isTransliterated === 'function' && app.isTransliterated());
+  }
 
   /* ---------------------------------------------------------
    * Voice selection
@@ -40,11 +50,16 @@
    * Button state
    * ------------------------------------------------------- */
   function paintButtons() {
+    var en = inEnglish();
+    var play = en ? LABEL_PLAY_EN : LABEL_PLAY;
+    var stop = en ? LABEL_STOP_EN : LABEL_STOP;
     var buttons = document.querySelectorAll('[data-action="speak"]');
     for (var i = 0; i < buttons.length; i++) {
-      buttons[i].textContent = isSpeaking ? LABEL_STOP : LABEL_PLAY;
+      buttons[i].textContent = isSpeaking ? stop : play;
       buttons[i].classList.toggle('is-speaking', isSpeaking);
-      buttons[i].setAttribute('aria-label', isSpeaking ? 'वाचन रोकें' : 'यह पाठ सुनें');
+      buttons[i].setAttribute('aria-label', isSpeaking
+        ? (en ? 'Stop narration' : 'वाचन रोकें')
+        : (en ? 'Listen to this text' : 'यह पाठ सुनें'));
       buttons[i].setAttribute('aria-pressed', isSpeaking ? 'true' : 'false');
     }
   }
@@ -61,6 +76,14 @@
    * Core
    * ------------------------------------------------------- */
   function currentText() {
+    // The reader can be showing English (Roman) letters, but the hi-IN voice
+    // would spell those out letter by letter — always narrate the Devanagari.
+    var app = window.jinbhaktApp;
+    if (app && typeof app.getSpeechText === 'function') {
+      var devanagari = app.getSpeechText();
+      if (devanagari) return devanagari;
+    }
+
     var body = document.getElementById('prayer-body');
     if (!body) return '';
 
@@ -168,6 +191,13 @@
   }
 
   window.toggleSpeech = function () { speak(); };
+
+  /* app.js calls paintButtons() right after the script toggle changes, so the
+   * listen/stop wording follows the reader's choice. */
+  window.jinbhaktSpeech = {
+    paintButtons: paintButtons,
+    isSpeaking: function () { return isSpeaking; }
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

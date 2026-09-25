@@ -1,5 +1,9 @@
 # JinBhakt Bot Content Migration Summary
 
+> **Historical record.** This describes the *first* migration pass. The figures
+> and the 10-category list below are superseded — see `MIGRATION_UPDATE.md` for
+> the current pipeline, dataset and category mapping.
+
 ## Overview
 Successfully migrated and enriched prayer content from nikkyjain.github.io into the JinBhakt_Bot JSON structure.
 

@@ -19,7 +19,7 @@ function ok(name, cond, extra) {
 const MIME = { '.html':'text/html', '.css':'text/css', '.js':'text/javascript',
                '.json':'application/json', '.png':'image/png', '.ico':'image/x-icon' };
 
-async function boot(hash, mobile) {
+async function boot(hash, mobile, setup) {
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const vc = new VirtualConsole();
   const jsErrors = [];
@@ -71,8 +71,13 @@ async function boot(hash, mobile) {
   window.SpeechSynthesisUtterance = function (t) { this.text = t; };
   window.location.replace = function (h) { window.location.hash = h; };
 
-  // run the REAL app code
+  // Optional pre-boot hook: seed localStorage / stub APIs before the real
+  // app scripts run, so tests can cover "what a returning visitor sees".
+  if (typeof setup === 'function') setup(window);
+
+  // run the REAL app code (order mirrors index.html)
   window.eval(fs.readFileSync(path.join(ROOT, 'js', 'speech.js'), 'utf8'));
+  window.eval(fs.readFileSync(path.join(ROOT, 'js', 'translit.js'), 'utf8'));
   window.eval(fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8'));
 
   // jsdom fires its own DOMContentLoaded; only dispatch manually if the

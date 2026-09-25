@@ -170,6 +170,98 @@
   font-size: var(--font-size-sm);
 }
 
+.no-results-hint {
+  margin-top: 6px;
+  font-size: var(--font-size-xs);
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+/* --- result list furniture ------------------------------------- */
+.search-result-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-nav-hover);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.search-count {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-text-light);
+}
+
+.search-hint {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--color-maroon);
+  opacity: 0.85;
+}
+
+.search-result-divider {
+  padding: 6px 12px 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-text-light);
+  background: rgba(0, 0, 0, 0.025);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.search-result-item.is-active {
+  background: var(--color-nav-hover);
+  box-shadow: inset 3px 0 0 var(--color-saffron);
+}
+
+.result-partial .result-name { opacity: 0.82; }
+
+.result-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.result-sub {
+  font-size: 0.65rem;
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: rgba(232, 128, 12, 0.12);
+  color: var(--color-saffron);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Romanized subtitle — lets a visitor confirm an English query hit. */
+.result-latin {
+  display: block;
+  margin-top: 1px;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--color-text-light);
+  font-family: var(--font-body, inherit);
+  direction: ltr;
+  text-align: left;
+  word-break: break-word;
+}
+
+mark.hit {
+  background: rgba(232, 128, 12, 0.22);
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
 /* ---------- Sidebar: category accordion ---------- */
 .nav-loading {
   padding: 20px 14px;
@@ -962,3 +1054,77 @@ details[open] > .category-header::after { transform: rotate(90deg); }
 }
 
 .cat-card-empty .cat-card-meta { color: var(--color-text-light); font-weight: 500; }
+
+/* ============================================
+   English (Roman) transliteration
+   The reader can flip a passage from Devanagari
+   into Latin letters. See paintReaderContent()
+   in js/app.js for the script-swapping logic.
+   ============================================ */
+
+/* Any button whose label follows the script toggle wraps its text in a span,
+   so the flex centering keeps working in both scripts. */
+.btn.is-translit span { white-space: nowrap; }
+
+/* ON state — filled saffron, matching .btn-primary, so it reads as active. */
+.btn-ghost.is-translit.is-active {
+  background: var(--color-saffron);
+  border-color: var(--color-saffron);
+  color: #fff;
+}
+
+.btn-ghost.is-translit.is-active:hover,
+.btn-ghost.is-translit.is-active:focus-visible {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Latin has no matras, so it needs a Latin face and tighter leading. */
+.prayer-body.is-translit,
+.brief-body.is-translit {
+  font-family: var(--font-latin);
+  font-size: clamp(1rem, 2.4vw, 1.075rem);
+  line-height: 1.9;
+  letter-spacing: .01em;
+}
+
+.prayer-body.is-translit h2,
+.prayer-body.is-translit h3,
+.prayer-body.is-translit h4,
+.prayer-body.is-translit h5,
+.prayer-body.is-translit h6,
+.brief-body.is-translit h2,
+.brief-body.is-translit h3 {
+  font-family: var(--font-latin-serif);
+  line-height: 1.4;
+}
+
+.prayer-body.is-translit th,
+.brief-body.is-translit th { font-family: var(--font-latin-serif); }
+
+/* The title and the prev/next names flip scripts too. */
+body.translit-on .reader-title,
+body.translit-on .nav-btn-name {
+  font-family: var(--font-latin-serif);
+  line-height: 1.45;
+}
+
+body.translit-on .reader-brief h3 { font-family: var(--font-latin-serif); }
+
+/* Chrome that flips script along with the passage: the meta line, the
+   prev/next arrows and the action buttons all read as Latin in this view,
+   so they get the Latin face instead of Noto Sans Devanagari. */
+body.translit-on .reader-meta,
+body.translit-on .nav-btn-dir,
+body.translit-on .reader-actions .btn {
+  font-family: var(--font-latin);
+}
+
+/* Four buttons in the action row — keep them tappable on small phones. */
+@media (max-width: 480px) {
+  .btn.is-translit { padding: 9px 13px; font-size: var(--font-size-xs); }
+}
+

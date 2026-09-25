@@ -38,11 +38,11 @@ module.exports = async function (ctx) {
   ok('text content preserved', /bold/.test(clean) && /cell/.test(clean));
 
   console.log('\n[8] Unavailable item deep link');
-  window.location.hash = '#/stotra/Adhya_ashtak_stotra';
+  window.location.hash = '#/aarti/आरती_बाहुबली_भगवान';
   await wait(350);
   ok('shows being-prepared state', !!document.querySelector('.empty-state'));
   ok('no empty prayer body', !document.querySelector('#prayer-body'));
-  ok('still offers a list link', !!document.querySelector('.empty-state a[href="#/stotra"]'));
+  ok('still offers a list link', !!document.querySelector('.empty-state a[href="#/aarti"]'));
 
   console.log('\n[9] Unknown routes');
   window.location.hash = '#/aarti/Does_Not_Exist_XYZ';
@@ -56,7 +56,7 @@ module.exports = async function (ctx) {
   console.log('\n[10] Search over full catalogue');
   const app = window.jinbhaktApp;
   ok('jinbhaktApp exposed', !!app && typeof app.getCurrentText === 'function');
-  ok('index covers all 1842 items', app.state.searchIndex.length === 1842,
+  ok('index covers all 1854 items', app.state.searchIndex.length === 1854,
      'got ' + app.state.searchIndex.length);
 
   const input = document.getElementById('search-input');

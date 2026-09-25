@@ -20,11 +20,11 @@ module.exports = async function (ctx) {
   const desk = await require('./harness.js').boot('#/aarti', false);
   const d = desk.document;
   ok('desktop: no drawer open', !d.body.classList.contains('nav-open'));
-  ok('desktop: nav has 10 accordions',
-     d.querySelectorAll('#category-list details.category-item').length === 10);
+  ok('desktop: nav has 9 accordions',
+     d.querySelectorAll('#category-list details.category-item').length === 9);
   ok('desktop: category view rendered', !!d.querySelector('.cat-view-title'));
-  ok('desktop: 5 item links',
-     d.querySelectorAll('.item-list:not(.item-list-soon) .item-link').length === 5);
+  ok('desktop: 45 item links',
+     d.querySelectorAll('.item-list:not(.item-list-soon) .item-link').length === 45);
   ok('desktop: no runtime errors', desk.jsErrors.length === 0,
      desk.jsErrors.slice(0, 2).join(' | '));
 
@@ -86,10 +86,13 @@ module.exports = async function (ctx) {
   await wait(200);
   ok('Home key goes to #/', window.location.hash === '#/', window.location.hash);
 
+  // Transliteration-aware search (js/translit.js + rendering + keyboard nav).
+  await require('./part5.js')(ctx);
+
   console.log('\n[15] Console health');
   const real = jsErrors.filter(e =>
     !/SW registration|serviceWorker|Not implemented|scroll|Could not parse CSS/i.test(e));
   ok('no unexpected runtime errors', real.length === 0, real.slice(0, 3).join(' | '));
 
-  require('./part4.js')(ctx);
+  await require('./part4.js')(ctx);
 };

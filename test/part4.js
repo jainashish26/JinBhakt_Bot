@@ -33,7 +33,7 @@ module.exports = function ({ ok }) {
   ok('every precached asset exists on disk', missing.length === 0, 'missing: ' + missing.join(', '));
 
   const precached = new Set((shell || []).concat(content || []).map(u => u.replace(/^\.\//, '')));
-  ['index.html', 'manifest.json', 'js/app.js', 'js/speech.js',
+  ['index.html', 'manifest.json', 'js/app.js', 'js/speech.js', 'js/translit.js',
    'css/variables.css', 'css/base.css', 'css/layout.css', 'css/components.css'
   ].forEach(f => ok('critical file precached: ' + f, precached.has(f)));
 
@@ -111,8 +111,8 @@ module.exports = function ({ ok }) {
     });
   });
   ok('no manifest inlines hCont (lazy split intact)', inlineCont === 0, inlineCont + ' cats still inline');
-  ok('catalogue total is 1842 items', total === 1842, 'got ' + total);
-  ok('1620 items have real content', readable === 1620, 'got ' + readable);
+  ok('catalogue total is 1854 items', total === 1854, 'got ' + total);
+  ok('1826 items have real content', readable === 1826, 'got ' + readable);
   ok('every readable item has a lazy text file', missingText === 0, missingText + ' missing');
 
   console.log('\n[19] No dead references to removed files');
