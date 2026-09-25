@@ -56,7 +56,7 @@ module.exports = async function (ctx) {
   console.log('\n[10] Search over full catalogue');
   const app = window.jinbhaktApp;
   ok('jinbhaktApp exposed', !!app && typeof app.getCurrentText === 'function');
-  ok('index covers all 279 items', app.state.searchIndex.length === 279,
+  ok('index covers all 1842 items', app.state.searchIndex.length === 1842,
      'got ' + app.state.searchIndex.length);
 
   const input = document.getElementById('search-input');

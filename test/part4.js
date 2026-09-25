@@ -44,7 +44,10 @@ module.exports = function ({ ok }) {
      (sw.match(/CACHE_NAME = '([^']+)'/) || [])[1]);
   ok('old caches are purged on activate', /caches\.delete/.test(sw));
   ok('install tolerates a single 404', /cache\.add\(url\)\.catch/.test(sw));
-  ok('JSON is network-first (no stale prayers)', /isJSON \|\| isNavigation/.test(sw));
+  ok('manifests are network-first (no stale metadata)',
+     /\(isJSON && !isLazyText\) \|\| isNavigation/.test(sw));
+  ok('lazy prayer bodies (content/text/) are cache-first',
+     /isLazyText/.test(sw) && /\/content\/text\//.test(sw));
   const all = (shell || []).concat(content || []);
   const absolute = all.filter(u => u.startsWith('/') || /^[a-z]+:\/\//i.test(u));
   ok('SW uses relative paths only (sub-path safe)', absolute.length === 0,
@@ -78,8 +81,8 @@ module.exports = function ({ ok }) {
   ok('lang is Hindi', /<html[^>]+lang="hi"/.test(html));
   ok('deferred scripts used', (html.match(/<script[^>]+defer/g) || []).length >= 2);
 
-  console.log('\n[18] Content data integrity');
-  let total = 0, readable = 0;
+  console.log('\n[18] Content data integrity (manifest + lazy text)');
+  let total = 0, readable = 0, missingText = 0, inlineCont = 0;
   cats.forEach(c => {
     const raw = fs.readFileSync(path.join(ROOT, 'content', c.id + '.json'));
     ok(c.id + '.json is BOM-free UTF-8',
@@ -96,11 +99,21 @@ module.exports = function ({ ok }) {
     const badName = arr.filter(i => !i.hName && !i.eName);
     ok(c.id + ': every item has a display name', badName.length === 0,
        badName.length + ' unnamed');
+    // The heavy body must NOT be inlined in the manifest (it lives in content/text/).
+    if (arr.some(i => Object.prototype.hasOwnProperty.call(i, 'hCont'))) inlineCont++;
     total += arr.length;
-    readable += arr.filter(i => i.hCont && String(i.hCont).trim() && i.hCont !== 'TBC#').length;
+    arr.forEach(i => {
+      if (i.hasContent === true) {
+        readable++;
+        const tf = path.join(ROOT, 'content', 'text', c.id, i.cref + '.json');
+        if (!fs.existsSync(tf)) missingText++;
+      }
+    });
   });
-  ok('catalogue total is 279 items', total === 279, 'got ' + total);
-  ok('11 items have real content', readable === 11, 'got ' + readable);
+  ok('no manifest inlines hCont (lazy split intact)', inlineCont === 0, inlineCont + ' cats still inline');
+  ok('catalogue total is 1842 items', total === 1842, 'got ' + total);
+  ok('1620 items have real content', readable === 1620, 'got ' + readable);
+  ok('every readable item has a lazy text file', missingText === 0, missingText + ' missing');
 
   console.log('\n[19] No dead references to removed files');
   const allSrc = [html, sw,

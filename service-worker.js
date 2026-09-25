@@ -3,11 +3,11 @@
 /* ============================================================
  *  JinBhakt service worker
  *  - Relative URLs so it works on any hosting sub-path
- *  - Cache-first for app shell, network-first for JSON content
- *    (so updated prayers are never served stale)
+ *  - App shell + manifests: precached / network-first (fresh metadata)
+ *  - Lazy prayer bodies (content/text/*): cache-first (static, immutable)
  * ============================================================ */
 
-var CACHE_NAME = 'jinbhakt-v3';
+var CACHE_NAME = 'jinbhakt-v6';
 
 var SHELL_ASSETS = [
   './',
@@ -29,7 +29,9 @@ var SHELL_ASSETS = [
 
 var CONTENT_ASSETS = [
   './content/categories.json',
+  './content/bhajan.json',
   './content/pooja.json',
+  './content/granth.json',
   './content/stotra.json',
   './content/aarti.json',
   './content/chalisa.json',
@@ -75,9 +77,12 @@ self.addEventListener('fetch', function (event) {
 
   var isJSON = /\.json(\?|$)/.test(url.pathname);
   var isNavigation = request.mode === 'navigate';
+  // Lazy prayer bodies are static/immutable once built — cache them aggressively.
+  var isLazyText = url.pathname.indexOf('/content/text/') !== -1;
 
-  // JSON + navigations: NETWORK FIRST (always fresh content)
-  if (isJSON || isNavigation) {
+  // Manifests + navigations: NETWORK FIRST (always fresh metadata).
+  // Lazy text files are excluded so they fall through to cache-first below.
+  if ((isJSON && !isLazyText) || isNavigation) {
     event.respondWith(
       fetch(request).then(function (response) {
         if (response && response.status === 200 && response.type === 'basic') {

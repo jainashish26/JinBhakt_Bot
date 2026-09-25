@@ -33,6 +33,27 @@
   border: 0;
 }
 
+/* ---------- Lazy content loading + subcategories ---------- */
+.reader-loading,
+.reader-error {
+  padding: 28px 8px;
+  text-align: center;
+  font-style: italic;
+  color: var(--color-muted, #7a6a55);
+}
+.reader-error {
+  font-style: normal;
+  color: var(--color-maroon, #8a3324);
+}
+.reader-brief-slot:empty { display: none; }
+
+.subcat-title {
+  margin-top: 26px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-border, #e3d6c2);
+}
+.cat-view .subcat-title:first-of-type { margin-top: 10px; }
+
 /* ---------- Search ---------- */
 .search-section {
   position: sticky;

@@ -18,14 +18,16 @@
    * ------------------------------------------------------- */
   var state = {
     categories: [],   // [{id,label,icon}]
-    items: {},        // catId -> [item]   (every item)
-    readable: {},     // catId -> [item]   (items with real content)
+    items: {},        // catId -> [item]   (metadata manifest for every item)
+    readable: {},     // catId -> [item]   (manifest items flagged hasContent)
     searchIndex: [],  // flattened catalogue for search
+    contentCache: {}, // "catId/cref" -> {hCont,hBrief}  (lazy-loaded bodies)
     ready: false
   };
 
   var dom = {};
   var initialized = false;
+  var readerToken = 0;   // guards async content population against stale navigation
 
   /* ---------------------------------------------------------
    * Small helpers
@@ -37,7 +39,11 @@
   }
 
   function hasContent(item) {
-    return !!item && !isPlaceholder(item.hCont);
+    // Manifests carry a precomputed hasContent flag (the body lives in a
+    // separate lazy-loaded text file, so hCont is no longer in memory).
+    if (!item) return false;
+    if (typeof item.hasContent === 'boolean') return item.hasContent;
+    return !isPlaceholder(item.hCont);   // fallback for legacy full items
   }
 
   function escapeHTML(s) {
@@ -110,10 +116,11 @@
   function normalizeContent(html) {
 
     return String(html)
-      .replace(/\r\n?/g, '\n')
-      .replace(/[ \t]+\n/g, '\n')
-      .replace(/\n{3,}/g, '\n\n')
-      .trim();
+      .replace(/\r\n?/g, '\n')        // normalize CRLF/CR -> LF
+      .replace(/[ \t]+\n/g, '\n')     // strip trailing whitespace on each line
+      .replace(/\n{3,}/g, '\n\n')     // collapse 3+ blank lines down to one blank line
+      .trim()                         // drop leading/trailing blank lines
+      .replace(/\n/g, '<br>\n');      // convert surviving newlines to <br> for rendering
   }
 
   function el(tag, className, text) {
@@ -127,6 +134,29 @@
     return fetch(url, { credentials: 'same-origin' }).then(function (res) {
       if (!res.ok) throw new Error('HTTP ' + res.status + ' for ' + url);
       return res.json();
+    });
+  }
+
+  /* ---------------------------------------------------------
+   * Lazy content loading
+   * Item bodies live in content/text/<cat>/<cref>.json and are
+   * fetched only when the reader opens that prayer. Results are
+   * memoised in state.contentCache so prev/next is instant.
+   * ------------------------------------------------------- */
+  function contentRef(item) {
+    return (item && item.cref !== undefined && item.cref !== null) ? item.cref : (item ? item._index : 0);
+  }
+
+  function contentUrl(catId, item) {
+    return CONTENT_DIR + 'text/' + catId + '/' + contentRef(item) + '.json';
+  }
+
+  function loadItemContent(catId, item) {
+    var key = catId + '/' + contentRef(item);
+    if (state.contentCache[key]) return Promise.resolve(state.contentCache[key]);
+    return loadJSON(contentUrl(catId, item)).then(function (data) {
+      state.contentCache[key] = data || {};
+      return state.contentCache[key];
     });
   }
 
@@ -452,8 +482,27 @@
     dom.main.appendChild(wrap);
   }
 
+  /** Render a <ul class="item-list"> of reader links for the given items. */
+  function buildItemList(catId, items) {
+    var list = el('ul', 'item-list');
+    items.forEach(function (item) {
+      var li = el('li', 'item-row');
+      var a = el('a', 'item-link');
+      a.href = '#/' + catId + '/' + encodeURIComponent(item._id);
+      a.setAttribute('data-route', 'reader');
+      a.appendChild(el('span', 'item-name', item.hName || item.eName || item._id));
+      if (!isPlaceholder(item.hAuth)) {
+        a.appendChild(el('span', 'item-author', 'रचियता: ' + item.hAuth));
+      }
+      a.appendChild(el('span', 'item-go', 'पढ़ें ›'));
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    return list;
+  }
+
   /* ---------------------------------------------------------
-   * View: Category — full title list
+   * View: Category — full title list (grouped by subcategory)
    * ------------------------------------------------------- */
   function renderCategoryView(catId) {
     var cat = categoryById(catId);
@@ -486,22 +535,25 @@
     wrap.appendChild(head);
 
     if (ready.length) {
-      wrap.appendChild(el('h3', 'section-title', 'पढ़ने योग्य पाठ'));
-      var list = el('ul', 'item-list');
-      ready.forEach(function (item) {
-        var li = el('li', 'item-row');
-        var a = el('a', 'item-link');
-        a.href = '#/' + catId + '/' + encodeURIComponent(item._id);
-        a.setAttribute('data-route', 'reader');
-        a.appendChild(el('span', 'item-name', item.hName || item.eName || item._id));
-        if (!isPlaceholder(item.hAuth)) {
-          a.appendChild(el('span', 'item-author', 'रचियता: ' + item.hAuth));
-        }
-        a.appendChild(el('span', 'item-go', 'पढ़ें ›'));
-        li.appendChild(a);
-        list.appendChild(li);
-      });
-      wrap.appendChild(list);
+      // Group by subcategory when items carry a `sub` label
+      // (e.g. ग्रन्थ → टीका / गाथा / अंग्रेज़ी ग्रन्थ).
+      var hasSubs = ready.some(function (i) { return !!i.sub; });
+      if (hasSubs) {
+        var groups = {}, order = [];
+        ready.forEach(function (item) {
+          var s = item.sub || 'अन्य';
+          if (!groups[s]) { groups[s] = []; order.push(s); }
+          groups[s].push(item);
+        });
+        order.forEach(function (subName) {
+          wrap.appendChild(el('h3', 'section-title subcat-title',
+            subName + ' (' + groups[subName].length + ')'));
+          wrap.appendChild(buildItemList(catId, groups[subName]));
+        });
+      } else {
+        wrap.appendChild(el('h3', 'section-title', 'पढ़ने योग्य पाठ'));
+        wrap.appendChild(buildItemList(catId, ready));
+      }
     } else {
       var empty = el('div', 'empty-state');
       empty.appendChild(el('p', null, 'इस खंड में अभी कोई पठनीय सामग्री उपलब्ध नहीं है।'));
@@ -604,22 +656,14 @@
 
     art.appendChild(actions);
 
-    /* --- body --- */
+    /* --- body (filled lazily from content/text/<cat>/<cref>.json) --- */
     var body = el('div', 'prayer-body');
     body.id = 'prayer-body';
-    body.innerHTML = sanitizeHTML(normalizeContent(item.hCont));
-    wrapTables(body);
+    body.appendChild(el('p', 'reader-loading', 'पाठ लोड हो रहा है…'));
     art.appendChild(body);
 
-    if (!isPlaceholder(item.hBrief)) {
-      var brief = el('aside', 'reader-brief');
-      brief.appendChild(el('h3', null, 'सारांश'));
-      var briefBody = el('div', 'brief-body');
-      briefBody.innerHTML = sanitizeHTML(normalizeContent(item.hBrief));
-      wrapTables(briefBody);
-      brief.appendChild(briefBody);
-      art.appendChild(brief);
-    }
+    var briefSlot = el('div', 'reader-brief-slot');
+    art.appendChild(briefSlot);
 
     /* --- prev / next --- */
     if (siblings.prev || siblings.next) {
@@ -651,6 +695,36 @@
 
     dom.main.appendChild(art);
     window.scrollTo({ top: 0, behavior: 'auto' });
+
+    /* --- fetch this prayer's body on demand (lazy) --- */
+    var token = ++readerToken;
+    loadItemContent(catId, item).then(function (data) {
+      if (token !== readerToken) return;            // user navigated away — ignore
+      var b = document.getElementById('prayer-body');
+      if (!b) return;
+      b.innerHTML = sanitizeHTML(normalizeContent(data && data.hCont ? data.hCont : ''));
+      wrapTables(b);
+      if (data && !isPlaceholder(data.hBrief)) {
+        var aside = el('aside', 'reader-brief');
+        aside.appendChild(el('h3', null, 'सारांश'));
+        var bb = el('div', 'brief-body');
+        bb.innerHTML = sanitizeHTML(normalizeContent(data.hBrief));
+        wrapTables(bb);
+        aside.appendChild(bb);
+        briefSlot.innerHTML = '';
+        briefSlot.appendChild(aside);
+      }
+      // Re-apply speech highlighting if audio was already playing this text.
+      if (window.jinbhaktSpeech && typeof window.jinbhaktSpeech.isSpeaking === 'function' &&
+          window.jinbhaktSpeech.isSpeaking() && typeof window.jinbhaktSpeech.highlightSegment === 'function') {
+        window.jinbhaktSpeech.highlightSegment(0);
+      }
+    }).catch(function (err) {
+      if (token !== readerToken) return;
+      var b = document.getElementById('prayer-body');
+      if (b) { b.innerHTML = ''; b.appendChild(el('p', 'reader-error', 'पाठ लोड नहीं हो सका। कृपया पुनः प्रयास करें।')); }
+      console.error('[JinBhakt] content load failed for ' + catId + '/' + contentRef(item) + ':', err);
+    });
   }
 
   function renderUnavailable(cat, item) {

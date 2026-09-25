@@ -1,0 +1,317 @@
+[
+  {
+    "_id": "Aaraadhna_Paath",
+    "_index": 0,
+    "eCtg": "Stuti",
+    "eName": "Aaraadhna Paath",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "आराधना पाठ"
+  },
+  {
+    "_id": "Aatm_Kirtan",
+    "_index": 1,
+    "eCtg": "Stuti",
+    "eName": "Aatm Kirtan",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "आत्म कीर्तन"
+  },
+  {
+    "_id": "Alochna_Path",
+    "_index": 2,
+    "eCtg": "Stuti",
+    "eName": "Alochna Path",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "आलोचना पाठ"
+  },
+  {
+    "_id": "Amulya_Tattva_Vichaar",
+    "_index": 3,
+    "eCtg": "Stuti",
+    "eName": "Amulya Tattva Vichaar",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "अमूल्य तत्त्व विचार"
+  },
+  {
+    "_id": "Bahubali_Stuti",
+    "_index": 4,
+    "eCtg": "Stuti",
+    "eName": "Bahubali Stuti",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "बाहुबली स्तुति"
+  },
+  {
+    "_id": "Bhaktambar_Mahima",
+    "_index": 5,
+    "eCtg": "Stuti",
+    "eName": "Bhaktambar Mahima",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "भक्ताम्बर महिमा"
+  },
+  {
+    "_id": "12_Bhawna_Short",
+    "_index": 6,
+    "eCtg": "Stuti",
+    "eName": "12 Bhawna - Short",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "बारह भावना - लघु"
+  },
+  {
+    "_id": "12_Bhawna_Long",
+    "_index": 7,
+    "eCtg": "Stuti",
+    "eName": "12 Bhawna Long",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "बारह भावना - दीर्घ"
+  },
+  {
+    "_id": "24_Teerthankar_Vandana",
+    "_index": 8,
+    "eCtg": "Stuti",
+    "eName": "24 Teerthankar Vandana",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "चौबीस (24) तीर्थंकर वन्दना"
+  },
+  {
+    "_id": "Darshan_Path_Tum_Nirkhat",
+    "_index": 9,
+    "eCtg": "Stuti",
+    "eName": "Darshan Path Tum Nirkhat",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "दर्शन पाठ - तुम निरखत"
+  },
+  {
+    "_id": "Darshan_Stuti_Ati_Punya",
+    "_index": 10,
+    "eCtg": "Stuti",
+    "eName": "Darshan Stuti - Ati Punya",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "दर्शन स्तुति - अति पुण्य"
+  },
+  {
+    "_id": "Darshan_Stuti_Jai_Vitrag",
+    "_index": 11,
+    "eCtg": "Stuti",
+    "eName": "Darshan Stuti - Jain Vitrag",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "दर्शन स्तुति - जैन वीतराग"
+  },
+  {
+    "_id": "Dev_Stuti_Aho_Jagat",
+    "_index": 12,
+    "eCtg": "Stuti",
+    "eName": "Dev Stuti - Aho Jagat",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "देव स्तुति - अहो जगत"
+  },
+  {
+    "_id": "Guru_Stuti",
+    "_index": 13,
+    "eCtg": "Stuti",
+    "eName": "Guru Stuti",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "गुरु स्तुति"
+  },
+  {
+    "_id": "Isht_Prarthna",
+    "_index": 14,
+    "eCtg": "Stuti",
+    "eName": "Isht Prarthna",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "इष्ट प्रार्थना"
+  },
+  {
+    "_id": "Jinendra_Prarthna",
+    "_index": 15,
+    "eCtg": "Stuti",
+    "eName": "Jinendra Prarthna",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "जिनेन्द्र प्रार्थना"
+  },
+  {
+    "_id": "Jinvani_Stuti_Jain_Jinvani_Mata",
+    "_index": 16,
+    "eCtg": "Stuti",
+    "eName": "Jinvani Stuti - Jain Jinvani Mata",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "जिनवाणी स्तुति - जैन जिनवाणी माता"
+  },
+  {
+    "_id": "Jinvani_Stuti_Jinvar_Jinvaani",
+    "_index": 17,
+    "eCtg": "Stuti",
+    "eName": "Jinvani Stuti - Jinvar Jinvaani",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "जिनवाणी स्तुति - जिनवर जिनवाणी"
+  },
+  {
+    "_id": "Jinvani_Stuti_Maa_Jinvaani_Mamata",
+    "_index": 18,
+    "eCtg": "Stuti",
+    "eName": "Jinvani Stuti - Maa Jinvaani Mamata",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "जिनवाणी स्तुति - माँ जिनवाणी ममता"
+  },
+  {
+    "_id": "Jinvani_Stuti_Mhaari_Maa_Jinvaani",
+    "_index": 19,
+    "eCtg": "Stuti",
+    "eName": "Jinvani Stuti - Mhaari Maa Jinvaani",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "जिनवाणी  स्तुति - म्हारी माँ जिनवाणी"
+  },
+  {
+    "_id": "Jinvani_Stuti_Mithyam_Nashave",
+    "_index": 20,
+    "eCtg": "Stuti",
+    "eName": "Jinvani Stuti - Mithyam Nashave",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "जिनवाणी स्तुति - मिथ्यम नशावे"
+  },
+  {
+    "_id": "Meri_Bhawna",
+    "_index": 21,
+    "eCtg": "Stuti",
+    "eName": "Meri Bhawna",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "मेरी भावना"
+  },
+  {
+    "_id": "Main_Tum_Charan",
+    "_index": 22,
+    "eCtg": "Stuti",
+    "eName": "Main Tum Charan",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "मैं तुम चरण"
+  },
+  {
+    "_id": "Nirvaan_Kaand",
+    "_index": 23,
+    "eCtg": "Stuti",
+    "eName": "Nirvaan Kaand",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "निर्वाण काण्ड"
+  },
+  {
+    "_id": "Prabhu_Patit_Paavan",
+    "_index": 24,
+    "eCtg": "Stuti",
+    "eName": "Prabhu Patit Paavan",
+    "hAuth": "कवि श्री बुधजन",
+    "hCtg": "स्तुति",
+    "hName": "प्रभु पतित पावन"
+  },
+  {
+    "_id": "Ratnakar_PanchVinshitika",
+    "_index": 25,
+    "eCtg": "Stuti",
+    "eName": "Ratnakar PanchVinshitika",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "रंत्नाकर पञ्चविन्शितिका"
+  },
+  {
+    "_id": "Samadhi_Bhawna_Din_Raat_Mere_Swami",
+    "_index": 26,
+    "eCtg": "Stuti",
+    "eName": "Samadhi Bhawna - Din Raat Mere Swami",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "समाधि भावना - दिन रात मेरे स्वामी"
+  },
+  {
+    "_id": "Samadhi_Bhawna_Teri_Chhatra_Chhaya",
+    "_index": 27,
+    "eCtg": "Stuti",
+    "eName": "Samadhi Bhawna Teri Chhatra Chhaya",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "समाधि भावना - तेरी छत्र छाया"
+  },
+  {
+    "_id": "Samayik_Paath",
+    "_index": 28,
+    "eCtg": "Stuti",
+    "eName": "Samayik Paath",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "सामायिक पाठ"
+  },
+  {
+    "_id": "Shaanti_Paath",
+    "_index": 29,
+    "eCtg": "Stuti",
+    "eName": "Shaanti Paath",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "शान्ति पाठ"
+  },
+  {
+    "_id": "Siddhchakra_Stuti",
+    "_index": 30,
+    "eCtg": "Stuti",
+    "eName": "Siddhchakra Stuti",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "सिद्धचक्र स्तुति"
+  },
+  {
+    "_id": "Shantinaath_Stuti",
+    "_index": 31,
+    "eCtg": "Stuti",
+    "eName": "Shantinaath Stuti",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "शान्तिनाथ स्तुति"
+  },
+  {
+    "_id": "Teerthankara_Vandana",
+    "_index": 32,
+    "eCtg": "Stuti",
+    "eName": "Teerthankara Vandana",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "तीर्थंकर वंदना"
+  },
+  {
+    "_id": "Tum_Taran_Taaran",
+    "_index": 33,
+    "eCtg": "Stuti",
+    "eName": "Tum Taran Taaran",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "तुम तरण तारण"
+  },
+  {
+    "_id": "Vairagya_Bhawna",
+    "_index": 34,
+    "eCtg": "Stuti",
+    "eName": "Vairagya Bhawna",
+    "hAuth": "TBC#",
+    "hCtg": "स्तुति",
+    "hName": "वैराग्य भावना"
+  }
+]
