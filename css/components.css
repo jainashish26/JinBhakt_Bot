@@ -470,6 +470,108 @@ details[open] > .category-header::after { transform: rotate(90deg); }
 
 .hero-stat strong { color: var(--color-maroon); font-size: 1rem; }
 
+/* Mobile: compact hero + hide category grid (accessible via ☰ menu) */
+@media (max-width: 899px) {
+  .home-hero { padding: 18px 14px; }
+  .om-symbol { font-size: 2rem; margin-bottom: 4px; }
+  .home-hero h2 { font-size: 1.35rem; margin-bottom: 4px; }
+  .hero-sub { font-size: .82rem; margin-bottom: 8px; line-height: 1.5; }
+  .hero-stat { padding: 5px 12px; font-size: .75rem; }
+  .hero-stat strong { font-size: .85rem; }
+
+  .home-view .section-title,
+  .home-view .cat-grid {
+    display: none;
+  }
+
+  .panchang-patra { padding: 14px 12px; margin-bottom: 14px; }
+  .patra-moon { width: 44px; height: 44px; }
+  .patra-tithi { font-size: 1rem; margin-bottom: 2px; }
+  .patra-month { font-size: .82rem; }
+  .patra-parv { margin-top: 8px; padding: 6px 10px; }
+
+  .kids-banner { margin-top: 14px; padding: 12px 14px; }
+  .kids-banner-mark { width: 30px; height: 30px; }
+  .kids-banner-copy strong { font-size: .9rem; }
+  .kids-banner-copy span { font-size: .75rem; }
+  .kids-banner-chip { font-size: .65rem; padding: 4px 10px; }
+}
+
+/* ============================================================
+   Sidebar nav: compact rows so the full hamburger menu fits
+   without scrolling on phones (Galaxy A55 360×800) and the
+   desktop sidebar at common laptop heights (≥ 700px).
+
+   Math (Galaxy A55, drawer):
+     viewport 800 − header 56 = 744 available
+     search section  ~58
+     lens tabs       ~46
+     category-list padding 16
+     ─────────────────────
+     624px for 12 closed accordions
+     → target ≤ 52px per row (currently ~50px; tighten slightly)
+   ============================================================ */
+
+/* --- Header row (the <summary> of each <details>) --- */
+.category-header {
+  padding: 8px 14px;
+  font-size: .95rem;
+}
+.cat-icon { font-size: 1rem; }
+
+/* --- Caret arrow --- */
+.category-header::after {
+  width: 14px;
+  height: 14px;
+  background-position: center;
+  background-size: 14px 14px;
+}
+
+/* --- Count badge --- */
+.cat-count {
+  min-width: 22px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: .65rem;
+}
+
+/* --- Category list bottom padding --- */
+.category-list { padding: 4px 0 14px; }
+
+/* --- Expanded pane: tighter so a section stays close --- */
+.category-links {
+  gap: 5px;
+  padding: 2px 12px 10px;
+}
+
+/* --- Pills inside an expanded section --- */
+.link-pill {
+  padding: 4px 9px;
+  font-size: .75rem;
+  line-height: 1.35;
+}
+
+/* --- Search section at the top of the drawer --- */
+.search-section {
+  padding: 8px 10px;
+}
+
+/* --- Lens tabs (4-lens switcher) --- */
+.lens-tabs {
+  padding: 4px 8px 2px;
+}
+.lens-tab {
+  padding: 4px 4px 6px;
+  font-size: .62rem;
+  gap: 1px;
+}
+
+/* --- Desktop sidebar: same rules + a hard max-height so a
+ *     pathological viewport (laptop 700px) never spills. --- */
+@media (min-width: 900px) {
+  .nav-panel { max-height: calc(100dvh - var(--header-h)); }
+}
+
 /* Desktop: compact home layout so it fits without scrolling */
 @media (min-width: 900px) {
   .home-hero { padding: 20px 16px; }
