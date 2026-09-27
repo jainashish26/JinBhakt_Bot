@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 module.exports = async function (ctx) {
   const { window, document, ok, txt, wait } = ctx;
 
@@ -56,7 +59,14 @@ module.exports = async function (ctx) {
   console.log('\n[10] Search over full catalogue');
   const app = window.jinbhaktApp;
   ok('jinbhaktApp exposed', !!app && typeof app.getCurrentText === 'function');
-  ok('index covers all 1854 items', app.state.searchIndex.length === 1854,
+  // Derive expected index size from manifests on disk
+  const catsList = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'content', 'categories.json'), 'utf8'));
+  let expectedTotal = 0;
+  catsList.forEach(c => {
+    const arr = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'content', c.id + '.json'), 'utf8'));
+    expectedTotal += arr.length;
+  });
+  ok('index covers all ' + expectedTotal + ' items', app.state.searchIndex.length === expectedTotal,
      'got ' + app.state.searchIndex.length);
 
   const input = document.getElementById('search-input');

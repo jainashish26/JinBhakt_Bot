@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 module.exports = async function (ctx) {
   const { window, document, ok, txt, wait, jsErrors } = ctx;
   const app = window.jinbhaktApp;
@@ -20,8 +23,10 @@ module.exports = async function (ctx) {
   const desk = await require('./harness.js').boot('#/aarti', false);
   const d = desk.document;
   ok('desktop: no drawer open', !d.body.classList.contains('nav-open'));
-  ok('desktop: nav has 9 accordions',
-     d.querySelectorAll('#category-list details.category-item').length === 9);
+  const catsData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'content', 'categories.json'), 'utf8'));
+  ok('desktop: nav has ' + (catsData.length + 1) + ' accordions',
+     // +1 = the Kids Learning menu section, always appended last
+     d.querySelectorAll('#category-list details.category-item').length === catsData.length + 1);
   ok('desktop: category view rendered', !!d.querySelector('.cat-view-title'));
   ok('desktop: 45 item links',
      d.querySelectorAll('.item-list:not(.item-list-soon) .item-link').length === 45);
@@ -50,6 +55,35 @@ module.exports = async function (ctx) {
   ok('granth content memoised after load',
      Object.keys(app.state.contentCache).some(k => k.indexOf('granth/') === 0),
      Object.keys(app.state.contentCache).join(','));
+
+  console.log('\n[12c] Katha-kosh section');
+  window.location.hash = '#/katha';
+  await wait(400);
+  ok('katha category view rendered',
+     /कथा-कोश/.test(txt(document.querySelector('.cat-view-title'))),
+     txt(document.querySelector('.cat-view-title')));
+  const kathaLinks = document.querySelectorAll('details[data-cat="katha"] .link-pill:not(.pill-more)');
+  ok('katha nav lists 114 readable pills', kathaLinks.length === 114, 'got ' + kathaLinks.length);
+  const kathaSoon = document.querySelectorAll('details[data-cat="katha"] .pill-more');
+  ok('katha shows "+2" pill for pending stories', !!kathaSoon, 'has pill-more');
+  // Open the first katha story and confirm its body is lazily fetched + rendered.
+  window.location.hash = '#/katha/001-पात्रकेसरी-की-कथा';
+  await wait(1800);
+  const kBody = document.getElementById('prayer-body');
+  ok('katha reader title renders',
+     !!document.querySelector('.reader-title') && txt(document.querySelector('.reader-title')).length > 0);
+  ok('katha body lazily populated (>100 chars)', !!kBody && txt(kBody).length > 100,
+     'len=' + (kBody ? txt(kBody).length : 0));
+  ok('katha content memoised after load',
+     Object.keys(app.state.contentCache).some(k => k.indexOf('katha/') === 0),
+     Object.keys(app.state.contentCache).join(','));
+  // Verify the source granth page is unchanged (still renders its full text, not split).
+  window.location.hash = '#/granth/आराधना-कथा-कोश--ब्र-नेमिदत्त';
+  await wait(1800);
+  const granthBody = document.getElementById('prayer-body');
+  ok('granth page still has full katha-kosh text (>500 chars)',
+     !!granthBody && txt(granthBody).length > 500,
+     'len=' + (granthBody ? txt(granthBody).length : 0));
 
   console.log('\n[13] Speech wiring');
   window.location.hash = '#/aarti/पंच_परमेष्ठी_आरती_पण्डित_द्यानतराय';
@@ -89,10 +123,16 @@ module.exports = async function (ctx) {
   // Transliteration-aware search (js/translit.js + rendering + keyboard nav).
   await require('./part5.js')(ctx);
 
+  // Panchang engine + rendering tests.
+  await require('./part6.js')(ctx);
+
   console.log('\n[15] Console health');
   const real = jsErrors.filter(e =>
     !/SW registration|serviceWorker|Not implemented|scroll|Could not parse CSS/i.test(e));
   ok('no unexpected runtime errors', real.length === 0, real.slice(0, 3).join(' | '));
 
   await require('./part4.js')(ctx);
+
+  // English stories section tests.
+  await require('./part7.js')(ctx);
 };

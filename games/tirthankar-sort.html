@@ -1,0 +1,2335 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6D1B2F">
+<meta name="description" content="चौबीस तीर्थंकरों को उनके क्रम, चिन्ह, वर्ण और निर्वाण स्थल से पहचानिए। Arrange the 24 Tirthankaras by order, emblem, complexion or nirvana place — choose 6 to 24 tiles.">
+<title>तीर्थंकर क्रम · Tirthankar Sorting</title>
+<style>
+/* ============================================================
+   स्मृति पट्ट · Memory Match
+   Single file · no CDN · no images · no external fonts
+   Motion: transform + opacity only · honours prefers-reduced-motion
+   ============================================================ */
+:root{
+  --saffron:#E8800C; --maroon:#6D1B2F; --gold:#C8860A; --cream:#FFF8F0;
+  --warm:#FFFBF5; --ink:#2D1B06; --ink2:#5C3D1E; --border:#D4A574;
+  --success:#2E7D32; --rose:#B23A3A; --leaf:#3F7D4F; --info:#1565C0;
+  --card-line:#EADBC0;
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-full:9999px;
+  --sh-sm:0 1px 3px rgba(45,27,6,.08), 0 1px 2px rgba(45,27,6,.06);
+  --sh-md:0 4px 12px rgba(45,27,6,.10), 0 2px 4px rgba(45,27,6,.06);
+  --sh-lg:0 10px 25px rgba(45,27,6,.12), 0 4px 8px rgba(45,27,6,.06);
+  --fast:.15s ease; --base:.25s ease; --slow:.4s ease;
+  --ritual:.7s cubic-bezier(.2,.7,.2,1);
+  --font-head:'Noto Serif Devanagari', Georgia, 'Times New Roman', serif;
+  --font-body:'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+@media (max-width:480px){html{font-size:15px}}
+body{
+  font-family:var(--font-body);color:var(--ink);line-height:1.6;min-height:100vh;
+  background:
+    radial-gradient(900px 480px at 50% -10%, #FFF6E2 0%, transparent 62%),
+    linear-gradient(165deg,#FDF8EE,#F7ECD6 60%,#F1E2C4);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+button,input,select{font:inherit;color:inherit}
+button{background:none;border:none;cursor:pointer}
+img,svg{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:2px;border-radius:var(--r-sm)}
+.is-hidden{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+.g-wrap{max-width:900px;margin:0 auto;padding:14px 14px 40px}
+
+/* ---------- header ---------- */
+.g-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 2px 14px}
+.g-brand{display:flex;align-items:center;gap:9px;min-width:0}
+.g-mark{width:30px;height:30px;flex-shrink:0;color:var(--saffron)}
+.g-brand-txt{display:flex;flex-direction:column;min-width:0}
+.g-brand-hi{font-family:var(--font-head);font-weight:700;font-size:1.02rem;
+  color:var(--maroon);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g-brand-en{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);opacity:.85}
+.g-head-actions{display:flex;align-items:center;gap:6px;margin-left:auto;flex-wrap:wrap}
+.g-pill{border:1.5px solid var(--border);background:rgba(255,255,255,.72);
+  border-radius:var(--r-full);padding:6px 13px;font-weight:600;font-size:.76rem;
+  color:#7A5A12;transition:background var(--fast),transform var(--fast);white-space:nowrap;min-height:36px}
+.g-pill:hover{background:#fff;transform:translateY(-1px)}
+.g-iconbtn{width:38px;height:38px;display:grid;place-items:center;border-radius:var(--r-full);
+  border:1.5px solid var(--border);background:rgba(255,255,255,.72);color:var(--maroon);
+  transition:background var(--fast)}
+.g-iconbtn:hover{background:#fff}
+.g-iconbtn svg{width:19px;height:19px}
+
+/* ---------- screens ---------- */
+.g-screen{animation:g-rise .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes g-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.g-card{background:var(--warm);border:1px solid var(--card-line);border-radius:var(--r-lg);
+  box-shadow:var(--sh-md);padding:26px 20px;margin:14px 0;text-align:center}
+.g-rule{width:56px;height:2px;margin:0 auto 18px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.g-title{font-family:var(--font-head);font-weight:700;color:var(--maroon);
+  font-size:clamp(1.4rem,4.6vw,2rem);line-height:1.25;margin-bottom:.25em}
+.g-sub{color:var(--ink2);font-size:.95rem;max-width:46ch;margin:0 auto 1.2em}
+.g-glyph{display:block;width:64px;height:64px;margin:0 auto 10px;color:var(--saffron)}
+.g-glyph svg{width:100%;height:100%}
+
+/* ---------- choice tiles ---------- */
+.g-choices{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.g-choice{border:1.5px solid var(--border);background:rgba(255,255,255,.62);
+  border-radius:var(--r-lg);padding:18px 20px;min-width:140px;flex:0 1 190px;
+  color:var(--maroon);text-align:center;
+  transition:transform var(--base),background var(--base),border-color var(--base),box-shadow var(--base)}
+.g-choice:hover{transform:translateY(-3px);background:#fff;box-shadow:var(--sh-md);border-color:var(--saffron)}
+.g-choice.is-on{border-color:var(--maroon);background:#fff;box-shadow:0 0 0 2px rgba(109,27,47,.16)}
+.g-choice-mark{width:34px;height:34px;margin:0 auto 8px;color:var(--saffron)}
+.g-choice-name{display:block;font-family:var(--font-head);font-weight:700;font-size:1.02rem}
+.g-choice-note{display:block;font-size:.74rem;color:var(--ink2);margin-top:3px;opacity:.9}
+@media (pointer:coarse){.g-choice{min-height:44px}}
+
+/* ---------- setup form ---------- */
+.g-field{text-align:left;margin:20px auto 0;max-width:540px}
+.g-label{display:block;font-weight:700;font-size:.84rem;color:var(--maroon);margin-bottom:8px;
+  letter-spacing:.02em}
+.g-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--r-md);
+  background:#fff;font-size:1rem;min-height:46px;transition:border-color var(--fast)}
+.g-input:focus{border-color:var(--saffron);outline:none}
+.g-chips{display:flex;flex-wrap:wrap;gap:8px}
+.g-chip{border:1.5px solid var(--border);background:rgba(255,255,255,.7);
+  border-radius:var(--r-full);padding:8px 15px;font-size:.84rem;font-weight:600;color:#6B5733;
+  min-height:42px;transition:background var(--fast),border-color var(--fast),color var(--fast)}
+.g-chip:hover{background:#fff;border-color:var(--saffron)}
+.g-chip.is-on{background:var(--maroon);border-color:var(--maroon);color:#fff}
+.g-hint{font-size:.8rem;color:var(--ink2);margin-top:16px;font-style:italic}
+
+/* ---------- buttons ---------- */
+.g-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:1.5px solid var(--border);background:rgba(255,255,255,.75);border-radius:var(--r-full);
+  padding:12px 26px;font-weight:700;font-size:.95rem;color:#7A5A12;min-height:46px;
+  transition:transform var(--fast),background var(--fast),box-shadow var(--fast)}
+.g-btn:hover{background:#fff;transform:translateY(-2px);box-shadow:var(--sh-sm)}
+.g-btn-primary{background:linear-gradient(180deg,var(--saffron),#D0710A);border-color:#B85F08;
+  color:#fff;box-shadow:0 3px 0 #A85607}
+.g-btn-primary:hover{background:linear-gradient(180deg,#F08C15,var(--saffron));color:#fff}
+.g-btn-primary:active{transform:translateY(2px);box-shadow:0 1px 0 #A85607}
+.g-btn-primary:disabled{background:#D9CDB8;border-color:#C9BCA5;box-shadow:none;color:#8B7C63;
+  cursor:not-allowed;transform:none}
+.g-btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.g-btn-sm{padding:8px 16px;font-size:.82rem;min-height:38px}
+
+/* ---------- HUD ---------- */
+.g-hud{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;
+  background:rgba(255,255,255,.6);border:1px solid var(--card-line);border-radius:var(--r-lg);
+  padding:10px 12px;margin:6px 0 14px}
+.g-stat{display:flex;flex-direction:column;align-items:center;min-width:66px;padding:2px 8px}
+.g-stat-val{font-family:var(--font-head);font-weight:700;font-size:1.15rem;color:var(--maroon);
+  line-height:1.15;font-variant-numeric:tabular-nums}
+.g-stat-lbl{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);opacity:.85}
+.g-hud-sep{width:1px;height:26px;background:var(--card-line)}
+.g-progress{height:6px;background:rgba(212,165,116,.32);border-radius:var(--r-full);
+  overflow:hidden;width:100%;margin-top:4px}
+.g-progress-fill{height:100%;width:100%;border-radius:var(--r-full);transform-origin:left center;
+  transform:scaleX(0);background:linear-gradient(90deg,var(--gold),var(--saffron));
+  transition:transform var(--slow)}
+
+/* ---------- memory grid ---------- */
+.g-board{display:grid;gap:10px;grid-template-columns:repeat(4,1fr);margin:4px 0 8px;
+  perspective:1200px}
+@media (min-width:620px){.g-board[data-cols="12"]{grid-template-columns:repeat(6,1fr)}}
+@media (max-width:400px){.g-board{gap:7px}}
+/* tight board: cards fill cells, no aspect-ratio constraint */
+.g-board.is-tight{grid-auto-rows:1fr}
+.g-board.is-tight .g-cardflip{aspect-ratio:auto;height:100%;min-height:0}
+.g-board.is-tight .g-face{padding:4px 3px;gap:3px}
+.g-board.is-tight .g-face-back .g-art{width:28px;height:28px}
+.g-board.is-tight .g-face-back .g-txt{font-size:.62rem}
+.g-board.is-tight .g-face-back .g-sub2{font-size:.54rem}
+.g-board.is-tight .g-face-front svg{width:44%;height:auto}
+
+/* The flip lives on the WRAPPER only. Neither face is itself rotated, so no
+   glyph can ever be painted mirrored. The hidden face also drops to
+   opacity 0 after the turn, which makes a mirrored render impossible even
+   where backface-visibility is unsupported. */
+.g-cardflip{position:relative;aspect-ratio:3/4;cursor:pointer;
+  transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+.g-cardflip.is-flipped{transform:rotateY(180deg)}
+.g-face{position:absolute;inset:0;border-radius:var(--r-md);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  padding:8px 6px;text-align:center;overflow:hidden;
+  -webkit-backface-visibility:hidden;backface-visibility:hidden;
+  transition:opacity .2s linear .35s, box-shadow var(--base)}
+.g-cardflip.is-flipped .g-face-front{opacity:0}
+.g-cardflip:not(.is-flipped) .g-face-back{opacity:0}
+.g-face-front{background:linear-gradient(150deg,#FBEBCB,#F2DCB0);
+  border:1.5px solid var(--border);box-shadow:var(--sh-sm);color:var(--gold)}
+.g-face-front svg{width:64%;height:auto;color:var(--gold);opacity:.85}
+.g-face-back{transform:rotateY(180deg);background:#fff;border:1.5px solid var(--card-line);
+  box-shadow:var(--sh-sm);color:var(--ink)}
+.g-face-back .g-art{width:44px;height:44px;flex-shrink:0}
+.g-face-back .g-txt{font-size:.74rem;font-weight:700;line-height:1.3;color:var(--maroon);
+  overflow-wrap:anywhere}
+.g-face-back .g-sub2{font-size:.64rem;color:var(--ink2);opacity:.85;line-height:1.25}
+.g-cardflip.is-matched{cursor:default}
+.g-cardflip.is-matched .g-face-back{border-color:var(--gold);
+  box-shadow:0 0 0 2px rgba(200,134,10,.28), var(--sh-md)}
+.g-cardflip.is-matched .g-face-back .g-txt{color:var(--leaf)}
+.g-cardflip.is-wrong{animation:g-sway .42s ease}
+@keyframes g-sway{0%,100%{transform:rotateY(180deg) translateX(0)}
+  25%{transform:rotateY(180deg) translateX(-4px)}
+  75%{transform:rotateY(180deg) translateX(4px)}}
+.g-cardflip.is-hint .g-face-back{box-shadow:0 0 0 3px rgba(232,128,12,.45)}
+@media (max-width:400px){
+  .g-face-back .g-art{width:32px;height:32px}
+  .g-face-back .g-txt{font-size:.66rem}
+  .g-face-back .g-sub2{font-size:.58rem}
+}
+
+/* ---------- result ---------- */
+.g-medal{display:block;width:76px;height:76px;margin:0 auto 8px;color:var(--gold);
+  animation:g-bloom .8s cubic-bezier(.2,.8,.25,1)}
+.g-medal svg{width:100%;height:100%}
+@keyframes g-bloom{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:scale(1)}}
+.g-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:18px 0}
+.g-statbox{background:#fff;border:1px solid var(--card-line);border-radius:var(--r-md);padding:13px 8px}
+.g-statbox b{display:block;font-family:var(--font-head);font-size:1.4rem;color:var(--saffron);
+  line-height:1.2;font-variant-numeric:tabular-nums}
+.g-statbox span{display:block;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink2);margin-top:3px}
+.g-review{text-align:left;margin:18px auto 0;max-width:640px}
+.g-review-title{font-family:var(--font-head);font-weight:700;color:var(--maroon);
+  font-size:1.02rem;text-align:center;margin-bottom:10px}
+.g-tablewrap{overflow-x:auto;border:1px solid var(--card-line);border-radius:var(--r-md);background:#fff}
+.g-table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:430px}
+.g-table th,.g-table td{padding:9px 10px;text-align:left;border-bottom:1px solid #F1E6D2;vertical-align:top}
+.g-table th{background:#FBF3E2;font-weight:700;color:var(--maroon);font-size:.7rem;
+  letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.g-table tbody tr:last-child td{border-bottom:none}
+.g-table td.g-num{font-variant-numeric:tabular-nums;color:var(--ink2);width:2.4em}
+.g-note{font-size:.8rem;color:var(--ink2);background:#FBF3E2;border-left:3px solid var(--gold);
+  padding:9px 12px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-top:14px;line-height:1.55}
+.g-rank{display:inline-block;background:var(--gold);color:#4A3508;border-radius:var(--r-full);
+  padding:4px 14px;font-weight:700;font-size:.8rem;margin-top:12px}
+
+/* ---------- leaderboard ---------- */
+.g-lb{text-align:left;margin-top:18px}
+.g-lb-head{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  flex-wrap:wrap;margin-bottom:10px}
+.g-lb-title{font-family:var(--font-head);font-weight:700;color:var(--maroon);font-size:1.02rem}
+.g-lb-empty{font-size:.84rem;color:var(--ink2);font-style:italic;text-align:center;padding:14px 6px}
+.g-medalcell{font-weight:700;color:var(--gold);width:2.6em}
+
+/* ---------- toast / dialog / fx ---------- */
+.g-toast{position:fixed;left:50%;bottom:24px;z-index:70;max-width:min(92vw,430px);
+  transform:translateX(-50%) translateY(120px);opacity:0;pointer-events:none;
+  background:rgba(60,40,20,.94);color:#FFF6E2;padding:11px 20px;border-radius:var(--r-full);
+  font-weight:600;font-size:.86rem;box-shadow:var(--sh-lg);text-align:center;line-height:1.45;
+  transition:transform var(--slow),opacity var(--slow)}
+.g-toast.is-on{transform:translateX(-50%) translateY(0);opacity:1}
+.g-fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:60}
+.g-fx i{position:absolute;top:-24px;display:block;
+  border-radius:60% 60% 60% 60%/70% 70% 30% 30%;
+  animation:g-fall linear forwards;will-change:transform,opacity}
+@keyframes g-fall{to{transform:translateY(112vh) rotate(420deg);opacity:.15}}
+.g-dialog{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;
+  background:rgba(45,27,6,.55)}
+.g-dialog-card{background:var(--warm);border:1px solid var(--border);border-radius:var(--r-lg);
+  box-shadow:var(--sh-lg);padding:26px 22px;max-width:400px;width:100%;text-align:center;
+  animation:g-rise .35s cubic-bezier(.2,.7,.2,1)}
+.g-dialog-card h2{font-family:var(--font-head);color:var(--maroon);font-size:1.2rem;margin-bottom:8px}
+.g-dialog-card p{font-size:.9rem;color:var(--ink2);margin-bottom:6px}
+.g-foot{text-align:center;color:#A08A5E;font-size:.74rem;margin:28px auto 0;line-height:1.7;
+  font-style:italic;max-width:60ch}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .g-fx{display:none!important}
+}
+
+/* ---------- short desktop: compact play screens so they fit the iframe without scrolling ---------- */
+@media (min-width:900px) and (max-height:880px){
+  .g-wrap{padding:8px 14px 20px}
+  .g-card{padding:18px 16px;margin:8px 0}
+  .g-title{font-size:clamp(1.2rem,3.6vw,1.6rem);margin-bottom:.15em}
+  .g-sub{font-size:.85rem;margin-bottom:.8em}
+  .g-hud{padding:8px 10px;margin:4px 0 8px}
+  .g-stat-val{font-size:1rem}
+  .g-stat-lbl{font-size:.58rem}
+  .g-btn-row{margin-top:10px}
+  .g-btn{padding:10px 20px;min-height:40px;font-size:.85rem}
+  .g-btn-sm{padding:7px 14px;min-height:34px;font-size:.78rem}
+  .g-foot{margin:14px auto 0;font-size:.68rem}
+  .g-board{margin:2px 0 6px}
+  .g-cardflip{aspect-ratio:auto;min-height:0}
+  .g-face{padding:6px 4px;gap:4px}
+  .g-face-back .g-art{width:36px;height:36px}
+  .g-face-back .g-txt{font-size:.68rem}
+  .g-face-front svg{width:50%;height:auto}
+  .g-medal{width:56px;height:56px}
+  .g-stats{margin:12px 0;gap:8px}
+  .g-statbox{padding:10px 6px}
+  .g-statbox b{font-size:1.2rem}
+  .g-statbox span{font-size:.6rem}
+  .g-review{margin:12px auto 0}
+  .g-note{margin-top:10px;padding:7px 10px;font-size:.74rem}
+}
+
+/* ---------- sorting tiles ---------- */
+.g-board{display:grid;gap:9px;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));
+  margin:4px 0 10px}
+.g-tile{position:relative;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:5px;min-height:78px;padding:10px 6px;text-align:center;
+  background:#fff;border:2px solid var(--card-line);border-radius:var(--r-md);
+  box-shadow:var(--sh-sm);cursor:grab;user-select:none;touch-action:manipulation;
+  transition:transform var(--fast),box-shadow var(--fast),border-color var(--fast),opacity var(--fast)}
+.g-tile:hover{transform:translateY(-2px);box-shadow:var(--sh-md)}
+.g-tile .g-art{width:34px;height:34px;flex-shrink:0;color:var(--maroon)}
+.g-tile .g-tname{font-size:.78rem;font-weight:700;color:var(--maroon);line-height:1.3;
+  overflow-wrap:anywhere}
+.g-tile .g-tnum{position:absolute;top:4px;left:7px;font-size:.62rem;font-weight:700;
+  color:var(--ink2);opacity:.6;font-variant-numeric:tabular-nums}
+.g-tile.is-selected{border-color:var(--saffron);
+  box-shadow:0 0 0 3px rgba(232,128,12,.28),var(--sh-md);transform:scale(1.03)}
+.g-tile.is-correct{border-color:var(--success);background:#F1F8F1}
+.g-tile.is-correct .g-tname{color:var(--leaf)}
+.g-tile.is-wrong{border-color:var(--rose);background:#FDF3F3}
+.g-tile.is-wrong .g-tname{color:var(--rose)}
+.g-tile.is-dragging{opacity:.45;transform:scale(.97)}
+.g-tile.is-drop{border-style:dashed;border-color:var(--saffron);background:#FFF7E8}
+.g-tile.is-hint{box-shadow:0 0 0 4px rgba(232,128,12,.45)}
+.g-tile.is-done{cursor:default;opacity:.9}
+.g-tile.is-shake{animation:g-sway .42s ease}
+
+/* ---------- fixed name rail (emblem mode) ---------- */
+.g-rail{display:grid;gap:7px;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));
+  margin:0 0 12px;padding:10px;border-radius:var(--r-md);
+  background:rgba(255,255,255,.55);border:1px dashed var(--border)}
+.g-slot{display:flex;align-items:center;gap:7px;min-height:46px;padding:6px 9px;
+  background:#fff;border:1.5px solid var(--card-line);border-radius:var(--r-sm);
+  transition:border-color var(--fast),box-shadow var(--fast)}
+.g-slot-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:grid;
+  place-items:center;background:rgba(200,134,10,.16);color:#7A5A12;
+  font-size:.66rem;font-weight:700;font-variant-numeric:tabular-nums}
+.g-slot-name{font-size:.74rem;font-weight:700;color:var(--maroon);line-height:1.25;
+  overflow-wrap:anywhere}
+.g-slot.is-drop{border-color:var(--saffron);border-style:dashed;
+  box-shadow:0 0 0 3px rgba(232,128,12,.2)}
+.g-slot.is-correct{border-color:var(--success);background:#F1F8F1}
+.g-slot.is-wrong{border-color:var(--rose);background:#FDF3F3}
+
+/* ---------- group buckets (varna / moksha modes) ---------- */
+.g-buckets{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));
+  margin:0 0 10px}
+.g-bucket{min-height:96px;padding:10px;border-radius:var(--r-md);
+  border:2px dashed var(--border);background:rgba(255,255,255,.5);
+  transition:border-color var(--fast),box-shadow var(--fast),transform var(--fast)}
+.g-bucket:hover{border-color:var(--saffron)}
+.g-bucket.is-drop{border-color:var(--saffron);border-style:solid;
+  box-shadow:0 0 0 3px rgba(232,128,12,.22);transform:translateY(-2px)}
+.g-bucket-head{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.g-swatch{width:20px;height:20px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid rgba(0,0,0,.18)}
+.g-bucket-name{font-size:.78rem;font-weight:700;color:var(--maroon);line-height:1.25}
+.g-bucket-list{display:flex;flex-direction:column;gap:5px}
+.g-chipin{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:var(--r-sm);
+  background:#fff;border:1px solid var(--card-line);font-size:.72rem;font-weight:600;
+  color:var(--ink);animation:g-rise .3s ease}
+.g-chipin .g-art{width:16px;height:16px;flex-shrink:0;color:var(--maroon)}
+.g-chipin.is-correct{border-color:var(--success);background:#F1F8F1;color:var(--leaf)}
+.g-chipin.is-wrong{border-color:var(--rose);background:#FDF3F3;color:var(--rose)}
+@media (max-width:400px){
+  .g-board{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:7px}
+  .g-tile{min-height:68px;padding:8px 4px}
+  .g-tile .g-art{width:26px;height:26px}
+  .g-tile .g-tname{font-size:.68rem}
+  .g-rail{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
+}
+</style>
+</head>
+<body data-game="tirth-sort">
+<div class="g-wrap">
+
+  <header class="g-head">
+    <div class="g-brand">
+      <span class="g-mark" id="brandMark" aria-hidden="true"></span>
+      <span class="g-brand-txt">
+        <span class="g-brand-hi" id="brandHi"></span>
+        <span class="g-brand-en" id="brandEn"></span>
+      </span>
+    </div>
+    <div class="g-head-actions">
+      <button type="button" class="g-iconbtn" id="sndBtn" aria-pressed="true"></button>
+      <button type="button" class="g-pill" id="langBtn"></button>
+      <button type="button" class="g-pill" id="hubBtn"></button>
+      <button type="button" class="g-pill is-hidden" id="restartBtn"></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- S1 · LANGUAGE GATE -->
+    <section class="g-screen" id="scrLang">
+      <div class="g-card">
+        <span class="g-glyph" id="langGlyph" aria-hidden="true"></span>
+        <h1 class="g-title" id="s1Title"></h1>
+        <p class="g-sub" id="s1Sub"></p>
+        <div class="g-rule"></div>
+        <div class="g-choices">
+          <button type="button" class="g-choice" data-lang="en">
+            <span class="g-choice-name">English</span>
+            <span class="g-choice-note">Continue in English</span>
+          </button>
+          <button type="button" class="g-choice" data-lang="hi">
+            <span class="g-choice-name" lang="hi">हिंदी</span>
+            <span class="g-choice-note" lang="hi">हिंदी में जारी रखें</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 · SETUP GATE -->
+    <section class="g-screen is-hidden" id="scrSetup">
+      <div class="g-card">
+        <h1 class="g-title" id="s3Title"></h1>
+        <p class="g-sub" id="s3Sub"></p>
+        <div class="g-rule"></div>
+
+        <div class="g-field">
+          <label class="g-label" for="nameInput" id="nameLabel"></label>
+          <input class="g-input" type="text" id="nameInput" maxlength="20"
+                 autocomplete="off" spellcheck="false">
+        </div>
+
+        <div class="g-field">
+          <span class="g-label" id="modeLabel"></span>
+          <div class="g-chips" id="modeChips" role="group"></div>
+        </div>
+
+        <div class="g-field">
+          <span class="g-label" id="diffLabel"></span>
+          <div class="g-chips" id="diffChips" role="group"></div>
+        </div>
+
+        <div class="g-field">
+          <span class="g-label" id="countLabel"></span>
+          <div class="g-chips" id="countChips" role="group"></div>
+        </div>
+
+        <p class="g-hint" id="setupHint"></p>
+        <div class="g-btn-row">
+          <button type="button" class="g-btn g-btn-primary" id="startBtn"></button>
+          <button type="button" class="g-btn" id="lbBtn"></button>
+        </div>
+      </div>
+
+      <div class="g-card g-lb is-hidden" id="lbPanel">
+        <div class="g-lb-head">
+          <span class="g-lb-title" id="lbTitle"></span>
+          <button type="button" class="g-btn g-btn-sm" id="lbClearBtn"></button>
+        </div>
+        <div id="lbBody"></div>
+      </div>
+    </section>
+
+    <!-- S4 · PLAY -->
+    <section class="g-screen is-hidden" id="scrPlay">
+      <div class="g-hud">
+        <div class="g-stat"><span class="g-stat-val" id="hudPlaced">0</span>
+          <span class="g-stat-lbl" id="hudPlacedLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudMoves">0</span>
+          <span class="g-stat-lbl" id="hudMovesLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudTime">0:00</span>
+          <span class="g-stat-lbl" id="hudTimeLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudHints">3</span>
+          <span class="g-stat-lbl" id="hudHintsLbl"></span></div>
+        <div class="g-progress"><div class="g-progress-fill" id="progFill"></div></div>
+      </div>
+
+      <p class="g-hint" id="playHint" style="text-align:center;margin:0 0 12px"></p>
+
+      <!-- fixed name rail, shown only in emblem mode -->
+      <div class="g-rail is-hidden" id="rail"></div>
+
+      <div class="g-board" id="board" data-cols="4"></div>
+
+      <!-- group buckets, shown only in varna / moksha modes -->
+      <div class="g-buckets is-hidden" id="buckets"></div>
+
+      <div class="g-btn-row">
+        <button type="button" class="g-btn g-btn-sm" id="hintBtn"></button>
+        <button type="button" class="g-btn g-btn-sm" id="quitBtn"></button>
+      </div>
+      <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- S5 · RESULT -->
+    <section class="g-screen is-hidden" id="scrResult">
+      <div class="g-card">
+        <span class="g-medal" id="medalMark" aria-hidden="true"></span>
+        <h1 class="g-title" id="resTitle"></h1>
+        <p class="g-sub" id="resSub"></p>
+        <span class="g-rank is-hidden" id="resRank"></span>
+        <div class="g-stats">
+          <div class="g-statbox"><b id="stTime">0:00</b><span id="stTimeLbl"></span></div>
+          <div class="g-statbox"><b id="stMoves">0</b><span id="stMovesLbl"></span></div>
+          <div class="g-statbox"><b id="stHints">0</b><span id="stHintsLbl"></span></div>
+          <div class="g-statbox"><b id="stTiles">0</b><span id="stTilesLbl"></span></div>
+        </div>
+        <p class="g-note" id="cheerLine"></p>
+        <div class="g-btn-row">
+          <button type="button" class="g-btn g-btn-primary" id="againBtn"></button>
+          <button type="button" class="g-btn" id="changeBtn"></button>
+          <button type="button" class="g-btn" id="resLbBtn"></button>
+        </div>
+      </div>
+
+      <div class="g-card g-lb is-hidden" id="resLbPanel">
+        <div class="g-lb-head">
+          <span class="g-lb-title" id="resLbTitle"></span>
+          <button type="button" class="g-btn g-btn-sm" id="resLbClearBtn"></button>
+        </div>
+        <div id="resLbBody"></div>
+      </div>
+
+      <div class="g-card g-review">
+        <h2 class="g-review-title" id="reviewTitle"></h2>
+        <div class="g-tablewrap">
+          <table class="g-table" id="reviewTable">
+            <thead><tr id="reviewHead"></tr></thead>
+            <tbody id="reviewBody"></tbody>
+          </table>
+        </div>
+        <div id="tradNotes"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="g-foot" id="footTxt"></footer>
+</div>
+
+<div class="g-toast" id="toast" role="status" aria-live="polite"></div>
+<div class="g-fx" id="fx" aria-hidden="true"></div>
+<div class="g-dialog is-hidden" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+  <div class="g-dialog-card">
+    <h2 id="dlgTitle"></h2>
+    <p id="dlgBody"></p>
+    <div class="g-btn-row">
+      <button type="button" class="g-btn g-btn-primary" id="dlgYes"></button>
+      <button type="button" class="g-btn" id="dlgNo"></button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+
+'use strict';
+
+/* Identity + rules for the sorting game. TIRTH data comes from the shared
+   fragment, byte-identical to memory-match (tools/check-games.js enforces). */
+var GAME_ID = 'tirth-sort';
+var LB_KEY = 'jinbhakt:kids:leaderboard:v1';
+var PREF_KEY = 'jinbhakt:kids:prefs:v1';
+var LB_MAX = 20;
+
+/** Fastest correct arrangement wins; fewer moves breaks a tie. */
+var LB_CMP = function (a, b) {
+  return (a.duration - b.duration) ||
+         (((a.meta && a.meta.moves) || 0) - ((b.meta && b.meta.moves) || 0)) ||
+         (b.ts - a.ts);
+};
+
+var COUNTS = [6, 8, 12, 18, 24];
+var MODES = ['order', 'chinh', 'varna', 'moksha'];
+var HINTS_MAX = 3;
+var HINT_PENALTY = 15;      // seconds added per hint used
+
+/* Balanced bucket definitions — the raw varna/moksha distributions are far
+   too skewed to sort fairly, so buckets draw at most BUCKET_CAP each. */
+var BUCKET_CAP = 4;
+var VARNA_BUCKETS = [
+  { key: 'golden', hex: '#E3B23C' },
+  { key: 'red',    hex: '#C0392B' },
+  { key: 'white',  hex: '#F2EDE4' },
+  { key: 'blue',   hex: '#2E5FA3' },
+  { key: 'dark',   hex: '#3A3A44' }
+];
+var MOKSHA_BUCKETS = [
+  { key: 'sammend' }, { key: 'ashtapada' }, { key: 'champapuri' },
+  { key: 'girnar' }, { key: 'pavapuri' }
+];
+
+var SS_EN = 'Sammed Shikharji', SS_HI = 'सम्मेद शिखरजी';
+var G = '#E3B23C', R = '#C0392B', W = '#F2EDE4', B = '#2E5FA3', D = '#3A3A44';
+var T_ROWS = [
+[1,'Rishabhanatha','ऋषभनाथ','Adinatha','आदिनाथ','Bull','वृषभ','bull','Golden','स्वर्ण',G,'golden','seated','Ashtapada','अष्टापद','ashtapada','Ayodhya','अयोध्या','ayodhya'],
+[2,'Ajitanatha','अजितनाथ','','','Elephant','हाथी','elephant','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Ayodhya','अयोध्या','ayodhya'],
+[3,'Sambhavanatha','सम्भवनाथ','','','Horse','अश्व','horse','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Shravasti','श्रावस्ती','shravasti'],
+[4,'Abhinandananatha','अभिनन्दन','','','Monkey','कपि','monkey','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Ayodhya','अयोध्या','ayodhya'],
+[5,'Sumatinatha','सुमतिनाथ','','','Curlew','क्रौंच','curlew','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Ayodhya','अयोध्या','ayodhya'],
+[6,'Padmaprabha','पद्मप्रभ','','','Red Lotus','लाल कमल','lotusRed','Red','रक्त',R,'red','standing',SS_EN,SS_HI,'sammend','Kaushambi','कौशाम्बी','kaushambi'],
+[7,'Suparshvanatha','सुपार्श्वनाथ','','','Swastika','स्वस्तिक','swastika','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Varanasi','काशी','varanasi'],
+[8,'Chandraprabha','चन्द्रप्रभ','','','Moon','चन्द्रमा','moon','White','श्वेत',W,'white','standing',SS_EN,SS_HI,'sammend','Chandrapuri','चन्द्रपुरी','chandrapuri'],
+[9,'Pushpadanta','पुष्पदन्त','Suvidhinatha','सुविधिनाथ','Makara','मकर','makara','White','श्वेत',W,'white','standing',SS_EN,SS_HI,'sammend','Kakandi','काकन्दी','kakandi'],
+[10,'Shitalanatha','शीतलनाथ','','','Shrivatsa','श्रीवत्स','shrivatsa','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Bhadrikapuri','भद्रिकापुरी','bhadrikapuri'],
+[11,'Shreyansanatha','श्रेयांसनाथ','','','Rhinoceros','गैंडा','rhino','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Simhapuri','सिंहपुरी','simhapuri'],
+[12,'Vasupujya','वासुपूज्य','','','Buffalo','महिष','buffalo','Red','रक्त',R,'red','standing','Champapuri','चम्पापुरी','champapuri','Champapuri','चम्पापुरी','champapuri'],
+[13,'Vimalanatha','विमलनाथ','','','Boar','वराह','boar','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Kampilya','कम्पिल्या','kampilya'],
+[14,'Anantanatha','अनन्तनाथ','','','Falcon','बाज़','falcon','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Ayodhya','अयोध्या','ayodhya'],
+[15,'Dharmanatha','धर्मनाथ','','','Thunderbolt','वज्र','vajra','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Ratnapuri','रत्नपुरी','ratnapuri'],
+[16,'Shantinatha','शान्तिनाथ','','','Deer','मृग','deer','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Hastinapur','हस्तिनापुर','hastinapur'],
+[17,'Kunthunatha','कुन्थुनाथ','','','Goat','अज','goat','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Hastinapur','हस्तिनापुर','hastinapur'],
+[18,'Aranatha','अरनाथ','','','Fish','मत्स्य','fish','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Hastinapur','हस्तिनापुर','hastinapur'],
+[19,'Mallinatha','मल्लिनाथ','','','Water Pot','कलश','kalash','Blue','नील',B,'blue','standing',SS_EN,SS_HI,'sammend','Mathura','मथुरा','mathura'],
+[20,'Munisuvrata','मुनिसुव्रत','','','Tortoise','कूर्म','tortoise','Dark','श्याम',D,'dark','standing',SS_EN,SS_HI,'sammend','Rajagriha','राजगृही','rajagriha'],
+[21,'Naminatha','नामिनाथ','','','Blue Lotus','नील कमल','lotusBlue','Golden','स्वर्ण',G,'golden','standing',SS_EN,SS_HI,'sammend','Mithila','मिथिला','mithila'],
+[22,'Neminatha','नेमिनाथ','Arishtanemi','अरिष्टनेमि','Conch','शंख','conch','Dark','श्याम',D,'dark','seated','Girnar','गिरनार','girnar','Shauripura','शौरिपुर','shauripura'],
+[23,'Parshvanatha','पार्श्वनाथ','','','Serpent','सर्प','serpent','Blue','नील',B,'blue','standing',SS_EN,SS_HI,'sammend','Varanasi','काशी','varanasi'],
+[24,'Mahavira','महावीर','Vardhamana','वर्धमान','Lion','सिंह','lion','Golden','स्वर्ण',G,'golden','seated','Pavapuri','पावापुरी','pavapuri','Kundagrama','कुण्डग्राम','kundagrama']
+];
+
+/* Where family or sectarian custom differs — shown as a note, never an answer. */
+var T_NOTES = {
+  10: { en:'Some Digambar charts give the Kalpavriksha (wish-fulfilling tree) instead.',
+        hi:'कुछ दिगंबर चित्रों में श्रीवत्स के स्थान पर कल्पवृक्ष भी बताया जाता है।' },
+  12: { en:'Some charts place his nirvana at Sammed Shikharji rather than Champapuri.',
+        hi:'कुछ परंपराओं में इनका निर्वाण चम्पापुरी के स्थान पर सम्मेद शिखरजी बताया जाता है।' },
+  14: { en:'Digambar charts sometimes give the porcupine (sahi) instead of the falcon.',
+        hi:'दिगंबर चित्रों में कभी-कभी बाज़ के स्थान पर साही भी बताया जाता है।' },
+  18: { en:'Some charts give the Nandyavarta instead of the fish.',
+        hi:'कुछ चित्रों में मत्स्य के स्थान पर नन्द्यावर्त भी बताया जाता है।' }
+};
+
+var TIRTH = T_ROWS.map(function (r) {
+  var note = T_NOTES[r[0]] || {};
+  return {
+    no: r[0], en: r[1], hi: r[2], aliasEn: r[3], aliasHi: r[4],
+    chinhEn: r[5], chinhHi: r[6], chinhSvg: r[7],
+    varnaEn: r[8], varnaHi: r[9], varnaHex: r[10], varnaKey: r[11],
+    aasanKey: r[12],
+    mokshaEn: r[13], mokshaHi: r[14], mokshaKey: r[15],
+    janmaEn: r[16], janmaHi: r[17], janmaKey: r[18],
+    noteEn: note.en || '', noteHi: note.hi || ''
+  };
+});
+
+var ATTRS = ['chinh', 'varna', 'moksha', 'aasan', 'janma', 'mixed'];
+var AASAN = {
+  seated:   { en: 'Seated · Padmasana',    hi: 'पद्मासन · बैठे' },
+  standing: { en: 'Standing · Kayotsarga', hi: 'कायोत्सर्ग · खड़े' }
+};
+var COUNTS = [4, 6, 8, 12];
+var GAME_ID = 'tirth-sort';
+var LB_KEY = 'jinbhakt:kids:leaderboard:v1';
+var PREF_KEY = 'jinbhakt:kids:prefs:v1';
+var LB_MAX = 20;
+
+
+
+
+/* ============================================================
+   UI DICTIONARY · every visible string lives here
+   ============================================================ */
+var UI = {
+  en: {
+    brandHi: 'तीर्थंकर क्रम', brandEn: 'Tirthankar Sorting',
+    langSwitch: 'हिंदी', hub: 'All games', restart: 'Restart',
+    soundOn: 'Sound on', soundOff: 'Sound off',
+    s1Title: 'Choose your language', s1Sub: 'अपनी भाषा चुनिए',
+    s3Title: 'Set up your round',
+    s3Sub: 'Choose how many Tirthankaras to place, and what you are sorting by.',
+    nameLabel: 'Your name (kept on this device only)', namePh: 'e.g. Vraddhim',
+    countLabel: 'How many Tirthankaras?',
+    modeLabel: 'Sort them by',
+    mode: {
+      order:  ['Correct order', '1st through 24th'],
+      chinh:  ['Emblem', 'Match each lanchan to its name'],
+      varna:  ['Complexion', 'Group by traditional colour'],
+      moksha: ['Nirvana place', 'Group by where each attained moksha']
+    },
+    diffLabel: 'Difficulty',
+    diff: { hard: ['Hard · no hints', 'Easy · show position numbers'], easy: ['Easy · show position numbers', 'Hard · no hints'] },
+    start: 'Begin', leaderboard: 'Leaderboard',
+    setupHint: 'Drag a tile, or tap one tile then another to swap. Arrow keys move a tile, Enter drops it.',
+    nameNeeded: 'Please write your name first.',
+    modeNeeds8: 'The nirvana-place round needs at least 8 Tirthankaras, so every place can appear.',
+    hudPlaced: 'Placed', hudMoves: 'Moves', hudTime: 'Time', hudHints: 'Hints',
+    playHintOrder: 'Arrange them from the 1st Tirthankara to the last.',
+    playHintChinh: 'Drop each emblem under the name it belongs to.',
+    playHintBucket: 'Tap a tile, then tap the group it belongs to.',
+    hint: 'Hint', hintsLeft: '{n} left',
+    hintUsed: 'A correct tile is glowing. {n} hints left, {s}s added.',
+    hintNone: 'No hints left — finish from memory.',
+    quit: 'Leave this round',
+    quitConfirm: 'Leave this round?', quitBody: 'Your progress in this round will be lost.',
+    yes: 'Yes, leave', no: 'Keep playing',
+    incomplete: 'Some tiles are not in place yet. Keep going.',
+    resTitle: ['A quiet beginning', 'Well arranged', 'Strong recall', 'Sadhu! Sadhu!'],
+    resSub: ['Every great journey starts with one step. Try a smaller round.',
+             'You are learning them well. Try more tiles next.',
+             'Very good. The order is settling into memory.',
+             'Perfectly placed, and quickly.'],
+    statTime: 'Time', statMoves: 'Moves', statHints: 'Hints', statTiles: 'Tiles',
+    rankLine: 'You are #{n} on this device',
+    cheers: ['Sadhu! Sadhu! A steady mind remembers well.',
+             'Well done — patience is its own form of tap.',
+             'Sadhu! Each name you placed is a step closer to the path.',
+             'Beautiful. Remembering them is itself a small worship.',
+             'Sadhu! Sadhu! Your attention did not wander.'],
+    again: 'Play again', changeSetup: 'Change set-up', showLb: 'Leaderboard',
+    reviewTitle: 'The 24 Tirthankaras',
+    thNo: '#', thName: 'Tirthankara', thChinh: 'Emblem', thVarna: 'Colour',
+    thAasan: 'Posture', thMoksha: 'Nirvana place', thJanma: 'Birth place',
+    tradTitle: 'Tradition notes',
+    lbTitle: 'Leaderboard · fastest rounds', lbClear: 'Clear',
+    lbEmpty: 'No records yet. Be the first!',
+    lbConfirmTitle: 'Clear the leaderboard?',
+    lbConfirmBody: 'Every record for this game will be removed from this device.',
+    lbCleared: 'Records cleared.',
+    thRank: '#', thLbName: 'Name', thLbLevel: 'Level', thLbTime: 'Time', thLbMoves: 'Moves',
+    storageOff: 'Records cannot be saved in a private window — the game still plays.',
+    saved: 'Round saved · {time}',
+    selected: 'Selected {name}. Now choose where it goes.',
+    swapped: 'Moved {name}.',
+    placedIn: '{name} placed in {bucket}.',
+    foot: 'Rooted in the Digambar Jain tradition. Emblem and place conventions vary by family and lineage — always ask your elders.'
+  },
+  hi: {
+    brandHi: 'तीर्थंकर क्रम', brandEn: 'Tirthankar Sorting',
+    langSwitch: 'English', hub: 'सभी खेल', restart: 'पुनः आरंभ',
+    soundOn: 'ध्वनि चालू', soundOff: 'ध्वनि बंद',
+    s1Title: 'अपनी भाषा चुनिए', s1Sub: 'Choose your language',
+    s3Title: 'अपनी बारी सजाइए',
+    s3Sub: 'तय कीजिए कि कितने तीर्थंकर रखने हैं और किस आधार पर क्रम बनाना है।',
+    nameLabel: 'आपका नाम (केवल इसी उपकरण में संचित)', namePh: 'जैसे वृद्धिम',
+    countLabel: 'कितने तीर्थंकर?',
+    modeLabel: 'किस आधार पर छाँटिए',
+    mode: {
+      order:  ['सही क्रम', 'प्रथम से चौबीसवें तक'],
+      chinh:  ['चिन्ह', 'प्रत्येक लांछन को उसके नाम से मिलाइए'],
+      varna:  ['वर्ण', 'परंपरागत रंग के अनुसार समूह बनाइए'],
+      moksha: ['निर्वाण स्थल', 'मोक्ष स्थान के अनुसार समूह बनाइए']
+    },
+    diffLabel: 'कठिनाई',
+    diff: { hard: ['कठिन · कोई संकेत नहीं', 'सरल · स्थान संख्या दिखाएँ'], easy: ['सरल · स्थान संख्या दिखाएँ', 'कठिन · कोई संकेत नहीं'] },
+    start: 'आरंभ कीजिए', leaderboard: 'उपलब्धि सूची',
+    setupHint: 'टाइल खींचिए, या एक टाइल छूकर दूसरी छूइए — अदला-बदली हो जाएगी। तीर कुंजी से चलिए, Enter से रखिए।',
+    nameNeeded: 'कृपया पहले अपना नाम लिखिए।',
+    modeNeeds8: 'निर्वाण स्थल वाली बारी हेतु कम से कम 8 तीर्थंकर चाहिए, ताकि सभी स्थान आ सकें।',
+    hudPlaced: 'सही स्थान', hudMoves: 'चालें', hudTime: 'समय', hudHints: 'संकेत',
+    playHintOrder: 'इन्हें प्रथम से अंतिम तीर्थंकर के क्रम में लगाइए।',
+    playHintChinh: 'प्रत्येक चिन्ह को उसके नाम के नीचे रखिए।',
+    playHintBucket: 'पहले टाइल छूइए, फिर उसका समूह छूइए।',
+    hint: 'संकेत', hintsLeft: '{n} शेष',
+    hintUsed: 'एक सही टाइल चमक रही है। {n} संकेत शेष, {s} सेकंड जुड़े।',
+    hintNone: 'संकेत समाप्त — अब स्मृति से पूरा कीजिए।',
+    quit: 'यह बारी छोड़िए',
+    quitConfirm: 'यह बारी छोड़ें?', quitBody: 'इस बारी की प्रगति मिट जाएगी।',
+    yes: 'हाँ, छोड़ दीजिए', no: 'खेलते रहिए',
+    incomplete: 'कुछ टाइल अभी सही स्थान पर नहीं हैं। प्रयास जारी रखिए।',
+    resTitle: ['शांत आरंभ', 'अच्छा क्रम', 'दृढ़ स्मृति', 'साधु! साधु!'],
+    resSub: ['हर बड़ी यात्रा एक कदम से शुरू होती है। छोटी बारी लीजिए।',
+             'आप इन्हें अच्छे से सीख रहे हैं। अगली बार अधिक टाइल लीजिए।',
+             'बहुत अच्छा। क्रम अब स्मृति में बैठने लगा है।',
+             'पूर्णतः सही और तेज़ भी।'],
+    statTime: 'समय', statMoves: 'चालें', statHints: 'संकेत', statTiles: 'टाइलें',
+    rankLine: 'इस उपकरण पर आप #{n} स्थान पर हैं',
+    cheers: ['साधु! साधु! स्थिर मन ही अच्छा स्मरण करता है।',
+             'बहुत सुंदर — धैर्य भी एक तप है।',
+             'साधु! हर रखा गया नाम पथ की ओर एक कदम है।',
+             'अद्भुत। इन्हें याद रखना भी एक छोटी पूजा है।',
+             'साधु! साधु! आपका ध्यान कहीं भटका नहीं।'],
+    again: 'पुनः खेलिए', changeSetup: 'सेटिंग बदलिए', showLb: 'उपलब्धि सूची',
+    reviewTitle: 'चौबीस तीर्थंकर',
+    thNo: '#', thName: 'तीर्थंकर', thChinh: 'चिन्ह', thVarna: 'वर्ण',
+    thAasan: 'आसन', thMoksha: 'निर्वाण स्थल', thJanma: 'जन्म स्थल',
+    tradTitle: 'परंपरा भेद',
+    lbTitle: 'उपलब्धि सूची · सबसे तेज़ बारी', lbClear: 'हटाइए',
+    lbEmpty: 'अभी कोई रिकॉर्ड नहीं। पहले खिलाड़ी बनिए!',
+    lbConfirmTitle: 'उपलब्धि सूची हटाएँ?',
+    lbConfirmBody: 'इस खेल के सभी रिकॉर्ड इस उपकरण से हट जाएँगे।',
+    lbCleared: 'रिकॉर्ड हटा दिए गए।',
+    thRank: '#', thLbName: 'नाम', thLbLevel: 'स्तर', thLbTime: 'समय', thLbMoves: 'चालें',
+    storageOff: 'निजी विंडो में रिकॉर्ड संचित नहीं हो सकते — खेल सामान्य रूप से चलता रहेगा।',
+    saved: 'बारी संचित हुई · {time}',
+    selected: '{name} चुना। अब बताइए यह कहाँ जाए।',
+    swapped: '{name} खिसका।',
+    placedIn: '{name} · {bucket} में रखा।',
+    foot: 'दिगंबर जैन परंपरा से प्रेरित। चिन्ह और स्थल की परंपराएँ परिवार अनुसार भिन्न हो सकती हैं — अपने बड़ों से अवश्य पूछिए।'
+  }
+};
+
+/* ============================================================
+   CORE HELPERS · storage, i18n, formatting (all guarded)
+   ============================================================ */
+var $ = function (id) { return document.getElementById(id); };
+var mem = {}, memOn = false;
+
+function getLS() {
+  try {
+    if (typeof localStorage !== 'undefined' && localStorage) {
+      localStorage.setItem('__p__', '1'); localStorage.removeItem('__p__');
+      return localStorage;
+    }
+  } catch (e) { /* private mode */ }
+  memOn = true;
+  return null;
+}
+function rawGet(k) {
+  var ls = getLS();
+  try { if (ls) return ls.getItem(k); } catch (e) { /* ignore */ }
+  return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null;
+}
+function rawSet(k, v) {
+  var ls = getLS();
+  try { if (ls) { ls.setItem(k, v); return true; } } catch (e) { /* ignore */ }
+  try { mem[k] = v; } catch (e2) { return false; }
+  return true;
+}
+function rawDel(k) {
+  var ls = getLS();
+  try { if (ls) ls.removeItem(k); } catch (e) { /* ignore */ }
+  try { delete mem[k]; } catch (e2) { /* ignore */ }
+}
+function parseJSON(s, fb) {
+  if (!s) return fb;
+  try { var v = JSON.parse(s); return (v === null || v === undefined) ? fb : v; }
+  catch (e) { return fb; }
+}
+
+function sanitizeName(raw) {
+  var s = String(raw == null ? '' : raw);
+  s = s.replace(/[\u0000-\u001f\u007f]/g, '');
+  s = s.replace(/[<>"'`\\\/]/g, '');
+  s = s.replace(/\s+/g, ' ').trim();
+  if (s.length > 20) s = s.slice(0, 20).trim();
+  return s;
+}
+
+var PREF_DEF = { lang: 'hi', aud: 'kids', sound: true, name: '', lastGame: '' };
+function readPrefs() {
+  var p = parseJSON(rawGet(PREF_KEY), {}), o = {};
+  for (var k in PREF_DEF) {
+    if (!Object.prototype.hasOwnProperty.call(PREF_DEF, k)) continue;
+    o[k] = (p && p[k] !== undefined && p[k] !== null) ? p[k] : PREF_DEF[k];
+  }
+  o.lang = (o.lang === 'en') ? 'en' : 'hi';
+  o.aud = (o.aud === 'adults') ? 'adults' : 'kids';
+  o.sound = o.sound !== false;
+  o.name = sanitizeName(o.name);
+  return o;
+}
+function writePrefs(patch) {
+  var c = readPrefs();
+  if (patch) for (var k in patch) {
+    if (Object.prototype.hasOwnProperty.call(patch, k) &&
+        Object.prototype.hasOwnProperty.call(PREF_DEF, k)) c[k] = patch[k];
+  }
+  c.name = sanitizeName(c.name);
+  rawSet(PREF_KEY, JSON.stringify(c));
+  return c;
+}
+
+var DEV = ['\u0966','\u0967','\u0968','\u0969','\u096A','\u096B','\u096C','\u096D','\u096E','\u096F'];
+function devNum(n) { return String(n).replace(/\d/g, function (d) { return DEV[+d]; }); }
+function fmtTime(sec) {
+  var s = Math.max(0, Math.floor(sec || 0)), m = Math.floor(s / 60), r = s % 60;
+  var out = m + ':' + (r < 10 ? '0' : '') + r;
+  return S.lang === 'hi' ? devNum(out) : out;
+}
+function fmtClock(sec) {
+  var s = Math.max(0, Math.floor(sec || 0));
+  if (s < 3600) return fmtTime(s);
+  var h = Math.floor(s / 3600);
+  return S.lang === 'hi' ? devNum(h) + 'h ' + devNum(Math.floor((s % 3600) / 60)) + 'm'
+                         : h + 'h ' + Math.floor((s % 3600) / 60) + 'm';
+}
+function t(key, vars) {
+  var v = UI[S.lang] || UI.hi;
+  var s = v[key];
+  if (s === undefined) s = UI.hi[key];
+  if (typeof s !== 'string') return s;
+  if (!vars) return s;
+  for (var k in vars) {
+    if (!Object.prototype.hasOwnProperty.call(vars, k)) continue;
+    s = s.split('{' + k + '}').join(String(vars[k]));
+  }
+  return s;
+}
+/** Pick the right language field off a data record. */
+function L(obj, fieldHi, fieldEn) { return S.lang === 'hi' ? obj[fieldHi] : obj[fieldEn]; }
+
+function shuffle(arr) {                 // Fisher-Yates, unbiased
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  }
+  return arr;
+}
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function reduced() {
+  try {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) { return false; }
+}
+
+
+/* ============================================================
+   AUDIO · WebAudio only, created inside the first user gesture
+   ============================================================ */
+var AC = null;
+function ac() {
+  if (AC) return AC;
+  try {
+    var C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return null;
+    AC = new C();
+    if (AC.state === 'suspended' && AC.resume) AC.resume();
+  } catch (e) { AC = null; }
+  return AC;
+}
+function tone(freq, dur, type, gain, delay) {
+  if (!S.sound) return;
+  var c = ac(); if (!c) return;
+  try {
+    var t0 = c.currentTime + (delay || 0);
+    var o = c.createOscillator(), g = c.createGain();
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, gain || 0.06), t0 + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + (dur || 0.12));
+    o.connect(g); g.connect(c.destination);
+    o.start(t0); o.stop(t0 + (dur || 0.12) + 0.03);
+  } catch (e) { /* audio is never fatal */ }
+}
+/** Temple bell: fundamental + two harmonics, long exponential decay. */
+function bell(vol) {
+  if (!S.sound) return;
+  var v = (vol === undefined) ? 0.07 : vol;
+  tone(392, 1.5, 'sine', v, 0);
+  tone(588, 1.2, 'sine', v * 0.45, 0.01);
+  tone(784, 0.9, 'sine', v * 0.25, 0.02);
+}
+var sfx = {
+  tap:    function () { tone(660, 0.05, 'triangle', 0.035); },
+  flip:   function () { tone(520, 0.07, 'sine', 0.045); },
+  match:  function () { tone(659.25, 0.22, 'sine', 0.06, 0); tone(987.77, 0.34, 'sine', 0.05, 0.1); },
+  miss:   function () { tone(233, 0.16, 'sine', 0.04); },
+  finish: function () { bell(0.08); tone(523.25, 0.5, 'sine', 0.05, 0.35); }
+};
+
+/* ============================================================
+   SVG ART · generated at runtime, no images, no icon fonts
+   ============================================================ */
+function svgWrap(inner, vb, title) {
+  var a = title
+    ? 'role="img" aria-label="' + title.replace(/"/g, '') + '"'
+    : 'aria-hidden="true" focusable="false"';
+  return '<svg viewBox="0 0 ' + (vb || 64) + ' ' + (vb || 64) + '" ' + a +
+         ' xmlns="http://www.w3.org/2000/svg">' + inner + '</svg>';
+}
+/* Jain Swastika — four arms, three dots (ratnatraya) and the siddhashila
+   crescent-and-dot above. Drawn from paths so no font can ever mirror it. */
+function artSwastika(title) {
+  var s = 'fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="square"';
+  var arms =
+    '<path ' + s + ' d="M26 22 H42 V38"/>' +
+    '<path ' + s + ' d="M42 26 V42 H26"/>' +
+    '<path ' + s + ' d="M38 42 H22 V26"/>' +
+    '<path ' + s + ' d="M22 38 V22 H38"/>';
+  var dots = '<circle cx="26" cy="52" r="2.3" fill="currentColor"/>' +
+             '<circle cx="32" cy="54.4" r="2.3" fill="currentColor"/>' +
+             '<circle cx="38" cy="52" r="2.3" fill="currentColor"/>';
+  var cres = '<path d="M22 12 A12 12 0 0 0 42 12 A10 10 0 0 1 22 12 Z" fill="currentColor"/>' +
+             '<circle cx="32" cy="5.4" r="2.4" fill="currentColor"/>';
+  return svgWrap('<g transform="translate(0,2)">' + arms + '</g>' + dots + cres, 64, title);
+}
+/* 8-fold radially symmetric lotus rosette — mirroring is invisible by design. */
+function artRosette(title) {
+  var p = '';
+  for (var i = 0; i < 8; i++) {
+    p += '<path d="M32 32 C24 22 24 12 32 5 C40 12 40 22 32 32 Z" fill="currentColor" ' +
+         'opacity="' + (i % 2 ? '.38' : '.62') + '" transform="rotate(' + (i * 45) + ' 32 32)"/>';
+  }
+  p += '<circle cx="32" cy="32" r="6.4" fill="none" stroke="currentColor" stroke-width="2"/>';
+  p += '<circle cx="32" cy="32" r="2.6" fill="currentColor"/>';
+  return svgWrap(p, 64, title);
+}
+function artDiya(title) {
+  return svgWrap(
+    '<path d="M12 40 C12 50 22 56 32 56 C42 56 52 50 52 40 Z" fill="currentColor" opacity=".85"/>' +
+    '<ellipse cx="32" cy="40" rx="20" ry="4.6" fill="currentColor"/>' +
+    '<path d="M32 14 C37 22 39 27 39 31 A7 7 0 0 1 25 31 C25 27 27 22 32 14 Z" ' +
+    'fill="currentColor" opacity=".62"/>', 64, title);
+}
+function artBell(on, title) {
+  var body = '<path d="M32 10 C22 10 18 19 18 29 C18 38 15 42 13 45 H51 C49 42 46 38 46 29 ' +
+             'C46 19 42 10 32 10 Z" fill="none" stroke="currentColor" stroke-width="3.4"/>' +
+             '<path d="M26 50 A6 6 0 0 0 38 50" fill="none" stroke="currentColor" stroke-width="3.4"/>' +
+             '<circle cx="32" cy="7.6" r="2.6" fill="currentColor"/>';
+  if (!on) body += '<path d="M10 56 L54 12" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/>';
+  return svgWrap(body, 64, title);
+}
+function artMedal(title) {
+  return svgWrap(
+    '<circle cx="32" cy="38" r="18" fill="none" stroke="currentColor" stroke-width="3.2"/>' +
+    '<path d="M22 6 L28 22 M42 6 L36 22" stroke="currentColor" stroke-width="4" ' +
+    'stroke-linecap="round" fill="none"/>' +
+    '<path d="M32 29 L34.6 35.4 L41.4 35.9 L36.2 40.3 L37.8 47 L32 43.4 L26.2 47 L27.8 40.3 ' +
+    'L22.6 35.9 L29.4 35.4 Z" fill="currentColor"/>', 64, title);
+}
+
+
+/* ---- the 24 lanchan (emblems) as simple line art ---- */
+var STK = 'fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"';
+var EMBLEM = {
+  bull:      '<path ' + STK + ' d="M18 20 C10 14 8 24 14 30 M46 20 C54 14 56 24 50 30"/>' +
+             '<path ' + STK + ' d="M20 26 C20 44 26 52 32 52 C38 52 44 44 44 26 Z"/>' +
+             '<circle cx="26" cy="36" r="2" fill="currentColor"/><circle cx="38" cy="36" r="2" fill="currentColor"/>',
+  elephant:  '<path ' + STK + ' d="M16 24 C8 22 8 40 18 42 M48 24 C56 22 56 40 46 42"/>' +
+             '<path ' + STK + ' d="M20 24 C20 14 44 14 44 24 C44 34 42 40 40 44"/>' +
+             '<path ' + STK + ' d="M40 44 C44 50 40 56 34 54 C30 53 30 48 33 47"/>',
+  horse:     '<path ' + STK + ' d="M22 52 C20 38 22 26 30 20 C36 16 44 18 46 24 C48 30 44 34 40 34"/>' +
+             '<path ' + STK + ' d="M30 20 C26 14 22 12 18 14 C22 18 22 22 22 26"/>' +
+             '<circle cx="38" cy="25" r="2" fill="currentColor"/>',
+  monkey:    '<circle cx="32" cy="34" r="14" ' + STK + '/>' +
+             '<circle cx="15" cy="30" r="6" ' + STK + '/><circle cx="49" cy="30" r="6" ' + STK + '/>' +
+             '<path ' + STK + ' d="M25 30 C27 26 37 26 39 30 C40 38 36 44 32 44 C28 44 24 38 25 30 Z"/>' +
+             '<circle cx="28" cy="34" r="1.8" fill="currentColor"/><circle cx="36" cy="34" r="1.8" fill="currentColor"/>',
+  curlew:    '<path ' + STK + ' d="M14 44 C22 30 38 24 52 22"/>' +
+             '<path ' + STK + ' d="M52 22 C46 30 40 34 34 36"/>' +
+             '<path ' + STK + ' d="M24 40 C28 48 36 52 44 50"/>' +
+             '<circle cx="48" cy="25" r="2" fill="currentColor"/>',
+  lotusRed:  '<path ' + STK + ' d="M32 48 C20 44 14 34 14 26 C22 26 28 32 32 40 C36 32 42 26 50 26 C50 34 44 44 32 48 Z"/>' +
+             '<path ' + STK + ' d="M32 40 C30 30 30 20 32 12 C34 20 34 30 32 40 Z"/>',
+  swastika:  '<path ' + STK + ' d="M26 22 H42 V38"/><path ' + STK + ' d="M42 26 V42 H26"/>' +
+             '<path ' + STK + ' d="M38 42 H22 V26"/><path ' + STK + ' d="M22 38 V22 H38"/>' +
+             '<circle cx="26" cy="52" r="2" fill="currentColor"/><circle cx="32" cy="54" r="2" fill="currentColor"/>' +
+             '<circle cx="38" cy="52" r="2" fill="currentColor"/>',
+  moon:      '<path ' + STK + ' d="M42 12 A22 22 0 1 0 42 52 A17 17 0 1 1 42 12 Z"/>',
+  makara:    '<path ' + STK + ' d="M10 38 C18 28 30 26 40 30 C46 32 50 30 54 24"/>' +
+             '<path ' + STK + ' d="M10 38 C18 48 32 50 42 44 C48 40 52 42 54 48"/>' +
+             '<path ' + STK + ' d="M40 30 L44 22 L48 30"/>' +
+             '<circle cx="20" cy="35" r="2" fill="currentColor"/>',
+  shrivatsa: '<path ' + STK + ' d="M32 12 L50 32 L32 52 L14 32 Z"/>' +
+             '<path ' + STK + ' d="M32 22 L41 32 L32 42 L23 32 Z"/>',
+  rhino:     '<path ' + STK + ' d="M16 46 C14 32 22 22 34 22 C44 22 50 30 50 40 C50 46 46 50 40 50 L20 50 Z"/>' +
+             '<path ' + STK + ' d="M46 30 L56 20 L52 34"/>' +
+             '<circle cx="26" cy="36" r="2.2" fill="currentColor"/>',
+  buffalo:   '<path ' + STK + ' d="M14 24 C6 22 6 36 16 38 M50 24 C58 22 58 36 48 38"/>' +
+             '<path ' + STK + ' d="M18 28 C18 18 46 18 46 28 C46 42 40 52 32 52 C24 52 18 42 18 28 Z"/>' +
+             '<circle cx="26" cy="36" r="2" fill="currentColor"/><circle cx="38" cy="36" r="2" fill="currentColor"/>',
+  boar:      '<path ' + STK + ' d="M14 40 C14 26 26 20 38 22 C48 24 54 32 52 42 C50 50 40 54 30 52 C20 50 14 46 14 40 Z"/>' +
+             '<path ' + STK + ' d="M50 34 L58 30 L54 40"/><path ' + STK + ' d="M44 46 C48 50 52 50 54 46"/>' +
+             '<circle cx="26" cy="34" r="2" fill="currentColor"/>',
+  falcon:    '<path ' + STK + ' d="M12 30 C22 18 42 16 52 26 C46 28 42 32 40 38 C34 34 26 32 20 34 Z"/>' +
+             '<path ' + STK + ' d="M52 26 L58 30 L50 32"/>' +
+             '<circle cx="44" cy="24" r="2" fill="currentColor"/>',
+  vajra:     '<path ' + STK + ' d="M36 8 L20 34 H30 L26 56 L46 28 H34 Z"/>',
+  deer:      '<path ' + STK + ' d="M24 24 C20 14 14 12 10 14 M24 24 C24 14 28 10 32 10"/>' +
+             '<path ' + STK + ' d="M40 24 C44 14 50 12 54 14 M40 24 C40 14 36 10 32 10"/>' +
+             '<path ' + STK + ' d="M22 30 C22 24 42 24 42 30 C42 44 38 54 32 54 C26 54 22 44 22 30 Z"/>' +
+             '<circle cx="27" cy="36" r="2" fill="currentColor"/><circle cx="37" cy="36" r="2" fill="currentColor"/>',
+  goat:      '<path ' + STK + ' d="M22 26 C14 22 10 14 12 8 M42 26 C50 22 54 14 52 8"/>' +
+             '<path ' + STK + ' d="M22 28 C22 20 42 20 42 28 C42 42 38 54 32 54 C26 54 22 42 22 28 Z"/>' +
+             '<path ' + STK + ' d="M30 54 C30 58 34 58 34 54"/>' +
+             '<circle cx="27" cy="34" r="2" fill="currentColor"/><circle cx="37" cy="34" r="2" fill="currentColor"/>',
+  fish:      '<path ' + STK + ' d="M10 32 C18 20 38 18 48 32 C38 46 18 44 10 32 Z"/>' +
+             '<path ' + STK + ' d="M48 32 L58 22 V42 Z"/>' +
+             '<circle cx="20" cy="30" r="2.2" fill="currentColor"/>',
+  kalash:    '<path ' + STK + ' d="M22 26 H42 L46 34 C48 44 42 54 32 54 C22 54 16 44 18 34 Z"/>' +
+             '<path ' + STK + ' d="M26 26 C26 18 38 18 38 26"/>' +
+             '<path ' + STK + ' d="M32 18 V10"/><circle cx="32" cy="8" r="2.6" fill="currentColor"/>',
+  tortoise:  '<path ' + STK + ' d="M12 40 C12 26 22 18 32 18 C42 18 52 26 52 40 Z"/>' +
+             '<path ' + STK + ' d="M32 18 V40 M18 30 L46 30 M14 38 L50 38"/>' +
+             '<path ' + STK + ' d="M12 40 H52"/>' +
+             '<path ' + STK + ' d="M18 40 L14 50 M46 40 L50 50 M32 40 V50"/>',
+  lotusBlue: '<path ' + STK + ' d="M32 50 C18 46 12 34 12 24 C22 24 28 32 32 42 C36 32 42 24 52 24 C52 34 46 46 32 50 Z"/>' +
+             '<path ' + STK + ' d="M32 42 C29 30 29 18 32 10 C35 18 35 30 32 42 Z"/>' +
+             '<circle cx="32" cy="46" r="2" fill="currentColor"/>',
+  conch:     '<path ' + STK + ' d="M20 46 C12 38 14 22 28 18 C42 14 54 24 52 36 C50 46 40 52 32 48"/>' +
+             '<path ' + STK + ' d="M26 40 C22 34 26 26 34 26 C40 26 44 32 42 38"/>' +
+             '<path ' + STK + ' d="M20 46 L14 54 L26 50"/>',
+  serpent:   '<path ' + STK + ' d="M18 52 C14 40 16 26 24 20 C30 16 38 16 44 22 C50 28 50 40 46 52"/>' +
+             '<path ' + STK + ' d="M24 20 C26 12 38 12 40 20"/>' +
+             '<circle cx="28" cy="26" r="2" fill="currentColor"/><circle cx="36" cy="26" r="2" fill="currentColor"/>' +
+             '<path ' + STK + ' d="M30 34 H34"/>',
+  lion:      '<path ' + STK + ' d="M32 10 L38 18 L48 16 L46 26 L54 32 L46 38 L48 48 L38 46 L32 54 L26 46 L16 48 L18 38 L10 32 L18 26 L16 16 L26 18 Z"/>' +
+             '<circle cx="32" cy="32" r="9" ' + STK + '/>' +
+             '<circle cx="28.5" cy="30" r="1.8" fill="currentColor"/><circle cx="35.5" cy="30" r="1.8" fill="currentColor"/>'
+};
+function artEmblem(key, title) {
+  return svgWrap(EMBLEM[key] || EMBLEM.lotusRed, 64, title);
+}
+
+
+/* ---- attribute art: complexion, posture, nirvana place, birth place ---- */
+function artDisc(hex, title) {
+  return svgWrap(
+    '<circle cx="32" cy="32" r="21" fill="' + hex + '" stroke="#8A6A2A" stroke-width="2.4"/>' +
+    '<circle cx="32" cy="32" r="21" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>' +
+    '<ellipse cx="25" cy="24" rx="7" ry="5" fill="rgba(255,255,255,.34)" transform="rotate(-28 25 24)"/>',
+    64, title);
+}
+/* Abstract, faceless meditative figure — no facial features, ever. */
+function artSilhouette(kind, title) {
+  var body;
+  if (kind === 'seated') {
+    body = '<circle cx="32" cy="16" r="7" fill="currentColor" opacity=".88"/>' +
+           '<path d="M32 24 C22 24 16 32 15 42 L49 42 C48 32 42 24 32 24 Z" fill="currentColor" opacity=".88"/>' +
+           '<path d="M10 44 C16 50 48 50 54 44 L54 50 C48 56 16 56 10 50 Z" fill="currentColor" opacity=".62"/>';
+  } else {
+    body = '<circle cx="32" cy="11" r="6.4" fill="currentColor" opacity=".88"/>' +
+           '<path d="M32 18 C25 18 21 24 21 32 L21 46 L26 46 L26 58 L38 58 L38 46 L43 46 L43 32 ' +
+           'C43 24 39 18 32 18 Z" fill="currentColor" opacity=".88"/>' +
+           '<path d="M17 30 L21 30 M43 30 L47 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>';
+  }
+  return svgWrap(body, 64, title);
+}
+/* Five distinct hill-and-temple skylines, one per nirvana sthal. */
+var MOKSHA_ART = {
+  sammend:    '<path d="M4 56 L18 22 L26 40 L34 12 L44 38 L52 24 L60 56 Z" fill="currentColor" opacity=".8"/>' +
+              '<path d="M30 40 h8 v16 h-8 Z" fill="#FFF8F0" opacity=".75"/>',
+  ashtapada:  '<path d="M4 56 L14 30 L22 44 L32 16 L42 44 L50 30 L60 56 Z" fill="currentColor" opacity=".8"/>' +
+              '<circle cx="32" cy="12" r="4" fill="currentColor"/>',
+  champapuri: '<path d="M6 56 V34 H20 V56 Z M44 56 V34 H58 V56 Z" fill="currentColor" opacity=".72"/>' +
+              '<path d="M22 56 V26 H42 V56 Z" fill="currentColor" opacity=".88"/>' +
+              '<path d="M26 26 C26 16 38 16 38 26 Z" fill="currentColor"/>' +
+              '<path d="M32 12 V6" stroke="currentColor" stroke-width="2.6"/>',
+  girnar:     '<path d="M2 56 L16 18 L28 42 L38 10 L50 40 L62 56 Z" fill="currentColor" opacity=".82"/>' +
+              '<path d="M34 30 h8 v10 h-8 Z" fill="#FFF8F0" opacity=".8"/>',
+  pavapuri:   '<path d="M4 56 C16 48 20 34 32 34 C44 34 48 48 60 56 Z" fill="currentColor" opacity=".55"/>' +
+              '<path d="M24 56 V36 H40 V56 Z" fill="currentColor" opacity=".88"/>' +
+              '<path d="M26 36 C26 24 38 24 38 36 Z" fill="currentColor"/>' +
+              '<path d="M10 56 H54" stroke="#FFF8F0" stroke-width="2.4" opacity=".7"/>'
+};
+function artMoksha(key, title) {
+  return svgWrap(MOKSHA_ART[key] || MOKSHA_ART.sammend, 64, title);
+}
+function artGate(title) {
+  return svgWrap(
+    '<path d="M10 56 V26 H54 V56" fill="none" stroke="currentColor" stroke-width="3.4"/>' +
+    '<path d="M22 56 V36 C22 28 42 28 42 36 V56" fill="none" stroke="currentColor" stroke-width="3.2"/>' +
+    '<path d="M6 26 L32 10 L58 26" fill="none" stroke="currentColor" stroke-width="3.4"/>' +
+    '<circle cx="32" cy="20" r="3" fill="currentColor"/>' +
+    '<path d="M14 30 V56 M50 30 V56" stroke="currentColor" stroke-width="2" opacity=".6"/>',
+    64, title);
+}
+/* The art shown on an attribute card, by attribute key. */
+function attrArt(attr, th) {
+  var title = '';
+  if (attr === 'chinh')  return artEmblem(th.chinhSvg, L(th, 'chinhHi', 'chinhEn'));
+  if (attr === 'varna')  return artDisc(th.varnaHex, L(th, 'varnaHi', 'varnaEn'));
+  if (attr === 'moksha') return artMoksha(th.mokshaKey, L(th, 'mokshaHi', 'mokshaEn'));
+  if (attr === 'aasan')  return artSilhouette(th.aasanKey, AASAN[th.aasanKey][S.lang]);
+  if (attr === 'janma')  return artGate(L(th, 'janmaHi', 'janmaEn'));
+  return artRosette(title);
+}
+/* The text label shown under the attribute art. */
+function attrText(attr, th) {
+  if (attr === 'chinh')  return L(th, 'chinhHi', 'chinhEn');
+  if (attr === 'varna')  return L(th, 'varnaHi', 'varnaEn');
+  if (attr === 'moksha') return L(th, 'mokshaHi', 'mokshaEn');
+  if (attr === 'aasan')  return AASAN[th.aasanKey][S.lang];
+  if (attr === 'janma')  return L(th, 'janmaHi', 'janmaEn');
+  return '';
+}
+/* One-line teaching fact spoken on a successful match. */
+function factLine(th, attr) {
+  var name = L(th, 'hi', 'en');
+  var parts = [name, attrText(attr, th)];
+  if (attr !== 'moksha') parts.push(L(th, 'mokshaHi', 'mokshaEn'));
+  return parts.join(' · ');
+}
+
+
+
+
+/* ============================================================
+   TOAST / DIALOG / PARTICLES
+   ============================================================ */
+var toastId = null;
+function toast(msg) {
+  var el = $('toast');
+  el.textContent = msg;
+  el.classList.add('is-on');
+  if (toastId) clearTimeout(toastId);
+  toastId = setTimeout(function () { el.classList.remove('is-on'); }, 3200);
+}
+function say(msg) { var el = $('live'); if (el) el.textContent = msg; }
+
+var dlgYesFn = null, dlgLastFocus = null;
+function askDialog(title, body, yesLabel, noLabel, onYes) {
+  dlgLastFocus = document.activeElement;
+  $('dlgTitle').textContent = title;
+  $('dlgBody').textContent = body;
+  $('dlgYes').textContent = yesLabel;
+  $('dlgNo').textContent = noLabel;
+  dlgYesFn = onYes;
+  $('dialog').classList.remove('is-hidden');
+  $('dlgNo').focus();
+}
+function closeDialog() {
+  $('dialog').classList.add('is-hidden');
+  dlgYesFn = null;
+  if (dlgLastFocus && dlgLastFocus.focus) dlgLastFocus.focus();
+}
+$('dlgYes').addEventListener('click', function () { var f = dlgYesFn; closeDialog(); if (f) f(); });
+$('dlgNo').addEventListener('click', closeDialog);
+$('dialog').addEventListener('click', function (e) { if (e.target === $('dialog')) closeDialog(); });
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && !$('dialog').classList.contains('is-hidden')) closeDialog();
+});
+
+/** Muted marigold petals — transform + opacity only, skipped for reduced motion. */
+function petals(count) {
+  if (reduced()) return;
+  var host = $('fx');
+  var cols = ['#E8800C', '#C8860A', '#B23A3A', '#D4A574', '#E3B23C'];
+  var n = count || 24;
+  for (var i = 0; i < n; i++) {
+    var p = document.createElement('i');
+    var size = 7 + Math.random() * 8;
+    p.style.left = (Math.random() * 100) + 'vw';
+    p.style.width = size + 'px';
+    p.style.height = (size * 1.35) + 'px';
+    p.style.background = cols[i % cols.length];
+    p.style.opacity = '.8';
+    p.style.animationDuration = (2.6 + Math.random() * 2.2) + 's';
+    p.style.animationDelay = (Math.random() * 0.7) + 's';
+    host.appendChild(p);
+    (function (node) { setTimeout(function () { if (node.parentNode) node.parentNode.removeChild(node); }, 5600); })(p);
+  }
+}
+
+/* ============================================================
+   LEADERBOARD · shared schema, one key for all six games
+   ============================================================ */
+function lbAll() {
+  var o = parseJSON(rawGet(LB_KEY), {});
+  return (o && typeof o === 'object' && !Array.isArray(o)) ? o : {};
+}
+function lbList() {
+  var l = lbAll()[GAME_ID];
+  if (!Array.isArray(l)) return [];
+  var out = [];
+  for (var i = 0; i < l.length; i++) {
+    var e = l[i];
+    if (!e || typeof e !== 'object') continue;
+    out.push({
+      name: sanitizeName(e.name), level: String(e.level || ''), levelKey: String(e.levelKey || ''),
+      duration: Math.max(0, Math.floor(Number(e.duration) || 0)),
+      score: Math.max(0, Math.floor(Number(e.score) || 0)),
+      meta: (e.meta && typeof e.meta === 'object') ? e.meta : {},
+      ts: Math.floor(Number(e.ts) || Date.now())
+    });
+  }
+  out.sort(lbCmp);
+  return out;
+}
+function lbCmp(a, b) { return LB_CMP(a, b); }
+function lbSave(entry) {
+  var all = lbAll();
+  var list = Array.isArray(all[GAME_ID]) ? all[GAME_ID] : [];
+  list.push(entry);
+  list.sort(lbCmp);
+  if (list.length > LB_MAX) list = list.slice(0, LB_MAX);
+  all[GAME_ID] = list;
+  var okSave = rawSet(LB_KEY, JSON.stringify(all));
+  var rank = 0;
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].ts === entry.ts && list[i].name === entry.name &&
+        list[i].levelKey === entry.levelKey) { rank = i + 1; break; }
+  }
+  return { saved: okSave, rank: rank };
+}
+function lbClear() {
+  var all = lbAll();
+  if (Object.prototype.hasOwnProperty.call(all, GAME_ID)) {
+    delete all[GAME_ID];
+    rawSet(LB_KEY, JSON.stringify(all));
+  }
+}
+
+
+
+
+/* ============================================================
+   STATE
+   ============================================================ */
+var S = {
+  lang: 'hi', sound: true, name: '', screen: 'lang',
+  mode: 'order', count: 8, diff: 'hard',
+  tiles: [],          // [{th, no}] in canonical order for the chosen subset
+  order: [],          // current arrangement: order[pos] = index into tiles
+  buckets: [],        // bucket mode: [{key,label,hex,items:[tileIdx]}]
+  placed: {},         // bucket mode: tileIdx -> bucketKey
+  slots: [],          // emblem mode: slots[pos] = tileIdx
+  sel: -1, moves: 0, hints: HINTS_MAX, hintsUsed: 0,
+  startedAt: 0, clockId: null, elapsed: 0, bonus: 0,
+  lastRank: 0, lock: false
+};
+
+function setScreen(name) {
+  S.screen = name;
+  ['scrLang', 'scrSetup', 'scrPlay', 'scrResult'].forEach(function (id) {
+    $(id).classList.toggle('is-hidden',
+      id !== 'scr' + name.charAt(0).toUpperCase() + name.slice(1));
+  });
+  $('restartBtn').classList.toggle('is-hidden', name !== 'play' && name !== 'result');
+  window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   ROUND SET-UP
+   ============================================================ */
+function bucketDefs() {
+  return (S.mode === 'varna') ? VARNA_BUCKETS : MOKSHA_BUCKETS;
+}
+function isBucketMode() { return S.mode === 'varna' || S.mode === 'moksha'; }
+
+/** Pick `count` Tirthankaras. Bucket modes draw a balanced subset so that
+ *  every bucket present in the data can actually appear in the round. */
+function pickSubset(n) {
+  if (!isBucketMode()) {
+    return shuffle(TIRTH.slice()).slice(0, n).sort(function (a, b) { return a.no - b.no; });
+  }
+  var key = (S.mode === 'varna') ? 'varnaKey' : 'mokshaKey';
+  var groups = {};
+  TIRTH.forEach(function (th) {
+    var k = th[key];
+    if (!groups[k]) groups[k] = [];
+    groups[k].push(th);
+  });
+  var keys = Object.keys(groups).filter(function (k) { return groups[k].length; });
+  shuffle(keys);
+  var out = [];
+  /* round-robin across buckets, capped, until we reach n */
+  var i = 0;
+  while (out.length < n && i < 400) {
+    var k = keys[i % keys.length];
+    var bucket = groups[k];
+    var take = Math.floor(i / keys.length);
+    if (take < Math.min(BUCKET_CAP, bucket.length)) {
+      var cand = bucket[take];
+      if (out.indexOf(cand) < 0) out.push(cand);
+    }
+    i++;
+  }
+  if (out.length < n) {
+    shuffle(TIRTH.slice()).forEach(function (th) {
+      if (out.length < n && out.indexOf(th) < 0) out.push(th);
+    });
+  }
+  return out.sort(function (a, b) { return a.no - b.no; });
+}
+
+function startRound() {
+  var nm = sanitizeName($('nameInput').value);
+  if (!nm) { toast(t('nameNeeded')); $('nameInput').focus(); return; }
+  if (S.mode === 'moksha' && S.count < 8) { toast(t('modeNeeds8')); return; }
+  S.name = nm;
+  writePrefs({ name: nm, lastGame: GAME_ID });
+
+  S.tiles = pickSubset(S.count);
+  S.moves = 0; S.hints = HINTS_MAX; S.hintsUsed = 0; S.bonus = 0;
+  S.sel = -1; S.lock = false;
+  S.startedAt = 0; S.elapsed = 0;
+  stopClock();
+
+  if (isBucketMode()) {
+    var defs = bucketDefs();
+    var key = (S.mode === 'varna') ? 'varnaKey' : 'mokshaKey';
+    var present = {};
+    S.tiles.forEach(function (th) { present[th[key]] = true; });
+    S.buckets = defs.filter(function (b) { return present[b.key]; })
+                    .map(function (b) { return { key: b.key, hex: b.hex || null, items: [] }; });
+    S.placed = {};
+    S.order = [];
+    S.slots = [];
+  } else if (S.mode === 'chinh') {
+    S.slots = S.tiles.map(function () { return -1; });
+    S.order = shuffle(S.tiles.map(function (_, i) { return i; }));
+    S.buckets = [];
+  } else {
+    S.order = shuffle(S.tiles.map(function (_, i) { return i; }));
+    S.slots = [];
+    S.buckets = [];
+  }
+
+  setScreen('play');
+  buildPlayField();
+  paintHud();
+  bell(0.05);
+}
+
+/* ============================================================
+   PLAY FIELD · rail (emblem mode) + tiles + buckets
+   ============================================================ */
+function L(obj, hi, en) { return S.lang === 'hi' ? obj[hi] : obj[en]; }
+
+function bucketLabel(key) {
+  if (S.mode === 'varna') {
+    var th = TIRTH.filter(function (x) { return x.varnaKey === key; })[0];
+    return th ? L(th, 'varnaHi', 'varnaEn') : key;
+  }
+  var m = TIRTH.filter(function (x) { return x.mokshaKey === key; })[0];
+  return m ? L(m, 'mokshaHi', 'mokshaEn') : key;
+}
+
+function buildPlayField() {
+  var rail = $('rail'), board = $('board'), buck = $('buckets');
+  rail.innerHTML = ''; board.innerHTML = ''; buck.innerHTML = '';
+
+  rail.classList.toggle('is-hidden', S.mode !== 'chinh');
+  buck.classList.toggle('is-hidden', !isBucketMode());
+  board.classList.toggle('is-hidden', isBucketMode() === false ? false : false);
+
+  /* Emblem mode: a fixed, numbered name rail the emblems drop into. */
+  if (S.mode === 'chinh') {
+    S.tiles.forEach(function (th, i) {
+      var slot = document.createElement('div');
+      slot.className = 'g-slot';
+      slot.dataset.slot = String(i);
+      var num = document.createElement('span');
+      num.className = 'g-slot-num';
+      num.textContent = S.lang === 'hi' ? devNum(th.no) : String(th.no);
+      var nm = document.createElement('span');
+      nm.className = 'g-slot-name';
+      nm.textContent = L(th, 'hi', 'en');
+      slot.appendChild(num);
+      slot.appendChild(nm);
+      addDropTarget(slot, 'slot', i);
+      rail.appendChild(slot);
+    });
+  }
+
+  /* Buckets for varna / moksha modes. */
+  if (isBucketMode()) {
+    S.buckets.forEach(function (b) {
+      var box = document.createElement('div');
+      box.className = 'g-bucket';
+      box.dataset.bucket = b.key;
+      var head = document.createElement('div');
+      head.className = 'g-bucket-head';
+      if (b.hex) {
+        var sw = document.createElement('span');
+        sw.className = 'g-swatch';
+        sw.style.background = b.hex;
+        head.appendChild(sw);
+      }
+      var lbl = document.createElement('span');
+      lbl.className = 'g-bucket-name';
+      lbl.textContent = bucketLabel(b.key);
+      head.appendChild(lbl);
+      var list = document.createElement('div');
+      list.className = 'g-bucket-list';
+      box.appendChild(head);
+      box.appendChild(list);
+      box.addEventListener('click', function () {
+        if (S.sel >= 0) placeInBucket(S.sel, b.key);
+      });
+      addDropTarget(box, 'bucket', b.key);
+      buck.appendChild(box);
+    });
+  }
+
+  renderTiles();
+  paintHintLine();
+}
+
+/** Tiles live in #board (the tray) for every mode; in bucket mode the tray
+ *  holds only the tiles not yet placed, and the buckets show the placed ones. */
+function renderTiles() {
+  var board = $('board');
+  board.innerHTML = '';
+
+  if (isBucketMode()) {
+    S.tiles.forEach(function (th, i) {
+      if (S.placed[i] !== undefined) return;
+      board.appendChild(makeTile(i));
+    });
+    if (!board.childNodes.length) {
+      var empty = document.createElement('p');
+      empty.className = 'g-hint';
+      empty.style.textAlign = 'center';
+      empty.textContent = t('playHintBucket');
+      board.appendChild(empty);
+    }
+    /* repaint the buckets */
+    S.buckets.forEach(function (b) {
+      var box = document.querySelector('.g-bucket[data-bucket="' + b.key + '"]');
+      if (!box) return;
+      var list = box.querySelector('.g-bucket-list');
+      list.innerHTML = '';
+      S.tiles.forEach(function (th, i) {
+        if (S.placed[i] !== b.key) return;
+        var chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'g-chipin';
+        chip.dataset.tile = String(i);
+        chip.setAttribute('aria-label', L(th, 'hi', 'en'));
+        var art = document.createElement('span');
+        art.className = 'g-art';
+        art.innerHTML = artEmblem(th.chinhSvg);
+        var nm = document.createElement('span');
+        nm.textContent = L(th, 'hi', 'en');
+        chip.appendChild(art);
+        chip.appendChild(nm);
+        chip.addEventListener('click', function () { unplace(i); });
+        list.appendChild(chip);
+      });
+    });
+    paintBuckets();
+    return;
+  }
+
+  S.order.forEach(function (tileIdx, pos) {
+    var el = makeTile(tileIdx);
+    el.dataset.pos = String(pos);
+    board.appendChild(el);
+  });
+  validateAll();
+}
+
+function makeTile(tileIdx) {
+  var th = S.tiles[tileIdx];
+  var b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'g-tile' + (S.sel === tileIdx ? ' is-selected' : '');
+  b.dataset.tile = String(tileIdx);
+  b.setAttribute('aria-label', L(th, 'hi', 'en'));
+
+  var num = document.createElement('span');
+  num.className = 'g-tnum';
+  /* Position numbers only shown in Easy mode (hard mode = no hints) */
+  num.textContent = (S.mode === 'order' && S.diff === 'easy')
+    ? (S.lang === 'hi' ? devNum(th.no) : String(th.no)) : '';
+  b.appendChild(num);
+
+  if (S.mode === 'chinh') {
+    var art = document.createElement('span');
+    art.className = 'g-art';
+    art.innerHTML = artEmblem(th.chinhSvg);
+    b.appendChild(art);
+    var cap = document.createElement('span');
+    cap.className = 'g-tname';
+    cap.textContent = L(th, 'chinhHi', 'chinhEn');
+    b.appendChild(cap);
+  } else {
+    var nm = document.createElement('span');
+    nm.className = 'g-tname';
+    nm.textContent = L(th, 'hi', 'en');
+    b.appendChild(nm);
+  }
+
+  b.addEventListener('click', function () { tapTile(tileIdx); });
+  addDragSource(b, tileIdx);
+  return b;
+}
+
+
+/* ============================================================
+   INTERACTION · tap-swap, HTML5 drag-and-drop and keyboard
+   ============================================================ */
+function startClock() {
+  if (S.startedAt) return;
+  S.startedAt = Date.now();
+  stopClock();
+  S.clockId = setInterval(function () {
+    S.elapsed = Math.floor((Date.now() - S.startedAt) / 1000) + S.bonus;
+    $('hudTime').textContent = fmtTime(S.elapsed);
+  }, 500);
+}
+function stopClock() { if (S.clockId) { clearInterval(S.clockId); S.clockId = null; } }
+
+function tapTile(tileIdx) {
+  startClock();
+  sfx.tap();
+
+  if (isBucketMode()) {
+    if (S.sel === tileIdx) { S.sel = -1; renderTiles(); return; }
+    S.sel = tileIdx;
+    renderTiles();
+    say(t('selected', { name: L(S.tiles[tileIdx], 'hi', 'en') }));
+    return;
+  }
+
+  if (S.mode === 'chinh') {
+    if (S.sel === tileIdx) { S.sel = -1; repaintSel(); return; }
+    S.sel = tileIdx;
+    repaintSel();
+    say(t('selected', { name: L(S.tiles[tileIdx], 'chinhHi', 'chinhEn') }));
+    return;
+  }
+
+  /* order mode: tap one tile then another to swap their positions */
+  if (S.sel < 0) { S.sel = tileIdx; repaintSel(); return; }
+  if (S.sel === tileIdx) { S.sel = -1; repaintSel(); return; }
+  var p1 = S.order.indexOf(S.sel);
+  var p2 = S.order.indexOf(tileIdx);
+  S.sel = -1;
+  swapPositions(p1, p2);
+}
+
+function repaintSel() {
+  var all = document.querySelectorAll('.g-tile');
+  for (var i = 0; i < all.length; i++) {
+    all[i].classList.toggle('is-selected', +all[i].dataset.tile === S.sel);
+  }
+}
+
+function swapPositions(p1, p2) {
+  if (p1 < 0 || p2 < 0 || p1 === p2) return;
+  var tmp = S.order[p1];
+  S.order[p1] = S.order[p2];
+  S.order[p2] = tmp;
+  S.moves++;
+  var moved = S.tiles[S.order[p2]];
+  renderTiles();
+  paintHud();
+  sfx.flip();
+  say(t('swapped', { name: L(moved, 'hi', 'en') }));
+}
+
+/** Emblem mode: put the chosen emblem tile into a rail slot. */
+function placeInSlot(tileIdx, slotPos) {
+  startClock();
+  var current = S.slots[slotPos];
+  var from = S.slots.indexOf(tileIdx);
+  S.slots[slotPos] = tileIdx;
+  if (from >= 0 && from !== slotPos) S.slots[from] = current;
+  if (current >= 0 && current !== tileIdx && from < 0) {
+    var empty = S.slots.indexOf(-1);
+    if (empty >= 0) S.slots[empty] = current;
+  }
+  S.sel = -1;
+  S.moves++;
+  renderTiles();
+  paintSlots();
+  paintHud();
+  sfx.flip();
+}
+
+/** Bucket modes: assign a tile to a group. */
+function placeInBucket(tileIdx, bucketKey) {
+  startClock();
+  S.placed[tileIdx] = bucketKey;
+  S.sel = -1;
+  S.moves++;
+  renderTiles();
+  paintHud();
+  sfx.flip();
+  var th = S.tiles[tileIdx];
+  say(t('placedIn', { name: L(th, 'hi', 'en'), bucket: bucketLabel(bucketKey) }));
+}
+
+function unplace(tileIdx) {
+  delete S.placed[tileIdx];
+  S.sel = -1;
+  renderTiles();
+  paintHud();
+  sfx.tap();
+}
+
+
+/* ---------- drag and drop (mouse + touch), tap as the accessible fallback ---------- */
+var dragSrc = null;
+
+function addDragSource(el, tileIdx) {
+  el.setAttribute('draggable', 'true');
+  el.addEventListener('dragstart', function (e) {
+    dragSrc = tileIdx;
+    el.classList.add('is-dragging');
+    try { e.dataTransfer.setData('text/plain', String(tileIdx)); } catch (err) { /* ignore */ }
+    if (e.dataTransfer) e.dataTransfer.effectAllowed = 'move';
+  });
+  el.addEventListener('dragend', function () {
+    el.classList.remove('is-dragging');
+    clearDropMarks();
+    dragSrc = null;
+  });
+}
+
+function addDropTarget(el, kind, key) {
+  el.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+    el.classList.add('is-drop');
+  });
+  el.addEventListener('dragleave', function () { el.classList.remove('is-drop'); });
+  el.addEventListener('drop', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    el.classList.remove('is-drop');
+    var idx = dragSrc;
+    if (idx === null || idx === undefined) {
+      idx = parseInt((e.dataTransfer && e.dataTransfer.getData('text/plain')) || '', 10);
+    }
+    if (isNaN(idx)) return;
+    if (kind === 'slot') placeInSlot(idx, +key);
+    else if (kind === 'bucket') placeInBucket(idx, key);
+    dragSrc = null;
+  });
+}
+
+function clearDropMarks() {
+  var m = document.querySelectorAll('.is-drop');
+  for (var i = 0; i < m.length; i++) m[i].classList.remove('is-drop');
+}
+
+/* tile-to-tile drop in order mode, delegated so re-renders stay cheap */
+document.addEventListener('dragover', function (e) {
+  if (S.screen !== 'play' || S.mode !== 'order') return;
+  var tl = e.target && e.target.closest ? e.target.closest('.g-tile') : null;
+  if (tl) { e.preventDefault(); tl.classList.add('is-drop'); }
+});
+document.addEventListener('drop', function (e) {
+  if (S.screen !== 'play' || S.mode !== 'order') return;
+  var tl = e.target && e.target.closest ? e.target.closest('.g-tile') : null;
+  if (!tl || dragSrc === null) return;
+  e.preventDefault();
+  tl.classList.remove('is-drop');
+  swapPositions(S.order.indexOf(dragSrc), S.order.indexOf(+tl.dataset.tile));
+  dragSrc = null;
+});
+
+/* ---------- keyboard ---------- */
+function tileEls() {
+  return Array.prototype.slice.call(document.querySelectorAll('#board .g-tile'));
+}
+document.addEventListener('keydown', function (e) {
+  if (S.screen !== 'play') return;
+  var els = tileEls();
+  if (!els.length) return;
+  var cur = els.indexOf(document.activeElement);
+  var nav = ['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'];
+  if (nav.indexOf(e.key) >= 0) {
+    e.preventDefault();
+    if (cur < 0) { els[0].focus(); return; }
+    var d = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : -1;
+    els[(cur + d + els.length) % els.length].focus();
+  } else if (e.key === 'h' || e.key === 'H') {
+    e.preventDefault();
+    useHint();
+  }
+});
+
+
+/* ============================================================
+   VALIDATION · colour each tile / slot once the first move lands
+   ============================================================ */
+function correctCount() {
+  if (S.mode === 'order') {
+    var n = 0;
+    S.order.forEach(function (ti, pos) { if (pos === ti) n++; });
+    return n;
+  }
+  if (S.mode === 'chinh') {
+    var c = 0;
+    S.slots.forEach(function (ti, pos) { if (ti >= 0 && ti === pos) c++; });
+    return c;
+  }
+  var key = (S.mode === 'varna') ? 'varnaKey' : 'mokshaKey';
+  var k = 0;
+  S.tiles.forEach(function (th, i) {
+    if (S.placed[i] !== undefined && S.placed[i] === th[key]) k++;
+  });
+  return k;
+}
+
+function isComplete() {
+  if (isBucketMode()) return correctCount() === S.tiles.length;
+  if (S.mode === 'chinh') return S.slots.every(function (ti, pos) { return ti === pos; });
+  return S.order.every(function (ti, pos) { return ti === pos; });
+}
+
+function validateAll() {
+  if (S.moves < 1) return;
+  if (S.mode === 'order') {
+    var els = document.querySelectorAll('#board .g-tile');
+    for (var i = 0; i < els.length; i++) {
+      var ti = +els[i].dataset.tile;
+      var pos = +els[i].dataset.pos;
+      els[i].classList.remove('is-correct', 'is-wrong');
+      els[i].classList.add(pos === ti ? 'is-correct' : 'is-wrong');
+      /* once a tile settles it is locked, so the board cannot thrash */
+      els[i].classList.toggle('is-done', pos === ti);
+    }
+  } else if (S.mode === 'chinh') {
+    paintSlots();
+  } else {
+    paintBuckets();
+  }
+  /* Auto-finish: if every tile is correctly placed, transition after a brief beat */
+  if (isComplete() && !S.lock) {
+    S.lock = true;
+    setTimeout(function () { finishRound(); }, reduced() ? 100 : 650);
+  }
+}
+
+function paintSlots() {
+  var slots = document.querySelectorAll('.g-slot');
+  for (var i = 0; i < slots.length; i++) {
+    var ti = S.slots[i];
+    slots[i].classList.remove('is-correct', 'is-wrong');
+    if (ti >= 0 && S.moves >= 1) slots[i].classList.add(ti === i ? 'is-correct' : 'is-wrong');
+  }
+  var tiles = document.querySelectorAll('#board .g-tile');
+  for (var j = 0; j < tiles.length; j++) {
+    var idx = +tiles[j].dataset.tile;
+    tiles[j].classList.toggle('is-done', S.slots.indexOf(idx) >= 0);
+    tiles[j].classList.remove('is-correct', 'is-wrong');
+  }
+}
+
+function paintBuckets() {
+  var key = (S.mode === 'varna') ? 'varnaKey' : 'mokshaKey';
+  var chips = document.querySelectorAll('.g-chipin');
+  for (var i = 0; i < chips.length; i++) {
+    var idx = +chips[i].dataset.tile;
+    var th = S.tiles[idx];
+    if (!th) continue;
+    chips[i].classList.remove('is-correct', 'is-wrong');
+    chips[i].classList.add(S.placed[idx] === th[key] ? 'is-correct' : 'is-wrong');
+  }
+}
+
+/* ============================================================
+   HUD + HINTS
+   ============================================================ */
+function paintHud() {
+  var hi = (S.lang === 'hi');
+  var done = correctCount();
+  var total = S.tiles.length;
+  $('hudPlaced').textContent = hi ? devNum(done) + '/' + devNum(total) : done + '/' + total;
+  $('hudMoves').textContent = hi ? devNum(S.moves) : String(S.moves);
+  $('hudTime').textContent = fmtTime(S.elapsed);
+  $('hudHints').textContent = hi ? devNum(S.hints) : String(S.hints);
+  $('progFill').style.transform = 'scaleX(' + (total ? (done / total) : 0).toFixed(4) + ')';
+  var hb = $('hintBtn');
+  if (hb) hb.disabled = S.hints <= 0;
+}
+
+function useHint() {
+  if (S.hints <= 0) { toast(t('hintNone')); return; }
+  startClock();
+  S.hints--;
+  S.hintsUsed++;
+  S.bonus += HINT_PENALTY;
+  S.elapsed += HINT_PENALTY;
+
+  /* glow one tile that is still out of place — it teaches, never gives it away */
+  var target = -1;
+  for (var i = 0; i < S.tiles.length; i++) {
+    var pos = (S.mode === 'order') ? S.order.indexOf(i) : i;
+    if (!tileIsCorrectAt(i, pos)) { target = i; break; }
+  }
+  if (target >= 0) {
+    var el = document.querySelector('#board .g-tile[data-tile="' + target + '"]');
+    if (el) {
+      el.classList.add('is-hint');
+      setTimeout(function () { el.classList.remove('is-hint'); }, reduced() ? 200 : 1600);
+    }
+  }
+  paintHud();
+  toast(t('hintUsed', {
+    n: (S.lang === 'hi' ? devNum(S.hints) : S.hints),
+    s: (S.lang === 'hi' ? devNum(HINT_PENALTY) : HINT_PENALTY)
+  }));
+  sfx.tap();
+}
+
+function tileIsCorrectAt(tileIdx, pos) {
+  if (S.mode === 'order') return pos === tileIdx;
+  if (S.mode === 'chinh') return S.slots[tileIdx] === tileIdx;
+  var key = (S.mode === 'varna') ? 'varnaKey' : 'mokshaKey';
+  return S.placed[tileIdx] === S.tiles[tileIdx][key];
+}
+
+function paintHintLine() {
+  var h = $('playHint');
+  if (!h) return;
+  h.textContent = S.mode === 'order' ? t('playHintOrder')
+    : S.mode === 'chinh' ? t('playHintChinh')
+    : t('playHintBucket');
+}
+
+
+/* ============================================================
+   FINISH · only reachable once every tile is correctly placed
+   ============================================================ */
+function tryFinish() {
+  if (!isComplete()) {
+    toast(t('incomplete'));
+    sfx.miss();
+    var els = document.querySelectorAll('#board .g-tile.is-wrong');
+    for (var i = 0; i < els.length; i++) {
+      (function (el) {
+        el.classList.add('is-shake');
+        setTimeout(function () { el.classList.remove('is-shake'); }, reduced() ? 60 : 460);
+      })(els[i]);
+    }
+    return;
+  }
+  finishRound();
+}
+
+function levelKey() { return S.mode + '-' + S.count; }
+function levelLabel() {
+  var m = t('mode')[S.mode][0];
+  var n = (S.lang === 'hi') ? devNum(S.count) : String(S.count);
+  return m + ' · ' + n;
+}
+
+function tierOf() {
+  var ideal = S.count;
+  var ratio = S.moves ? (ideal / S.moves) : 0;
+  if (ratio >= 0.85 && S.hintsUsed === 0) return 3;
+  if (ratio >= 0.6) return 2;
+  if (ratio >= 0.35) return 1;
+  return 0;
+}
+
+function finishRound() {
+  stopClock();
+  S.elapsed = S.startedAt
+    ? Math.floor((Date.now() - S.startedAt) / 1000) + S.bonus
+    : S.bonus;
+  S.lock = true;
+
+  var entry = {
+    name: S.name,
+    level: levelLabel(),
+    levelKey: levelKey(),
+    duration: S.elapsed,
+    score: Math.max(0, Math.round(1000 * (S.count / Math.max(1, S.moves)))),
+    meta: { moves: S.moves, tiles: S.count, hints: S.hintsUsed, mode: S.mode },
+    ts: Date.now()
+  };
+  var res = lbSave(entry);
+  S.lastRank = res.saved ? res.rank : 0;
+
+  setScreen('result');
+  paintResultText();
+  renderReview();
+  petals(26);
+  sfx.finish();
+  toast(res.saved ? t('saved', { time: fmtClock(S.elapsed) }) : t('storageOff'));
+}
+
+function paintResultText() {
+  var tier = tierOf();
+  $('medalMark').innerHTML = artMedal();
+  $('resTitle').textContent = t('resTitle')[tier];
+  $('resSub').textContent = t('resSub')[tier];
+  $('stTime').textContent = fmtClock(S.elapsed);
+  $('stMoves').textContent = (S.lang === 'hi') ? devNum(S.moves) : String(S.moves);
+  $('stHints').textContent = (S.lang === 'hi') ? devNum(S.hintsUsed) : String(S.hintsUsed);
+  $('stTiles').textContent = (S.lang === 'hi') ? devNum(S.count) : String(S.count);
+  $('cheerLine').textContent = pick(t('cheers'));
+  var rk = $('resRank');
+  if (S.lastRank) {
+    rk.textContent = t('rankLine', { n: (S.lang === 'hi' ? devNum(S.lastRank) : S.lastRank) });
+    rk.classList.remove('is-hidden');
+  } else {
+    rk.classList.add('is-hidden');
+  }
+  $('resLbPanel').classList.remove('is-hidden');
+  renderLbInto('resLbBody');
+}
+
+/* ============================================================
+   REVIEW · the full 24-row reference table + tradition notes
+   ============================================================ */
+function renderReview() {
+  var head = $('reviewHead');
+  head.innerHTML = '';
+  [t('thNo'), t('thName'), t('thChinh'), t('thVarna'), t('thAasan'),
+   t('thMoksha'), t('thJanma')].forEach(function (h) {
+    var th = document.createElement('th');
+    th.textContent = h;
+    head.appendChild(th);
+  });
+
+  var body = $('reviewBody');
+  body.innerHTML = '';
+  var played = {};
+  S.tiles.forEach(function (th) { played[th.no] = true; });
+
+  TIRTH.forEach(function (th) {
+    var tr = document.createElement('tr');
+    if (!played[th.no]) tr.style.opacity = '.55';
+    var cells = [
+      (S.lang === 'hi' ? devNum(th.no) : String(th.no)),
+      L(th, 'hi', 'en') + (L(th, 'aliasHi', 'aliasEn') ? ' (' + L(th, 'aliasHi', 'aliasEn') + ')' : ''),
+      L(th, 'chinhHi', 'chinhEn'),
+      L(th, 'varnaHi', 'varnaEn'),
+      AASAN[th.aasanKey][S.lang],
+      L(th, 'mokshaHi', 'mokshaEn'),
+      L(th, 'janmaHi', 'janmaEn')
+    ];
+    cells.forEach(function (v, ci) {
+      var td = document.createElement('td');
+      if (ci === 0) td.className = 'g-num';
+      td.textContent = v;              // textContent only — never innerHTML
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+
+  var notes = $('tradNotes');
+  notes.innerHTML = '';
+  var h = document.createElement('p');
+  h.className = 'g-note';
+  h.textContent = t('tradTitle') + ': ';
+  var first = true;
+  TIRTH.forEach(function (th) {
+    var n = L(th, 'noteHi', 'noteEn');
+    if (!n) return;
+    if (!first) h.appendChild(document.createTextNode('  ·  '));
+    h.appendChild(document.createTextNode(
+      (S.lang === 'hi' ? devNum(th.no) : th.no) + '. ' + L(th, 'hi', 'en') + ' — ' + n));
+    first = false;
+  });
+  notes.appendChild(h);
+}
+
+
+/* ============================================================
+   LEADERBOARD
+   ============================================================ */
+function renderLbInto(id) {
+  var host = $(id);
+  if (!host) return;
+  host.innerHTML = '';
+  var list = lbList();
+  if (!list.length) {
+    var p = document.createElement('p');
+    p.className = 'g-lb-empty';
+    p.textContent = t('lbEmpty');
+    host.appendChild(p);
+    return;
+  }
+  var wrap = document.createElement('div');
+  wrap.className = 'g-tablewrap';
+  var tb = document.createElement('table');
+  tb.className = 'g-table';
+  var thead = document.createElement('thead');
+  var hr = document.createElement('tr');
+  [t('thRank'), t('thLbName'), t('thLbLevel'), t('thLbTime'), t('thLbMoves')].forEach(function (h) {
+    var th = document.createElement('th');
+    th.textContent = h;
+    hr.appendChild(th);
+  });
+  thead.appendChild(hr);
+  tb.appendChild(thead);
+  var body = document.createElement('tbody');
+  var medals = ['\uD83E\uDD47', '\uD83E\uDD48', '\uD83E\uDD49'];
+  list.slice(0, 10).forEach(function (e, i) {
+    var tr = document.createElement('tr');
+    var vals = [
+      i < 3 ? medals[i] : String(i + 1),
+      e.name || '—',
+      e.level || e.levelKey || '—',
+      fmtClock(e.duration),
+      (S.lang === 'hi' ? devNum((e.meta && e.meta.moves) || 0) : String((e.meta && e.meta.moves) || 0))
+    ];
+    vals.forEach(function (v, ci) {
+      var td = document.createElement('td');
+      td.textContent = v;              // textContent only, never innerHTML
+      if (ci === 0 && i < 3) td.className = 'g-medalcell';
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+  tb.appendChild(body);
+  wrap.appendChild(tb);
+  host.appendChild(wrap);
+}
+
+function clearLb() {
+  askDialog(t('lbConfirmTitle'), t('lbConfirmBody'), t('lbClear'), t('no'), function () {
+    lbClear();
+    renderLbInto('lbBody');
+    renderLbInto('resLbBody');
+    toast(t('lbCleared'));
+  });
+}
+
+/* ============================================================
+   SETUP CHIPS
+   ============================================================ */
+function buildModeChips() {
+  var host = $('modeChips');
+  host.innerHTML = '';
+  MODES.forEach(function (m) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'g-chip' + (S.mode === m ? ' is-on' : '');
+    b.textContent = t('mode')[m][0];
+    b.title = t('mode')[m][1];
+    b.setAttribute('aria-pressed', S.mode === m ? 'true' : 'false');
+    b.addEventListener('click', function () {
+      S.mode = m;
+      /* the nirvana round needs enough tiles for every place to appear */
+      if (m === 'moksha' && S.count < 8) S.count = 8;
+      buildModeChips();
+      buildCountChips();
+      sfx.tap();
+    });
+    host.appendChild(b);
+  });
+}
+
+function buildCountChips() {
+  var host = $('countChips');
+  host.innerHTML = '';
+  COUNTS.forEach(function (n) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'g-chip' + (S.count === n ? ' is-on' : '');
+    b.textContent = (S.lang === 'hi') ? devNum(n) : String(n);
+    b.setAttribute('aria-pressed', S.count === n ? 'true' : 'false');
+    if (S.mode === 'moksha' && n < 8) b.disabled = true;
+    b.addEventListener('click', function () {
+      if (S.mode === 'moksha' && n < 8) { toast(t('modeNeeds8')); return; }
+      S.count = n;
+      buildCountChips();
+      sfx.tap();
+    });
+    host.appendChild(b);
+  });
+}
+
+function buildDiffChips() {
+  var host = $('diffChips');
+  if (!host) return;
+  host.innerHTML = '';
+  ['hard', 'easy'].forEach(function (d) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'g-chip' + (S.diff === d ? ' is-on' : '');
+    b.textContent = t('diff')[d][0];
+    b.title = t('diff')[d][1];
+    b.setAttribute('aria-pressed', S.diff === d ? 'true' : 'false');
+    b.addEventListener('click', function () {
+      S.diff = d;
+      buildDiffChips();
+      sfx.tap();
+    });
+    host.appendChild(b);
+  });
+}
+
+
+/* ============================================================
+   RENDER · a pure function of state, so switching language
+   mid-round never loses the arrangement, the clock or the hints
+   ============================================================ */
+function applyText() {
+  document.documentElement.lang = (S.lang === 'hi') ? 'hi' : 'en';
+  document.title = (S.lang === 'hi'
+    ? 'तीर्थंकर क्रम · Tirthankar Sorting'
+    : 'Tirthankar Sorting · तीर्थंकर क्रम');
+
+  $('brandMark').innerHTML = artSwastika();
+  $('brandHi').textContent = t('brandHi');
+  $('brandEn').textContent = t('brandEn');
+  $('langBtn').textContent = t('langSwitch');
+  $('hubBtn').textContent = t('hub');
+  $('restartBtn').textContent = t('restart');
+  paintSound();
+
+  $('langGlyph').innerHTML = artRosette();
+  $('s1Title').textContent = t('s1Title');
+  $('s1Sub').textContent = t('s1Sub');
+
+  $('s3Title').textContent = t('s3Title');
+  $('s3Sub').textContent = t('s3Sub');
+  $('nameLabel').textContent = t('nameLabel');
+  $('nameInput').placeholder = t('namePh');
+  $('modeLabel').textContent = t('modeLabel');
+  $('diffLabel').textContent = t('diffLabel');
+  $('countLabel').textContent = t('countLabel');
+  $('setupHint').textContent = t('setupHint');
+  $('startBtn').textContent = t('start');
+  $('lbBtn').textContent = t('leaderboard');
+  $('lbTitle').textContent = t('lbTitle');
+  $('lbClearBtn').textContent = t('lbClear');
+
+  $('hudPlacedLbl').textContent = t('hudPlaced');
+  $('hudMovesLbl').textContent = t('hudMoves');
+  $('hudTimeLbl').textContent = t('hudTime');
+  $('hudHintsLbl').textContent = t('hudHints');
+  $('hintBtn').textContent = t('hint');
+  $('quitBtn').textContent = t('quit');
+
+  $('stTimeLbl').textContent = t('statTime');
+  $('stMovesLbl').textContent = t('statMoves');
+  $('stHintsLbl').textContent = t('statHints');
+  $('stTilesLbl').textContent = t('statTiles');
+  $('againBtn').textContent = t('again');
+  $('changeBtn').textContent = t('changeSetup');
+  $('resLbBtn').textContent = t('showLb');
+  $('resLbTitle').textContent = t('lbTitle');
+  $('resLbClearBtn').textContent = t('lbClear');
+  $('reviewTitle').textContent = t('reviewTitle');
+  $('footTxt').textContent = t('foot');
+
+  buildModeChips();
+  buildDiffChips();
+  buildCountChips();
+  if (!$('lbPanel').classList.contains('is-hidden')) renderLbInto('lbBody');
+  if (!$('resLbPanel').classList.contains('is-hidden')) renderLbInto('resLbBody');
+  if (S.screen === 'play') { buildPlayField(); paintHud(); }
+  if (S.screen === 'result') { paintResultText(); renderReview(); }
+}
+
+function paintSound() {
+  var b = $('sndBtn');
+  b.innerHTML = artBell(S.sound);
+  b.setAttribute('aria-pressed', S.sound ? 'true' : 'false');
+  b.setAttribute('aria-label', S.sound ? t('soundOn') : t('soundOff'));
+  b.title = S.sound ? t('soundOn') : t('soundOff');
+}
+
+
+/* ============================================================
+   WIRING
+   ============================================================ */
+function setLang(lang) {
+  S.lang = (lang === 'en') ? 'en' : 'hi';
+  writePrefs({ lang: S.lang });
+  applyText();          // text only — the arrangement and clock survive
+}
+
+document.querySelectorAll('[data-lang]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    ac();
+    setLang(b.dataset.lang);
+    sfx.tap();
+    setScreen('setup');
+  });
+});
+
+$('langBtn').addEventListener('click', function () {
+  ac();
+  setLang(S.lang === 'hi' ? 'en' : 'hi');
+  sfx.tap();
+});
+
+$('sndBtn').addEventListener('click', function () {
+  S.sound = !S.sound;
+  writePrefs({ sound: S.sound });
+  paintSound();
+  if (S.sound) { ac(); sfx.tap(); }
+});
+
+$('hubBtn').addEventListener('click', function () {
+  sfx.tap();
+  try {
+    if (window.parent && window.parent !== window && window.parent.location) {
+      window.parent.location.hash = '#/kids';
+      return;
+    }
+  } catch (e) { /* cross-origin: fall through to the file hub */ }
+  window.location.href = 'index.html';
+});
+
+$('restartBtn').addEventListener('click', function () {
+  stopClock();
+  sfx.tap();
+  setScreen('setup');
+});
+
+$('startBtn').addEventListener('click', function () { ac(); startRound(); });
+$('nameInput').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') { e.preventDefault(); startRound(); }
+});
+$('hintBtn').addEventListener('click', useHint);
+$('quitBtn').addEventListener('click', function () {
+  askDialog(t('quitConfirm'), t('quitBody'), t('yes'), t('no'), function () {
+    stopClock();
+    setScreen('setup');
+    sfx.tap();
+  });
+});
+$('againBtn').addEventListener('click', function () { ac(); startRound(); });
+$('changeBtn').addEventListener('click', function () { stopClock(); sfx.tap(); setScreen('setup'); });
+
+$('lbBtn').addEventListener('click', function () {
+  var p = $('lbPanel');
+  p.classList.toggle('is-hidden');
+  if (!p.classList.contains('is-hidden')) renderLbInto('lbBody');
+  sfx.tap();
+});
+$('resLbBtn').addEventListener('click', function () {
+  var p = $('resLbPanel');
+  p.classList.toggle('is-hidden');
+  if (!p.classList.contains('is-hidden')) renderLbInto('resLbBody');
+  sfx.tap();
+});
+$('lbClearBtn').addEventListener('click', clearLb);
+$('resLbClearBtn').addEventListener('click', clearLb);
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+function parseQuery() {
+  var q = {};
+  try {
+    var sp = new URLSearchParams(window.location.search || '');
+    sp.forEach(function (v, k) { q[k] = v; });
+  } catch (e) { q = {}; }
+  return q;
+}
+
+function storageOk() {
+  try {
+    localStorage.setItem('__jb_t__', '1');
+    localStorage.removeItem('__jb_t__');
+    return true;
+  } catch (e) { return false; }
+}
+
+function boot() {
+  var prefs = readPrefs();
+  S.lang = (prefs.lang === 'en') ? 'en' : 'hi';
+  S.sound = prefs.sound !== false;
+  S.name = prefs.name || '';
+
+  var q = parseQuery();
+  if (q.lang === 'en' || q.lang === 'hi') S.lang = q.lang;
+  if (q.mode && MODES.indexOf(q.mode) >= 0) S.mode = q.mode;
+  var qn = parseInt(q.n, 10);
+  if (COUNTS.indexOf(qn) >= 0) S.count = qn;
+  if (S.mode === 'moksha' && S.count < 8) S.count = 8;
+  if (q.embed === '1') $('hubBtn').classList.add('is-hidden');
+
+  if (S.name) $('nameInput').value = S.name;
+  writePrefs({ lang: S.lang, sound: S.sound, lastGame: GAME_ID });
+
+  applyText();
+  setScreen(q.lang ? 'setup' : 'lang');
+  if (!storageOk()) setTimeout(function () { toast(t('storageOff')); }, 400);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
+
+})();
+</script>
+</body>
+</html>

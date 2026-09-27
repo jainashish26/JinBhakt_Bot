@@ -1,0 +1,79 @@
+<div class="g-wrap">
+
+  <header class="g-head">
+    <div class="g-brand">
+      <span class="g-mark" id="brandMark" aria-hidden="true"></span>
+      <span class="g-brand-txt">
+        <span class="g-brand-hi" id="brandHi"></span>
+        <span class="g-brand-en" id="brandEn"></span>
+      </span>
+    </div>
+    <div class="g-head-actions">
+      <button type="button" class="g-iconbtn" id="sndBtn" aria-pressed="true"></button>
+      <button type="button" class="g-pill" id="langBtn"></button>
+      <button type="button" class="g-pill is-hidden" id="appBtn"></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- S1 · LANGUAGE GATE -->
+    <section class="g-screen" id="scrLang">
+      <div class="g-card">
+        <span class="g-glyph" id="langGlyph" aria-hidden="true"></span>
+        <h1 class="g-title" id="s1Title"></h1>
+        <p class="g-sub" id="s1Sub"></p>
+        <div class="g-rule"></div>
+        <div class="g-choices">
+          <button type="button" class="g-choice" data-lang="en">
+            <span class="g-choice-name">English</span>
+            <span class="g-choice-note">Continue in English</span>
+          </button>
+          <button type="button" class="g-choice" data-lang="hi">
+            <span class="g-choice-name" lang="hi">हिंदी</span>
+            <span class="g-choice-note" lang="hi">हिंदी में जारी रखें</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- HUB -->
+    <section class="g-screen is-hidden" id="scrHub">
+      <div class="g-card g-hero">
+        <span class="g-glyph" id="heroMark" aria-hidden="true"></span>
+        <h1 class="g-title" id="hubTitle"></h1>
+        <p class="g-sub" id="hubSub"></p>
+      </div>
+
+      <h2 class="g-section" id="gamesLabel"></h2>
+      <div class="g-gamegrid" id="gameGrid"></div>
+
+      <h2 class="g-section" id="progressLabel"></h2>
+      <div class="g-card g-lb" id="lbCard">
+        <div class="g-lb-head">
+          <span class="g-lb-title" id="lbTitle"></span>
+          <button type="button" class="g-btn g-btn-sm" id="lbClearAllBtn"></button>
+        </div>
+        <div id="lbBody"></div>
+      </div>
+
+      <p class="g-note" id="offlineNote"></p>
+      <p class="g-note" id="storageNote"></p>
+      <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="g-foot" id="footTxt"></footer>
+</div>
+
+<div class="g-toast" id="toast" role="status" aria-live="polite"></div>
+<div class="g-fx" id="fx" aria-hidden="true"></div>
+<div class="g-dialog is-hidden" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+  <div class="g-dialog-card">
+    <h2 id="dlgTitle"></h2>
+    <p id="dlgBody"></p>
+    <div class="g-btn-row">
+      <button type="button" class="g-btn g-btn-primary" id="dlgYes"></button>
+      <button type="button" class="g-btn" id="dlgNo"></button>
+    </div>
+  </div>
+</div>

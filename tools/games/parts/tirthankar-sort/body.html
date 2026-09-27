@@ -1,0 +1,175 @@
+<div class="g-wrap">
+
+  <header class="g-head">
+    <div class="g-brand">
+      <span class="g-mark" id="brandMark" aria-hidden="true"></span>
+      <span class="g-brand-txt">
+        <span class="g-brand-hi" id="brandHi"></span>
+        <span class="g-brand-en" id="brandEn"></span>
+      </span>
+    </div>
+    <div class="g-head-actions">
+      <button type="button" class="g-iconbtn" id="sndBtn" aria-pressed="true"></button>
+      <button type="button" class="g-pill" id="langBtn"></button>
+      <button type="button" class="g-pill" id="hubBtn"></button>
+      <button type="button" class="g-pill is-hidden" id="restartBtn"></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- S1 · LANGUAGE GATE -->
+    <section class="g-screen" id="scrLang">
+      <div class="g-card">
+        <span class="g-glyph" id="langGlyph" aria-hidden="true"></span>
+        <h1 class="g-title" id="s1Title"></h1>
+        <p class="g-sub" id="s1Sub"></p>
+        <div class="g-rule"></div>
+        <div class="g-choices">
+          <button type="button" class="g-choice" data-lang="en">
+            <span class="g-choice-name">English</span>
+            <span class="g-choice-note">Continue in English</span>
+          </button>
+          <button type="button" class="g-choice" data-lang="hi">
+            <span class="g-choice-name" lang="hi">हिंदी</span>
+            <span class="g-choice-note" lang="hi">हिंदी में जारी रखें</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 · SETUP GATE -->
+    <section class="g-screen is-hidden" id="scrSetup">
+      <div class="g-card">
+        <h1 class="g-title" id="s3Title"></h1>
+        <p class="g-sub" id="s3Sub"></p>
+        <div class="g-rule"></div>
+
+        <div class="g-field">
+          <label class="g-label" for="nameInput" id="nameLabel"></label>
+          <input class="g-input" type="text" id="nameInput" maxlength="20"
+                 autocomplete="off" spellcheck="false">
+        </div>
+
+        <div class="g-field">
+          <span class="g-label" id="modeLabel"></span>
+          <div class="g-chips" id="modeChips" role="group"></div>
+        </div>
+
+        <div class="g-field">
+          <span class="g-label" id="diffLabel"></span>
+          <div class="g-chips" id="diffChips" role="group"></div>
+        </div>
+
+        <div class="g-field">
+          <span class="g-label" id="countLabel"></span>
+          <div class="g-chips" id="countChips" role="group"></div>
+        </div>
+
+        <p class="g-hint" id="setupHint"></p>
+        <div class="g-btn-row">
+          <button type="button" class="g-btn g-btn-primary" id="startBtn"></button>
+          <button type="button" class="g-btn" id="lbBtn"></button>
+        </div>
+      </div>
+
+      <div class="g-card g-lb is-hidden" id="lbPanel">
+        <div class="g-lb-head">
+          <span class="g-lb-title" id="lbTitle"></span>
+          <button type="button" class="g-btn g-btn-sm" id="lbClearBtn"></button>
+        </div>
+        <div id="lbBody"></div>
+      </div>
+    </section>
+
+    <!-- S4 · PLAY -->
+    <section class="g-screen is-hidden" id="scrPlay">
+      <div class="g-hud">
+        <div class="g-stat"><span class="g-stat-val" id="hudPlaced">0</span>
+          <span class="g-stat-lbl" id="hudPlacedLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudMoves">0</span>
+          <span class="g-stat-lbl" id="hudMovesLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudTime">0:00</span>
+          <span class="g-stat-lbl" id="hudTimeLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudHints">3</span>
+          <span class="g-stat-lbl" id="hudHintsLbl"></span></div>
+        <div class="g-progress"><div class="g-progress-fill" id="progFill"></div></div>
+      </div>
+
+      <p class="g-hint" id="playHint" style="text-align:center;margin:0 0 12px"></p>
+
+      <!-- fixed name rail, shown only in emblem mode -->
+      <div class="g-rail is-hidden" id="rail"></div>
+
+      <div class="g-board" id="board" data-cols="4"></div>
+
+      <!-- group buckets, shown only in varna / moksha modes -->
+      <div class="g-buckets is-hidden" id="buckets"></div>
+
+      <div class="g-btn-row">
+        <button type="button" class="g-btn g-btn-sm" id="hintBtn"></button>
+        <button type="button" class="g-btn g-btn-sm" id="quitBtn"></button>
+      </div>
+      <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- S5 · RESULT -->
+    <section class="g-screen is-hidden" id="scrResult">
+      <div class="g-card">
+        <span class="g-medal" id="medalMark" aria-hidden="true"></span>
+        <h1 class="g-title" id="resTitle"></h1>
+        <p class="g-sub" id="resSub"></p>
+        <span class="g-rank is-hidden" id="resRank"></span>
+        <div class="g-stats">
+          <div class="g-statbox"><b id="stTime">0:00</b><span id="stTimeLbl"></span></div>
+          <div class="g-statbox"><b id="stMoves">0</b><span id="stMovesLbl"></span></div>
+          <div class="g-statbox"><b id="stHints">0</b><span id="stHintsLbl"></span></div>
+          <div class="g-statbox"><b id="stTiles">0</b><span id="stTilesLbl"></span></div>
+        </div>
+        <p class="g-note" id="cheerLine"></p>
+        <div class="g-btn-row">
+          <button type="button" class="g-btn g-btn-primary" id="againBtn"></button>
+          <button type="button" class="g-btn" id="changeBtn"></button>
+          <button type="button" class="g-btn" id="resLbBtn"></button>
+        </div>
+      </div>
+
+      <div class="g-card g-lb is-hidden" id="resLbPanel">
+        <div class="g-lb-head">
+          <span class="g-lb-title" id="resLbTitle"></span>
+          <button type="button" class="g-btn g-btn-sm" id="resLbClearBtn"></button>
+        </div>
+        <div id="resLbBody"></div>
+      </div>
+
+      <div class="g-card g-review">
+        <h2 class="g-review-title" id="reviewTitle"></h2>
+        <div class="g-tablewrap">
+          <table class="g-table" id="reviewTable">
+            <thead><tr id="reviewHead"></tr></thead>
+            <tbody id="reviewBody"></tbody>
+          </table>
+        </div>
+        <div id="tradNotes"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="g-foot" id="footTxt"></footer>
+</div>
+
+<div class="g-toast" id="toast" role="status" aria-live="polite"></div>
+<div class="g-fx" id="fx" aria-hidden="true"></div>
+<div class="g-dialog is-hidden" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+  <div class="g-dialog-card">
+    <h2 id="dlgTitle"></h2>
+    <p id="dlgBody"></p>
+    <div class="g-btn-row">
+      <button type="button" class="g-btn g-btn-primary" id="dlgYes"></button>
+      <button type="button" class="g-btn" id="dlgNo"></button>
+    </div>
+  </div>
+</div>
+

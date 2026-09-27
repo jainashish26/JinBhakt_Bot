@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6D1B2F">
+<meta name="description" content="जैन धर्म के बारे में सत्य या मिथ्या — हर भूल पर एक छोटा स्पष्टीकरण। True or false about Jainism — every miss unlocks a short correction. 72 bilingual statements across 8 topics.">
+<title>मिथक भंजन · Myth Busters</title>
+<style>
+/* ============================================================
+   स्मृति पट्ट · Memory Match
+   Single file · no CDN · no images · no external fonts
+   Motion: transform + opacity only · honours prefers-reduced-motion
+   ============================================================ */
+:root{
+  --saffron:#E8800C; --maroon:#6D1B2F; --gold:#C8860A; --cream:#FFF8F0;
+  --warm:#FFFBF5; --ink:#2D1B06; --ink2:#5C3D1E; --border:#D4A574;
+  --success:#2E7D32; --rose:#B23A3A; --leaf:#3F7D4F; --info:#1565C0;
+  --card-line:#EADBC0;
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-full:9999px;
+  --sh-sm:0 1px 3px rgba(45,27,6,.08), 0 1px 2px rgba(45,27,6,.06);
+  --sh-md:0 4px 12px rgba(45,27,6,.10), 0 2px 4px rgba(45,27,6,.06);
+  --sh-lg:0 10px 25px rgba(45,27,6,.12), 0 4px 8px rgba(45,27,6,.06);
+  --fast:.15s ease; --base:.25s ease; --slow:.4s ease;
+  --ritual:.7s cubic-bezier(.2,.7,.2,1);
+  --font-head:'Noto Serif Devanagari', Georgia, 'Times New Roman', serif;
+  --font-body:'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+@media (max-width:480px){html{font-size:15px}}
+body{
+  font-family:var(--font-body);color:var(--ink);line-height:1.6;min-height:100vh;
+  background:
+    radial-gradient(900px 480px at 50% -10%, #FFF6E2 0%, transparent 62%),
+    linear-gradient(165deg,#FDF8EE,#F7ECD6 60%,#F1E2C4);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+button,input,select{font:inherit;color:inherit}
+button{background:none;border:none;cursor:pointer}
+img,svg{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:2px;border-radius:var(--r-sm)}
+.is-hidden{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+.g-wrap{max-width:900px;margin:0 auto;padding:14px 14px 40px}
+
+/* ---------- header ---------- */
+.g-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 2px 14px}
+.g-brand{display:flex;align-items:center;gap:9px;min-width:0}
+.g-mark{width:30px;height:30px;flex-shrink:0;color:var(--saffron)}
+.g-brand-txt{display:flex;flex-direction:column;min-width:0}
+.g-brand-hi{font-family:var(--font-head);font-weight:700;font-size:1.02rem;
+  color:var(--maroon);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g-brand-en{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);opacity:.85}
+.g-head-actions{display:flex;align-items:center;gap:6px;margin-left:auto;flex-wrap:wrap}
+.g-pill{border:1.5px solid var(--border);background:rgba(255,255,255,.72);
+  border-radius:var(--r-full);padding:6px 13px;font-weight:600;font-size:.76rem;
+  color:#7A5A12;transition:background var(--fast),transform var(--fast);white-space:nowrap;min-height:36px}
+.g-pill:hover{background:#fff;transform:translateY(-1px)}
+.g-iconbtn{width:38px;height:38px;display:grid;place-items:center;border-radius:var(--r-full);
+  border:1.5px solid var(--border);background:rgba(255,255,255,.72);color:var(--maroon);
+  transition:background var(--fast)}
+.g-iconbtn:hover{background:#fff}
+.g-iconbtn svg{width:19px;height:19px}
+
+/* ---------- screens ---------- */
+.g-screen{animation:g-rise .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes g-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.g-card{background:var(--warm);border:1px solid var(--card-line);border-radius:var(--r-lg);
+  box-shadow:var(--sh-md);padding:26px 20px;margin:14px 0;text-align:center}
+.g-rule{width:56px;height:2px;margin:0 auto 18px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.g-title{font-family:var(--font-head);font-weight:700;color:var(--maroon);
+  font-size:clamp(1.4rem,4.6vw,2rem);line-height:1.25;margin-bottom:.25em}
+.g-sub{color:var(--ink2);font-size:.95rem;max-width:46ch;margin:0 auto 1.2em}
+.g-glyph{display:block;width:64px;height:64px;margin:0 auto 10px;color:var(--saffron)}
+.g-glyph svg{width:100%;height:100%}
+
+/* ---------- choice tiles ---------- */
+.g-choices{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.g-choice{border:1.5px solid var(--border);background:rgba(255,255,255,.62);
+  border-radius:var(--r-lg);padding:18px 20px;min-width:140px;flex:0 1 190px;
+  color:var(--maroon);text-align:center;
+  transition:transform var(--base),background var(--base),border-color var(--base),box-shadow var(--base)}
+.g-choice:hover{transform:translateY(-3px);background:#fff;box-shadow:var(--sh-md);border-color:var(--saffron)}
+.g-choice.is-on{border-color:var(--maroon);background:#fff;box-shadow:0 0 0 2px rgba(109,27,47,.16)}
+.g-choice-mark{width:34px;height:34px;margin:0 auto 8px;color:var(--saffron)}
+.g-choice-name{display:block;font-family:var(--font-head);font-weight:700;font-size:1.02rem}
+.g-choice-note{display:block;font-size:.74rem;color:var(--ink2);margin-top:3px;opacity:.9}
+@media (pointer:coarse){.g-choice{min-height:44px}}
+
+/* ---------- setup form ---------- */
+.g-field{text-align:left;margin:20px auto 0;max-width:540px}
+.g-label{display:block;font-weight:700;font-size:.84rem;color:var(--maroon);margin-bottom:8px;
+  letter-spacing:.02em}
+.g-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--r-md);
+  background:#fff;font-size:1rem;min-height:46px;transition:border-color var(--fast)}
+.g-input:focus{border-color:var(--saffron);outline:none}
+.g-chips{display:flex;flex-wrap:wrap;gap:8px}
+.g-chip{border:1.5px solid var(--border);background:rgba(255,255,255,.7);
+  border-radius:var(--r-full);padding:8px 15px;font-size:.84rem;font-weight:600;color:#6B5733;
+  min-height:42px;transition:background var(--fast),border-color var(--fast),color var(--fast)}
+.g-chip:hover{background:#fff;border-color:var(--saffron)}
+.g-chip.is-on{background:var(--maroon);border-color:var(--maroon);color:#fff}
+.g-hint{font-size:.8rem;color:var(--ink2);margin-top:16px;font-style:italic}
+
+/* ---------- buttons ---------- */
+.g-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:1.5px solid var(--border);background:rgba(255,255,255,.75);border-radius:var(--r-full);
+  padding:12px 26px;font-weight:700;font-size:.95rem;color:#7A5A12;min-height:46px;
+  transition:transform var(--fast),background var(--fast),box-shadow var(--fast)}
+.g-btn:hover{background:#fff;transform:translateY(-2px);box-shadow:var(--sh-sm)}
+.g-btn-primary{background:linear-gradient(180deg,var(--saffron),#D0710A);border-color:#B85F08;
+  color:#fff;box-shadow:0 3px 0 #A85607}
+.g-btn-primary:hover{background:linear-gradient(180deg,#F08C15,var(--saffron));color:#fff}
+.g-btn-primary:active{transform:translateY(2px);box-shadow:0 1px 0 #A85607}
+.g-btn-primary:disabled{background:#D9CDB8;border-color:#C9BCA5;box-shadow:none;color:#8B7C63;
+  cursor:not-allowed;transform:none}
+.g-btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.g-btn-sm{padding:8px 16px;font-size:.82rem;min-height:38px}
+
+/* ---------- HUD ---------- */
+.g-hud{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;
+  background:rgba(255,255,255,.6);border:1px solid var(--card-line);border-radius:var(--r-lg);
+  padding:10px 12px;margin:6px 0 14px}
+.g-stat{display:flex;flex-direction:column;align-items:center;min-width:66px;padding:2px 8px}
+.g-stat-val{font-family:var(--font-head);font-weight:700;font-size:1.15rem;color:var(--maroon);
+  line-height:1.15;font-variant-numeric:tabular-nums}
+.g-stat-lbl{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);opacity:.85}
+.g-hud-sep{width:1px;height:26px;background:var(--card-line)}
+.g-progress{height:6px;background:rgba(212,165,116,.32);border-radius:var(--r-full);
+  overflow:hidden;width:100%;margin-top:4px}
+.g-progress-fill{height:100%;width:100%;border-radius:var(--r-full);transform-origin:left center;
+  transform:scaleX(0);background:linear-gradient(90deg,var(--gold),var(--saffron));
+  transition:transform var(--slow)}
+
+/* ---------- memory grid ---------- */
+.g-board{display:grid;gap:10px;grid-template-columns:repeat(4,1fr);margin:4px 0 8px;
+  perspective:1200px}
+@media (min-width:620px){.g-board[data-cols="12"]{grid-template-columns:repeat(6,1fr)}}
+@media (max-width:400px){.g-board{gap:7px}}
+/* tight board: cards fill cells, no aspect-ratio constraint */
+.g-board.is-tight{grid-auto-rows:1fr}
+.g-board.is-tight .g-cardflip{aspect-ratio:auto;height:100%;min-height:0}
+.g-board.is-tight .g-face{padding:4px 3px;gap:3px}
+.g-board.is-tight .g-face-back .g-art{width:28px;height:28px}
+.g-board.is-tight .g-face-back .g-txt{font-size:.62rem}
+.g-board.is-tight .g-face-back .g-sub2{font-size:.54rem}
+.g-board.is-tight .g-face-front svg{width:44%;height:auto}
+
+/* The flip lives on the WRAPPER only. Neither face is itself rotated, so no
+   glyph can ever be painted mirrored. The hidden face also drops to
+   opacity 0 after the turn, which makes a mirrored render impossible even
+   where backface-visibility is unsupported. */
+.g-cardflip{position:relative;aspect-ratio:3/4;cursor:pointer;
+  transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+.g-cardflip.is-flipped{transform:rotateY(180deg)}
+.g-face{position:absolute;inset:0;border-radius:var(--r-md);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  padding:8px 6px;text-align:center;overflow:hidden;
+  -webkit-backface-visibility:hidden;backface-visibility:hidden;
+  transition:opacity .2s linear .35s, box-shadow var(--base)}
+.g-cardflip.is-flipped .g-face-front{opacity:0}
+.g-cardflip:not(.is-flipped) .g-face-back{opacity:0}
+.g-face-front{background:linear-gradient(150deg,#FBEBCB,#F2DCB0);
+  border:1.5px solid var(--border);box-shadow:var(--sh-sm);color:var(--gold)}
+.g-face-front svg{width:64%;height:auto;color:var(--gold);opacity:.85}
+.g-face-back{transform:rotateY(180deg);background:#fff;border:1.5px solid var(--card-line);
+  box-shadow:var(--sh-sm);color:var(--ink)}
+.g-face-back .g-art{width:44px;height:44px;flex-shrink:0}
+.g-face-back .g-txt{font-size:.74rem;font-weight:700;line-height:1.3;color:var(--maroon);
+  overflow-wrap:anywhere}
+.g-face-back .g-sub2{font-size:.64rem;color:var(--ink2);opacity:.85;line-height:1.25}
+.g-cardflip.is-matched{cursor:default}
+.g-cardflip.is-matched .g-face-back{border-color:var(--gold);
+  box-shadow:0 0 0 2px rgba(200,134,10,.28), var(--sh-md)}
+.g-cardflip.is-matched .g-face-back .g-txt{color:var(--leaf)}
+.g-cardflip.is-wrong{animation:g-sway .42s ease}
+@keyframes g-sway{0%,100%{transform:rotateY(180deg) translateX(0)}
+  25%{transform:rotateY(180deg) translateX(-4px)}
+  75%{transform:rotateY(180deg) translateX(4px)}}
+.g-cardflip.is-hint .g-face-back{box-shadow:0 0 0 3px rgba(232,128,12,.45)}
+@media (max-width:400px){
+  .g-face-back .g-art{width:32px;height:32px}
+  .g-face-back .g-txt{font-size:.66rem}
+  .g-face-back .g-sub2{font-size:.58rem}
+}
+
+/* ---------- result ---------- */
+.g-medal{display:block;width:76px;height:76px;margin:0 auto 8px;color:var(--gold);
+  animation:g-bloom .8s cubic-bezier(.2,.8,.25,1)}
+.g-medal svg{width:100%;height:100%}
+@keyframes g-bloom{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:scale(1)}}
+.g-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:18px 0}
+.g-statbox{background:#fff;border:1px solid var(--card-line);border-radius:var(--r-md);padding:13px 8px}
+.g-statbox b{display:block;font-family:var(--font-head);font-size:1.4rem;color:var(--saffron);
+  line-height:1.2;font-variant-numeric:tabular-nums}
+.g-statbox span{display:block;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink2);margin-top:3px}
+.g-review{text-align:left;margin:18px auto 0;max-width:640px}
+.g-review-title{font-family:var(--font-head);font-weight:700;color:var(--maroon);
+  font-size:1.02rem;text-align:center;margin-bottom:10px}
+.g-tablewrap{overflow-x:auto;border:1px solid var(--card-line);border-radius:var(--r-md);background:#fff}
+.g-table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:430px}
+.g-table th,.g-table td{padding:9px 10px;text-align:left;border-bottom:1px solid #F1E6D2;vertical-align:top}
+.g-table th{background:#FBF3E2;font-weight:700;color:var(--maroon);font-size:.7rem;
+  letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.g-table tbody tr:last-child td{border-bottom:none}
+.g-table td.g-num{font-variant-numeric:tabular-nums;color:var(--ink2);width:2.4em}
+.g-note{font-size:.8rem;color:var(--ink2);background:#FBF3E2;border-left:3px solid var(--gold);
+  padding:9px 12px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-top:14px;line-height:1.55}
+.g-rank{display:inline-block;background:var(--gold);color:#4A3508;border-radius:var(--r-full);
+  padding:4px 14px;font-weight:700;font-size:.8rem;margin-top:12px}
+
+/* ---------- leaderboard ---------- */
+.g-lb{text-align:left;margin-top:18px}
+.g-lb-head{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  flex-wrap:wrap;margin-bottom:10px}
+.g-lb-title{font-family:var(--font-head);font-weight:700;color:var(--maroon);font-size:1.02rem}
+.g-lb-empty{font-size:.84rem;color:var(--ink2);font-style:italic;text-align:center;padding:14px 6px}
+.g-medalcell{font-weight:700;color:var(--gold);width:2.6em}
+
+/* ---------- toast / dialog / fx ---------- */
+.g-toast{position:fixed;left:50%;bottom:24px;z-index:70;max-width:min(92vw,430px);
+  transform:translateX(-50%) translateY(120px);opacity:0;pointer-events:none;
+  background:rgba(60,40,20,.94);color:#FFF6E2;padding:11px 20px;border-radius:var(--r-full);
+  font-weight:600;font-size:.86rem;box-shadow:var(--sh-lg);text-align:center;line-height:1.45;
+  transition:transform var(--slow),opacity var(--slow)}
+.g-toast.is-on{transform:translateX(-50%) translateY(0);opacity:1}
+.g-fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:60}
+.g-fx i{position:absolute;top:-24px;display:block;
+  border-radius:60% 60% 60% 60%/70% 70% 30% 30%;
+  animation:g-fall linear forwards;will-change:transform,opacity}
+@keyframes g-fall{to{transform:translateY(112vh) rotate(420deg);opacity:.15}}
+.g-dialog{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;
+  background:rgba(45,27,6,.55)}
+.g-dialog-card{background:var(--warm);border:1px solid var(--border);border-radius:var(--r-lg);
+  box-shadow:var(--sh-lg);padding:26px 22px;max-width:400px;width:100%;text-align:center;
+  animation:g-rise .35s cubic-bezier(.2,.7,.2,1)}
+.g-dialog-card h2{font-family:var(--font-head);color:var(--maroon);font-size:1.2rem;margin-bottom:8px}
+.g-dialog-card p{font-size:.9rem;color:var(--ink2);margin-bottom:6px}
+.g-foot{text-align:center;color:#A08A5E;font-size:.74rem;margin:28px auto 0;line-height:1.7;
+  font-style:italic;max-width:60ch}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .g-fx{display:none!important}
+}
+
+/* ---------- short desktop: compact play screens so they fit the iframe without scrolling ---------- */
+@media (min-width:900px) and (max-height:880px){
+  .g-wrap{padding:8px 14px 20px}
+  .g-card{padding:18px 16px;margin:8px 0}
+  .g-title{font-size:clamp(1.2rem,3.6vw,1.6rem);margin-bottom:.15em}
+  .g-sub{font-size:.85rem;margin-bottom:.8em}
+  .g-hud{padding:8px 10px;margin:4px 0 8px}
+  .g-stat-val{font-size:1rem}
+  .g-stat-lbl{font-size:.58rem}
+  .g-btn-row{margin-top:10px}
+  .g-btn{padding:10px 20px;min-height:40px;font-size:.85rem}
+  .g-btn-sm{padding:7px 14px;min-height:34px;font-size:.78rem}
+  .g-foot{margin:14px auto 0;font-size:.68rem}
+  .g-board{margin:2px 0 6px}
+  .g-cardflip{aspect-ratio:auto;min-height:0}
+  .g-face{padding:6px 4px;gap:4px}
+  .g-face-back .g-art{width:36px;height:36px}
+  .g-face-back .g-txt{font-size:.68rem}
+  .g-face-front svg{width:50%;height:auto}
+  .g-medal{width:56px;height:56px}
+  .g-stats{margin:12px 0;gap:8px}
+  .g-statbox{padding:10px 6px}
+  .g-statbox b{font-size:1.2rem}
+  .g-statbox span{font-size:.6rem}
+  .g-review{margin:12px auto 0}
+  .g-note{margin-top:10px;padding:7px 10px;font-size:.74rem}
+}
+
+/* ---------- statement card ---------- */
+.g-qnum{text-align:center;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink2);opacity:.85;font-weight:700;margin:2px 0 8px}
+.g-statementcard{padding:22px 18px}
+.g-statement{font-family:var(--font-head);font-weight:700;color:var(--maroon);
+  font-size:clamp(1.05rem,4.2vw,1.4rem);line-height:1.45;text-align:center;
+  min-height:3.2em;display:flex;align-items:center;justify-content:center;margin:0 0 8px}
+.g-statementcard.is-shake{animation:g-sway .45s ease}
+.g-topic{text-align:center;font-size:.72rem;color:var(--ink2);opacity:.8;margin-bottom:16px;
+  letter-spacing:.04em}
+.g-tfrow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.g-tfbtn{flex:1 1 150px;max-width:230px;min-height:56px;border-radius:var(--r-md);
+  font-family:var(--font-head);font-weight:700;font-size:1.08rem;color:#fff;
+  letter-spacing:.04em;transition:transform var(--fast),box-shadow var(--fast),opacity var(--fast)}
+.g-tfbtn:active{transform:translateY(2px)}
+.g-tfbtn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.g-tf-true{background:linear-gradient(180deg,#3F7D4F,#2E6240);box-shadow:0 3px 0 #234E32}
+.g-tf-false{background:linear-gradient(180deg,#B23A3A,#8E2B2B);box-shadow:0 3px 0 #712121}
+.g-timerbar{margin-top:8px}
+.g-timerbar .g-progress-fill{background:linear-gradient(90deg,#3F7D4F,#6E9E5A)}
+.g-timerbar.is-warn .g-progress-fill{background:linear-gradient(90deg,#C8860A,#B23A3A)}
+
+/* ---------- teaching feedback (inline, not a modal) ---------- */
+.g-lesson{margin:4px 0 10px;padding:16px 16px;border-radius:var(--r-lg);background:#fff;
+  border:1px solid var(--card-line);border-left:6px solid var(--gold);
+  box-shadow:var(--sh-sm);text-align:left;animation:g-rise .35s ease}
+.g-lesson.is-correct{border-left-color:var(--success);background:#F3FAF3}
+.g-lesson.is-wrong{border-left-color:var(--rose);background:#FDF4F4}
+.g-lesson-head{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.g-lesson-mark{width:30px;height:30px;flex-shrink:0;color:var(--gold)}
+.g-lesson-mark svg{width:100%;height:100%}
+.g-lesson-title{font-family:var(--font-head);font-weight:700;font-size:1rem;color:var(--maroon)}
+.g-stamp{display:inline-block;margin:0 auto 10px;padding:4px 14px;border-radius:var(--r-sm);
+  border:2.4px solid var(--rose);color:var(--rose);font-family:var(--font-head);
+  font-weight:700;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;
+  animation:g-stampIn .45s cubic-bezier(.2,.8,.25,1)}
+@keyframes g-stampIn{from{opacity:0;transform:scale(2.4)}to{opacity:1;transform:scale(1)}}
+.g-stampwrap{text-align:center}
+.g-lesson-body{font-size:.9rem;line-height:1.65;color:#4A3C2C}
+.g-lesson-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+.g-lesson-tag{font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:var(--r-full);
+  background:#fff;border:1px solid var(--card-line);color:var(--ink2)}
+.g-lesson-next{margin-left:auto}
+@media (max-width:700px){.g-lesson-next{margin-left:0}}
+
+/* ---------- review list ---------- */
+.g-revitem{background:#FDFAF2;border:1px solid var(--card-line);border-radius:var(--r-md);
+  padding:10px 13px;margin-bottom:8px;font-size:.86rem;line-height:1.55;text-align:left}
+.g-revitem b{color:var(--saffron)}
+.g-revitem .g-revwhy{color:var(--ink2);display:block;margin-top:3px}
+.g-revitem .g-revtopic{display:inline-block;font-size:.66rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);opacity:.8;margin-bottom:4px}
+</style>
+</head>
+<body data-game="myth-busters">
+<div class="g-wrap">
+
+  <header class="g-head">
+    <div class="g-brand">
+      <span class="g-mark" id="brandMark" aria-hidden="true"></span>
+      <span class="g-brand-txt">
+        <span class="g-brand-hi" id="brandHi"></span>
+        <span class="g-brand-en" id="brandEn"></span>
+      </span>
+    </div>
+    <div class="g-head-actions">
+      <button type="button" class="g-iconbtn" id="sndBtn" aria-pressed="true"></button>
+      <button type="button" class="g-pill" id="langBtn"></button>
+      <button type="button" class="g-pill" id="hubBtn"></button>
+      <button type="button" class="g-pill is-hidden" id="restartBtn"></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- S1 · LANGUAGE GATE -->
+    <section class="g-screen" id="scrLang">
+      <div class="g-card">
+        <span class="g-glyph" id="langGlyph" aria-hidden="true"></span>
+        <h1 class="g-title" id="s1Title"></h1>
+        <p class="g-sub" id="s1Sub"></p>
+        <div class="g-rule"></div>
+        <div class="g-choices">
+          <button type="button" class="g-choice" data-lang="en">
+            <span class="g-choice-name">English</span>
+            <span class="g-choice-note">Continue in English</span>
+          </button>
+          <button type="button" class="g-choice" data-lang="hi">
+            <span class="g-choice-name" lang="hi">हिंदी</span>
+            <span class="g-choice-note" lang="hi">हिंदी में जारी रखें</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 · AUDIENCE GATE -->
+    <section class="g-screen is-hidden" id="scrAud">
+      <div class="g-card">
+        <h1 class="g-title" id="s2Title"></h1>
+        <p class="g-sub" id="s2Sub"></p>
+        <div class="g-rule"></div>
+        <div class="g-choices">
+          <button type="button" class="g-choice" data-aud="kids">
+            <span class="g-choice-name" id="kidsLbl"></span>
+            <span class="g-choice-note" id="kidsNote"></span>
+          </button>
+          <button type="button" class="g-choice" data-aud="adults">
+            <span class="g-choice-name" id="adultsLbl"></span>
+            <span class="g-choice-note" id="adultsNote"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 · SETUP GATE -->
+    <section class="g-screen is-hidden" id="scrSetup">
+      <div class="g-card">
+        <h1 class="g-title" id="s3Title"></h1>
+        <p class="g-sub" id="s3Sub"></p>
+        <div class="g-rule"></div>
+
+        <div class="g-field">
+          <label class="g-label" for="nameInput" id="nameLabel"></label>
+          <input class="g-input" type="text" id="nameInput" maxlength="20"
+                 autocomplete="off" spellcheck="false">
+        </div>
+
+        <div class="g-field">
+          <span class="g-label" id="roundLabel"></span>
+          <div class="g-chips" id="roundChips" role="group"></div>
+        </div>
+
+        <div class="g-field">
+          <span class="g-label" id="timerLabel"></span>
+          <div class="g-chips" id="timerChips" role="group"></div>
+        </div>
+
+        <p class="g-hint" id="setupHint"></p>
+        <div class="g-btn-row">
+          <button type="button" class="g-btn g-btn-primary" id="startBtn"></button>
+          <button type="button" class="g-btn" id="lbBtn"></button>
+        </div>
+      </div>
+
+      <div class="g-card g-lb is-hidden" id="lbPanel">
+        <div class="g-lb-head">
+          <span class="g-lb-title" id="lbTitle"></span>
+          <button type="button" class="g-btn g-btn-sm" id="lbClearBtn"></button>
+        </div>
+        <div id="lbBody"></div>
+      </div>
+    </section>
+
+    <!-- S4 · PLAY -->
+    <section class="g-screen is-hidden" id="scrPlay">
+      <div class="g-hud">
+        <div class="g-stat"><span class="g-stat-val" id="hudScore">0</span>
+          <span class="g-stat-lbl" id="hudScoreLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudStreak">0</span>
+          <span class="g-stat-lbl" id="hudStreakLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudAcc">—</span>
+          <span class="g-stat-lbl" id="hudAccLbl"></span></div>
+        <div class="g-progress"><div class="g-progress-fill" id="progFill"></div></div>
+        <div class="g-progress g-timerbar"><div class="g-progress-fill" id="timerFill"></div></div>
+      </div>
+
+      <p class="g-qnum" id="qNum"></p>
+
+      <div class="g-card g-statementcard" id="statementCard">
+        <p class="g-statement" id="statement"></p>
+        <p class="g-topic" id="topicLine"></p>
+        <div class="g-tfrow">
+          <button type="button" class="g-tfbtn g-tf-true" id="btnTrue"></button>
+          <button type="button" class="g-tfbtn g-tf-false" id="btnFalse"></button>
+        </div>
+      </div>
+
+      <div class="g-btn-row">
+        <button type="button" class="g-btn g-btn-sm" id="quitBtn"></button>
+      </div>
+      <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- S5 · RESULT -->
+    <section class="g-screen is-hidden" id="scrResult">
+      <div class="g-card">
+        <span class="g-medal" id="medalMark" aria-hidden="true"></span>
+        <h1 class="g-title" id="resTitle"></h1>
+        <p class="g-sub" id="resSub"></p>
+        <span class="g-rank is-hidden" id="resRank"></span>
+        <div class="g-stats">
+          <div class="g-statbox"><b id="stScore">0</b><span id="stScoreLbl"></span></div>
+          <div class="g-statbox"><b id="stAcc">0%</b><span id="stAccLbl"></span></div>
+          <div class="g-statbox"><b id="stCorrect">0</b><span id="stCorrectLbl"></span></div>
+          <div class="g-statbox"><b id="stBest">0</b><span id="stBestLbl"></span></div>
+        </div>
+        <p class="g-note" id="cheerLine"></p>
+        <div class="g-btn-row">
+          <button type="button" class="g-btn g-btn-primary" id="againBtn"></button>
+          <button type="button" class="g-btn" id="changeBtn"></button>
+          <button type="button" class="g-btn" id="resLbBtn"></button>
+        </div>
+      </div>
+
+      <div class="g-card g-lb is-hidden" id="resLbPanel">
+        <div class="g-lb-head">
+          <span class="g-lb-title" id="resLbTitle"></span>
+          <button type="button" class="g-btn g-btn-sm" id="resLbClearBtn"></button>
+        </div>
+        <div id="resLbBody"></div>
+      </div>
+
+      <div class="g-card g-review">
+        <h2 class="g-review-title" id="reviewTitle"></h2>
+        <div id="reviewList"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="g-foot" id="footTxt"></footer>
+</div>
+
+<div class="g-toast" id="toast" role="status" aria-live="polite"></div>
+<div class="g-fx" id="fx" aria-hidden="true"></div>
+<div class="g-dialog is-hidden" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+  <div class="g-dialog-card">
+    <h2 id="dlgTitle"></h2>
+    <p id="dlgBody"></p>
+    <div class="g-btn-row">
+      <button type="button" class="g-btn g-btn-primary" id="dlgYes"></button>
+      <button type="button" class="g-btn" id="dlgNo"></button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+
+'use strict';
+
+/* Identity + rules for Myth Busters. */
+var GAME_ID = 'myth-busters';
+var LB_KEY = 'jinbhakt:kids:leaderboard:v1';
+var PREF_KEY = 'jinbhakt:kids:prefs:v1';
+var LB_MAX = 20;
+
+/** Higher score wins; more correct answers breaks a tie. */
+var LB_CMP = function (a, b) {
+  return (b.score - a.score) ||
+         (((b.meta && b.meta.correct) || 0) - ((a.meta && a.meta.correct) || 0)) ||
+         (a.duration - b.duration) ||
+         (b.ts - a.ts);
+};
+
+var ROUNDS = [10, 20, 0];                 // 0 === "all"
+var TIMERS = [                              // seconds per statement, 0 = none
+  { key: 'relaxed',  sec: 20 },
+  { key: 'standard', sec: 12 },
+  { key: 'quick',    sec: 8 },
+  { key: 'none',     sec: 0 }
+];
+var BASE = 10, STREAK_BONUS = 5, STREAK_AT = 3;
+var WARN_AT = 0.4;                        // timer bar turns amber at 40% left
+
+var TOPICS = [
+  ['tirthankara', 'Tirthankaras', 'तीर्थंकर'],
+  ['ahimsa',      'Ahimsa & food', 'अहिंसा और आहार'],
+  ['doctrine',    'Anekant · Ratnatraya · Karma', 'अनेकान्त · रत्नत्रय · कर्म'],
+  ['monastic',    'Monks, nuns & vows', 'मुनि-साध्वी और व्रत'],
+  ['symbol',      'Symbols & mantras', 'प्रतीक और मंत्र'],
+  ['festival',    'Festivals & calendar', 'पर्व और संवत्'],
+  ['scripture',   'Scriptures & Acharyas', 'ग्रन्थ और आचार्य'],
+  ['digambar',    'Digambar tradition', 'दिगंबर परंपरा']
+];
+
+/* Row: [id, aud('kids'|'adults'|'both'), topic, answer(1=true,0=false),
+         enStatement, hiStatement, enCorrection, hiCorrection] */
+var QUESTIONS = [
+['m01','both','tirthankara',0,'Lord Mahavira founded Jainism.','भगवान महावीर ने जैन धर्म की स्थापना की।','Mahavira was the 24th and last Tirthankara — a teacher who revived an ancient path. Jains hold the tradition to be beginningless, with Rishabhdev as the first Tirthankara of this cycle.','महावीर स्वामी चौबीसवें और अंतिम तीर्थंकर थे — एक प्राचीन पथ को पुनः प्रकाशित करने वाले शिक्षक। जैन परंपरा को अनादि मानते हैं, और इस कालखंड के प्रथम तीर्थंकर ऋषभदेव हैं।'],
+['m02','both','tirthankara',1,'There are 24 Tirthankaras in the present cycle.','वर्तमान कालखंड में चौबीस तीर्थंकर हुए हैं।','Correct. From Rishabhdev to Mahavira, each Tirthankara re-established the same path of non-violence, truth and restraint.','सही। ऋषभदेव से महावीर तक, प्रत्येक तीर्थंकर ने अहिंसा, सत्य और संयम का एक ही मार्ग पुनः स्थापित किया।'],
+['m03','kids','tirthankara',1,'The first Tirthankara is called Rishabhdev.','प्रथम तीर्थंकर ऋषभदेव कहलाते हैं।','Yes. Rishabhdev is also honoured as Adinatha, the first lord, and his emblem is the bull.','जी। ऋषभदेव को आदिनाथ भी कहा जाता है, और उनका लांछन वृषभ है।'],
+['m04','kids','tirthankara',0,'Lord Mahavira’s emblem is the elephant.','भगवान महावीर का चिन्ह हाथी है।','Mahavira’s emblem is the lion. The elephant belongs to the second Tirthankara, Ajitanatha.','महावीर का लांछन सिंह है। हाथी दूसरे तीर्थंकर अजितनाथ का चिन्ह है।'],
+['m05','adults','tirthankara',0,'All 24 Tirthankaras attained moksha at Sammed Shikharji.','सभी चौबीस तीर्थंकरों को सम्मेद शिखरजी पर मोक्ष प्राप्त हुआ।','Twenty of them did. Rishabhdev attained moksha at Ashtapada, Vasupujya at Champapuri, Neminatha at Girnar and Mahavira at Pavapuri.','बीस को वहाँ मोक्ष मिला। ऋषभदेव को अष्टापद, वासुपूज्य को चम्पापुरी, नेमिनाथ को गिरनार और महावीर को पावापुरी में।'],
+['m06','adults','tirthankara',1,'Only three Tirthankaras are traditionally shown seated in padmasana.','परंपरा में केवल तीन तीर्थंकर पद्मासन में बैठे दिखाए जाते हैं।','Correct — Rishabhdev, Neminatha and Mahavira. The other twenty-one are shown standing in kayotsarga.','सही — ऋषभदेव, नेमिनाथ और महावीर। शेष इक्कीस कायोत्सर्ग में खड़े दिखाए जाते हैं।'],
+['m07','both','tirthankara',0,'Tirthankaras grant boons to those who pray to them.','तीर्थंकर प्रार्थना करने वालों को वरदान देते हैं।','A Tirthankara is a liberated soul beyond the universe, free of all attachment. Jains venerate them to absorb their qualities, not to ask for favours.','तीर्थंकर विश्व के पार मुक्त आत्मा हैं, सब आसक्ति से रहित। जैन उनके गुण ग्रहण करने हेतु उनकी वंदना करते हैं, वरदान माँगने हेतु नहीं।'],
+['m08','kids','tirthankara',1,'Parshvanatha’s emblem is the serpent.','पार्श्वनाथ का चिन्ह सर्प है।','Yes. He is shown with a serpent hood above him, and his complexion is blue.','जी। उनके ऊपर फण दिखाया जाता है, और उनका वर्ण नील है।'],
+['m09','adults','tirthankara',1,'The 7th Tirthankara Suparshvanatha bears the swastika as his emblem.','सातवें तीर्थंकर सुपार्श्वनाथ का लांछन स्वस्तिक है।','Correct. The swastika is an ancient Jain auspicious mark, long predating any other use of that shape.','सही। स्वस्तिक एक प्राचीन जैन मंगल-चिन्ह है, जो इस आकृति के किसी भी अन्य प्रयोग से बहुत पूर्व का है।'],
+['m10','kids','tirthankara',0,'Mahavira was born in Pavapuri.','महावीर का जन्म पावापुरी में हुआ था।','He was born at Kundagrama, near Vaishali. Pavapuri is where he attained nirvana.','उनका जन्म कुण्डग्राम में, वैशाली के समीप हुआ। पावापुरी वे स्थान है जहाँ उन्हें निर्वाण प्राप्त हुआ।'],
+['m11','adults','tirthankara',1,'Neminatha is also known as Arishtanemi.','नेमिनाथ को अरिष्टनेमि भी कहा जाता है।','Correct. He is the 22nd Tirthankara, his emblem is the conch, and he attained moksha at Girnar.','सही। वे बाईसवें तीर्थंकर हैं, उनका लांछन शंख है, और उन्हें गिरनार पर मोक्ष प्राप्त हुआ।'],
+['m12','kids','tirthankara',1,'Mallinatha’s emblem is the water pot.','मल्लिनाथ का चिन्ह कलश है।','Yes. In the Digambar tradition Mallinatha is shown with a kalash and a blue complexion.','जी। दिगंबर परंपरा में मल्लिनाथ कलश के साथ और नील वर्ण में दिखाए जाते हैं।'],
+['m13','both','ahimsa',1,'Ahimsa Paramo Dharmah means non-violence is the supreme duty.','अहिंसा परमो धर्मः का अर्थ है — अहिंसा ही परम धर्म है।','Correct. Ahimsa in thought, word and deed toward every being, great and tiny, is the highest principle in Jainism.','सही। मन, वचन और काया से हर जीव के प्रति — बड़े हो या सूक्ष्म — अहिंसा ही जैन धर्म का परम सिद्धांत है।'],
+['m14','both','ahimsa',1,'Jains avoid root vegetables because uprooting kills the whole plant.','जैन कंद-मूल सब्ज़ियाँ इसलिए त्यागते हैं क्योंकि उखाड़ने से पूरा पौधा मर जाता है।','Yes. Pulling a root ends the plant’s whole life and disturbs countless tiny beings living in that soil.','जी। जड़ खींचने से पौधे का पूरा जीवन समाप्त होता है और उस मिट्टी में बसे असंख्य सूक्ष्म जीव हिलते हैं।'],
+['m15','kids','ahimsa',0,'Honey is fine because bees make too much of it anyway.','शहद ठीक है क्योंकि मधुमक्खियाँ वैसे भी अधिक बना लेती हैं।','Bees labour for every drop, and taking it harms the hive. That is why honey is given up entirely.','हर बूँद के लिए मधुमक्खियाँ श्रम करती हैं, और इसे लेने से छत्ते को हानि होती है। इसीलिए शहद पूर्णतः त्याग किया जाता है।'],
+['m16','both','ahimsa',1,'Jains believe every living being, even the smallest, has a soul.','जैन मानते हैं कि हर जीव — सबसे सूक्ष्म भी — आत्मा रखता है।','Correct. From elephants to micro-organisms, every jiva has a soul of infinite potential. That belief is the root of Jain care for all life.','सही। हाथी से लेकर सूक्ष्मजीव तक, हर जीव की आत्मा अनंत सामर्थ्य वाली है। यही मान्यता सभी जीवन के प्रति जैन सावधानी का मूल है।'],
+['m17','adults','ahimsa',0,'Anantkāy foods are avoided only because they taste strong.','अनंतकाय भोजन केवल तीखे स्वाद के कारण त्यागे जाते हैं।','Anantkāy means one body housing countless lives. Figs and banyan fruit are set aside to avoid that harm, not because of taste.','अनंतकाय का अर्थ है एक ही शरीर में असंख्य जीवन। अंजीर और बरगदी इस हानि से बचने हेतु त्यागे जाते हैं, स्वाद के कारण नहीं।'],
+['m18','adults','ahimsa',1,'Jain kitchens usually close before sunset.','जैन रसोई सामान्यतः सूर्यास्त से पूर्व बंद हो जाती है।','Correct. Tiny beings gather near light, water and food after dark, so food is cooked and eaten in daylight.','सही। अँधेरे के पश्चात सूक्ष्म जीव प्रकाश, जल और भोजन के पास एकत्र होते हैं, अतः भोजन दिन के प्रकाश में बनता और खाया जाता है।'],
+['m19','kids','ahimsa',1,'Eating above-ground food harms fewer living beings.','ज़मीन के ऊपर का भोजन खाने से कम जीवों को हानि पहुँचती है।','Yes. Grains, pulses, nuts and most fruits are harvested without ending the plant’s life.','जी। अन्न, दाल, मेवा और अधिकांश फल पौधे का जीवन समाप्त किए बिना एकत्र होते हैं।'],
+['m20','adults','ahimsa',0,'Jainism permits eating fish in coastal regions.','जैन धर्म तटीय क्षेत्रों में मछली खाने की अनुमति देता है।','Ahimsa admits no exception of place. Flesh of any kind, from any region, is wholly outside a Jain diet.','अहिंसा में स्थान का कोई अपवाद नहीं। किसी भी क्षेत्र का, किसी भी प्रकार का मांस जैन आहार से पूर्णतः बाहर है।'],
+['m21','kids','ahimsa',1,'Jain monks gently clear the path before they walk.','जैन मुनि चलने से पूर्व मार्ग को धीरे से साफ़ करते हैं।','Yes. A soft broom is used to move insects out of harm’s way so no creature is crushed underfoot.','जी। कोमल बुहारी से कीटों को हटाया जाता है ताकि कोई भी जीव पैर के नीचे न कुचला जाए।'],
+['m22','adults','ahimsa',1,'Milk is accepted in the Jain diet.','दूध जैन आहार में स्वीकार्य है।','Correct. Dairy taken without harming the animal is traditionally accepted, though many families keep strict rules about when and how it is used.','सही। पशु को हानि पहुँचाए बिना लिया गया दुग्ध उत्पाद परंपरा में स्वीकार्य है, तथापि अनेक परिवार इसके समय और विधि पर कड़े नियम रखते हैं।'],
+['m23','both','doctrine',0,'Jains believe a Creator God made the universe.','जैन मानते हैं कि ईश्वर ने विश्व की रचना की।','Jainism teaches the universe is uncreated and eternal, running on its own natural laws. Liberated souls are revered, but there is no creator.','जैन सिद्धांत में लोक अनादि और नित्य है, जो अपने स्वाभाविक नियमों से चलता है। मुक्त आत्माओं की वंदना होती है, पर कोई कर्ता-निर्माता नहीं है।'],
+['m24','both','doctrine',0,'Anekantavada means there is only one correct way to see anything.','अनेकान्तवाद का अर्थ है कि किसी भी वस्तु को देखने का केवल एक ही सही मार्ग है।','It means the opposite — truth has many valid sides, like the blind men and the elephant. It teaches intellectual humility.','इसका अर्थ ठीक विपरीत है — सत्य के अनेक वैध पक्ष होते हैं, जैसे अंधों और हाथी की कथा। यह बौद्धिक नम्रता सिखाता है।'],
+['m25','both','doctrine',1,'The Ratnatraya are Right Faith, Right Knowledge and Right Conduct.','रत्नत्रय हैं — सम्यक् दर्शन, सम्यक् ज्ञान और सम्यक् चारित्र।','Correct. These three jewels together form the Jain path to liberation; none of them works alone.','सही। ये तीनों रत्न मिलकर मोक्ष का मार्ग बनाते हैं; इनमें से कोई भी अकेले सिद्ध नहीं होता।'],
+['m26','adults','doctrine',1,'In Jainism karma is described as subtle matter that clings to the soul.','जैन धर्म में कर्म को सूक्ष्म पुद्गल बताया गया है जो आत्मा से चिपकता है।','Yes. Karma is understood as karmic particles that bind to the soul through passion and action, like dust settling on wet cloth.','जी। कर्म को कर्मण-पुद्गल माना जाता है जो कषाय और क्रिया से आत्मा से बँधते हैं, जैसे गीले वस्त्र पर धूल।'],
+['m27','kids','doctrine',1,'The soul never dies; it takes a new body.','आत्मा कभी नहीं मरती; वह नया शरीर लेती है।','Correct. The soul is eternal and moves through rebirth, shaped by its karma, until it is liberated.','सही। आत्मा नित्य है और कर्मों के अनुसार पुनर्जन्म से गुज़रती है, जब तक वह मुक्त नहीं हो जाती।'],
+['m28','adults','doctrine',0,'Liberation in Jainism means merging into God.','जैन धर्म में मोक्ष का अर्थ है ईश्वर में विलीन हो जाना।','Moksha means the soul rises to Siddhashila at the summit of the universe, alone in its own infinite knowledge and bliss — not merged into anything.','मोक्ष में आत्मा लोक के शिखर पर सिद्धशिला को प्राप्त होती है, अपने अनंत ज्ञान और आनंद में स्वतंत्र — किसी में विलीन नहीं होती।'],
+['m29','kids','doctrine',1,'Parasparopagraho Jivanam means souls help one another.','परस्परोपग्रहो जीवानाम् का अर्थ है — जीव एक-दूसरे की सहायता करते हैं।','Yes. This line from the Tattvartha Sutra is the Jain motto: all life is interconnected.','जी। तत्त्वार्थसूत्र का यह वाक्य ही जैन का आदर्श वाक्य है — समस्त जीवन परस्पर जुड़ा हुआ है।'],
+['m30','adults','doctrine',0,'Only human beings can attain moksha.','केवल मनुष्य ही मोक्ष प्राप्त कर सकते हैं।','Any soul capable of right faith, knowledge and conduct may rise to liberation; the potential is infinite in every jiva.','सम्यक् दर्शन, ज्ञान और चारित्र का सामर्थ्य रखने वाली कोई भी आत्मा मोक्ष को प्राप्त कर सकती है; हर जीव में यह सामर्थ्य अनंत है।'],
+['m31','both','doctrine',1,'The five great vows include truthfulness and non-stealing.','पाँच महाव्रतों में सत्य और अस्तेय भी शामिल हैं।','Correct. They are ahimsa, satya, achaurya, brahmacharya and aparigraha — non-violence, truth, non-stealing, celibacy and non-possession.','सही। वे हैं अहिंसा, सत्य, अस्तेय, ब्रह्मचर्य और अपरिग्रह।'],
+['m32','adults','doctrine',1,'Aparigraha means non-possession.','अपरिग्रह का अर्थ है परिग्रह-त्याग।','Correct. It covers outer possessions and inner attachment to them both; monks live it fully, householders in measure.','सही। इसमें बाहरी संपत्ति और उसके भीतर का मोह दोनों आते हैं; मुनि इसे पूर्णतः और श्रावक परिमित रूप में साधते हैं।'],
+['m33','adults','doctrine',0,'Syadvada is a doctrine of doubt and uncertainty.','स्याद्वाद संदेह और अनिश्चय का सिद्धांत है।','Syadvada is the careful method of holding that every judgement is true from some standpoint. It refines certainty; it does not abandon it.','स्याद्वाद वह सतर्क पद्धति है जो मानती है कि हर निर्णय किसी न किसी नय से सत्य है। यह निश्चय को परिष्कृत करता है, त्यागता नहीं।'],
+['m34','both','doctrine',1,'Karma can be shed as well as bound.','कर्म का बंधन और निर्जरा दोनों होती है।','Correct. Bandha binds karma through passion; samvara stops the inflow and nirjara burns off what is already gathered.','सही। कषाय से कर्म का बंध होता है; संवर से आगमन रुकता है और निर्जरा से संचित कर्म क्षीण होते हैं।'],
+['m35','both','monastic',0,'Digambara monks wear bright saffron robes.','दिगंबर मुनि गहरे केसरिया वस्त्र धारण करते हैं।','Digambara means sky-clad. A Digambara monk owns nothing, not even cloth, as the ultimate practice of aparigraha. It is Shvetambara monks who wear simple white robes.','दिगंबर का अर्थ है आकाश-वस्त्र। दिगंबर मुनि कुछ भी परिग्रह नहीं रखते, वस्त्र भी नहीं — यही अपरिग्रह की परम साधना है। श्वेतांबर मुनि सादे श्वेत वस्त्र धारण करते हैं।'],
+['m36','both','monastic',1,'Jain monks and nuns own almost nothing.','जैन मुनि और साध्वियाँ लगभग कुछ भी परिग्रह नहीं रखते।','Correct. Their possessions are limited to the bare essential, and many accept food only as alms.','सही। उनका परिग्रह केवल नितावश्यक वस्तुओं तक सीमित है, और अनेक केवल भिक्षा ही ग्रहण करते हैं।'],
+['m37','adults','monastic',1,'Householders observe twelve vows in all.','श्रावक कुल बारह व्रतों का पालन करते हैं।','Correct. The five anuvratas, three gunavratas and four shikshavratas together form the twelve vows of a householder.','सही। पाँच अणुव्रत, तीन गुणव्रत और चार शिक्षाव्रत मिलकर श्रावक के बारह व्रत बनते हैं।'],
+['m38','kids','monastic',0,'Jain monks travel everywhere by car.','जैन मुनि हर स्थान पर कार से यात्रा करते हैं।','Monks and nuns walk, and they walk carefully. A vehicle would risk harm to beings along the way.','मुनि और साध्वियाँ पैदल चलते हैं, और अति सावधानी से। वाहन से मार्ग में जीवों को हानि का भय रहता है।'],
+['m39','adults','monastic',1,'Pratikramana is a ritual of reflection and seeking forgiveness.','प्रतिक्रमण आलोचना और क्षमा-याचना की विधि है।','Correct. It is performed at set times to review one’s conduct, repent for lapses and ask forgiveness of all beings.','सही। इसे नियत काल में किया जाता है — अपने आचरण की समीक्षा, भूल पर पश्चात्ताप और सभी जीवों से क्षमा-प्रार्थना।'],
+['m40','kids','monastic',1,'Micchami Dukkadam is a way of asking forgiveness.','मिच्छामि दुक्कड़म् क्षमा माँगने का भाव है।','Yes. It means may all my wrong actions bear no fruit — spoken especially on Samvatsari and Kshamavani.','जी। इसका भाव है कि मेरे सभी दुष्कर्म निष्फल हो जाएँ — विशेषतः संवत्सरी और क्षमावाणी पर कहा जाता है।'],
+['m41','adults','monastic',0,'Jain nuns hold a higher rank than monks.','जैन साध्वियों का स्थान मुनियों से ऊँचा है।','Rank follows conduct and seniority, not gender. The path of restraint is equally open to every soul.','स्थान आचरण और ज्येष्ठता से निर्धारित होता है, लिंग से नहीं। संयम का मार्ग हर आत्मा के लिए समान रूप से खुला है।'],
+['m42','both','monastic',1,'Samayika is a practice of sitting in equanimity.','सामायिक समभाव में बैठने की साधना है।','Correct. For a fixed period one withdraws from activity and rests the mind in evenness toward all beings.','सही। नियत काल तक क्रियाओं से हटकर मन को सभी जीवों के प्रति समभाव में स्थिर किया जाता है।'],
+['m43','adults','monastic',1,'Monks accept food only within set daylight hours.','मुनि केवल नियत दिन-काल में ही भोजन ग्रहण करते हैं।','Correct. Alms are taken once, before sunset, from households that prepared the food with care.','सही। भिक्षा एक बार, सूर्यास्त से पूर्व, उन घरों से ली जाती है जिन्होंने भोजन सावधानी से बनाया हो।'],
+['m44','both','symbol',0,'The Jain emblem shows a hand holding a sword.','जैन प्रतीक में तलवार थामे हाथ दिखाया गया है।','The raised palm means stop, do no harm. The wheel in the palm is the cycle of birth and rebirth that ahimsa helps us leave.','ऊपर उठा हुआ हाथ कहता है — रुकिए, किसी को हानि न पहुँचाइए। हथेली का चक्र जन्म-मरण का वह चक्र है जिसे अहिंसा छोड़ने में सहायता करती है।'],
+['m45','both','symbol',1,'The raised palm on the Jain emblem means stop and do no harm.','जैन प्रतीक का ऊपर उठा हाथ कहता है — रुकिए और हानि मत कीजिए।','Correct. It asks the viewer to pause and consider before any action that could injure a living being.','सही। यह दर्शक से कहता है कि किसी भी जीव को हानि पहुँचाने वाली क्रिया से पूर्व रुकें और विचार करें।'],
+['m46','adults','symbol',0,'The Namokar Mantra asks God for wishes and boons.','णमोकार मंत्र ईश्वर से मनोकामना और वरदान माँगता है।','The Navkar Mantra asks for nothing. It simply bows to the virtues of the five supreme beings so that we may become like them.','णमोकार मंत्र कुछ भी नहीं माँगता। वह केवल पंच परमेष्ठी के गुणों को नमन करता है, ताकि हम भी उन जैसे बन सकें।'],
+['m47','kids','symbol',1,'The Namokar Mantra bows to five kinds of great souls.','णमोकार मंत्र पाँच प्रकार की महान आत्माओं को नमन करता है।','Yes — Arihanta, Siddha, Acharya, Upadhyaya and Sadhu. These five are the Panch Parmeshthi.','जी — अरिहंत, सिद्ध, आचार्य, उपाध्याय और साधु। इन्हीं पाँच को पंच परमेष्ठी कहा जाता है।'],
+['m48','adults','symbol',1,'The Jain swastika’s four arms recall the four states of existence.','जैन स्वस्तिक की चार भुजाएँ चार गतियों का बोध कराती हैं।','Correct. They point to the four destinations — heavenly, human, animal and infernal — through which a soul may pass.','सही। वे चार गतियों का स्मरण कराती हैं — देव, मनुष्य, तिर्यंच और नारक — जिनसे आत्मा गुज़र सकती है।'],
+['m49','kids','symbol',1,'The swastika is an ancient auspicious mark in Jainism.','स्वस्तिक जैन धर्म में एक प्राचीन मंगल-चिन्ह है।','Yes. It is the emblem of the seventh Tirthankara and is used in worship and in drawing ritual diagrams.','जी। यह सातवें तीर्थंकर का लांछन है और पूजा तथा मंडल-रचना में प्रयुक्त होता है।'],
+['m50','adults','symbol',0,'The three dots above the Jain swastika represent three Gods.','जैन स्वस्तिक के ऊपर के तीन बिंदु तीन देवताओं को दर्शाते हैं।','They stand for the three jewels — right faith, right knowledge and right conduct — not for three deities.','वे तीन रत्नों का बोध कराते हैं — सम्यक् दर्शन, सम्यक् ज्ञान और सम्यक् चारित्र — तीन देवताओं का नहीं।'],
+['m51','both','symbol',1,'The outline of the Jain emblem represents the shape of the universe.','जैन प्रतीक की बाहरी रेखा लोक के आकार को दर्शाती है।','Correct. It shows the loka as narrow at the top, wide in the middle and broad at the base.','सही। यह लोक को ऊपर संकीर्ण, मध्य में विस्तृत और आधार पर चौड़ा दिखाती है।'],
+['m52','kids','symbol',1,'Hreem is a sacred syllable used in Jain worship.','ह्रीं जैन पूजा में प्रयुक्त एक पवित्र बीजाक्षर है।','Yes. It is a bija mantra held in great reverence, written on ritual diagrams and manuscripts.','जी। यह अति आदरणीय बीज मंत्र है, जिसे मंडल और ग्रंथों पर लिखा जाता है।'],
+['m53','both','festival',1,'Jains celebrate Diwali because Lord Mahavira attained nirvana that day.','जैन दीपावली इसलिए मनाते हैं क्योंकि उस दिन भगवान महावीर को निर्वाण प्राप्त हुआ।','Yes. For Jains Diwali marks Mahavira’s liberation at Pavapuri, and the next day begins the Jain New Year, Veer Samvat.','जी। जैनों हेतु दीपावली पावापुरी में महावीर के मोक्ष का स्मरण है, और अगले दिन से जैन नववर्ष वीर संवत् आरंभ होता है।'],
+['m54','adults','festival',1,'Paryushana is a period of fasting, study and forgiveness.','पर्युषण उपवास, स्वाध्याय और क्षमा का काल है।','Correct. It is the holiest period of the Jain year, ending with Samvatsari, when forgiveness is asked of everyone.','सही। यह जैन वर्ष का सबसे पवित्र काल है, जिसका समापन संवत्सरी पर होता है, जब सभी से क्षमा माँगी जाती है।'],
+['m55','kids','festival',0,'Mahavir Jayanti celebrates Mahavira’s nirvana.','महावीर जयंती महावीर के निर्वाण का उत्सव है।','It celebrates his birth. His nirvana is remembered on Diwali.','यह उनके जन्म का उत्सव है। उनके निर्वाण का स्मरण दीपावली पर किया जाता है।'],
+['m56','adults','festival',1,'Akshaya Tritiya remembers Rishabhdev ending his year-long fast.','अक्षय तृतीया ऋषभदेव के वर्ष-व्यापी उपवास के समापन का स्मरण है।','Correct. He broke the fast with sugarcane juice offered by his son Bharata.','सही। उनके पुत्र भरत द्वारा दिए गए ईख के रस से उन्होंने उपवास तोड़ा।'],
+['m57','both','festival',1,'Kshamavani is the day set aside for asking forgiveness.','क्षमावाणी क्षमा माँगने हेतु नियत दिवस है।','Yes. On this day Jains seek forgiveness from everyone they may have hurt, knowingly or unknowingly.','जी। इस दिन जैन सभी से क्षमा माँगते हैं, जिनें उन्होंने जानते-अनजाने में कष्ट पहुँचाया हो।'],
+['m58','adults','festival',0,'Jain festivals are chiefly occasions for feasting.','जैन पर्व मुख्यतः भोज-उत्सव के अवसर हैं।','They are occasions for restraint, study and charity. Fasting and simplicity mark them far more than feasting.','वे संयम, स्वाध्याय और दान के अवसर हैं। इनमें उपवास और सादगी का स्थान भोज से कहीं अधिक है।'],
+['m59','kids','festival',1,'Shrut Panchami honours sacred knowledge.','श्रुत पंचमी ज्ञान का सम्मान करती है।','Yes. On this day scriptures and teachers are honoured, and manuscripts are reverently cleaned and worshipped.','जी। इस दिन ग्रंथों और गुरुओं का सम्मान होता है, तथा पाण्डुलिपियों को आदरपूर्वक शुद्ध कर पूजा जाता है।'],
+['m60','adults','festival',1,'The Jain New Year begins the day after Diwali.','जैन नववर्ष दीपावली के अगले दिन आरंभ होता है।','Correct. It is called Veer Samvat, counted from the year of Mahavira’s nirvana.','सही। इसे वीर संवत् कहते हैं, जो महावीर के निर्वाण वर्ष से गिना जाता है।'],
+['m61','both','scripture',1,'Kundakunda, author of the Samayasara, was a great Digambara Acharya.','समयसार के रचयिता कुन्दकुन्द एक महान दिगंबर आचार्य थे।','Correct. His works, among them the Samayasara and the Pravachanasara, are among the most revered in Digambar philosophy.','सही। समयसार और प्रवचनसार सहित उनकी रचनाएँ दिगंबर दर्शन में सर्वोच्च आदरणीय मानी जाती हैं।'],
+['m62','both','scripture',1,'The Tattvartha Sutra is accepted by both major Jain traditions.','तत्त्वार्थसूत्र दोनों प्रमुख जैन परंपराओं में स्वीकार्य है।','Correct. Written by Acharya Umasvati, it is the rare text both Digambaras and Shvetambaras hold as authoritative.','सही। आचार्य उमास्वाति की इस रचना को दिगंबर और श्वेतांबर दोनों प्रमाण मानते हैं — यह दुर्लभ सहमति है।'],
+['m63','adults','scripture',0,'The Jain Agamas were written down immediately after Mahavira’s nirvana.','जैन आगम महावीर के निर्वाण के तुरंत बाद लिख लिए गए थे।','They were carried orally for many centuries before being committed to writing, which is part of why traditions differ today.','वे अनेक शताब्दियों तक मौखिक परंपरा में रहे, उसके पश्चात लिखे गए — आज परंपराओं में भेद का एक कारण यही है।'],
+['m64','kids','scripture',1,'Jain holy books are treated with great respect.','जैन ग्रंथों का अति आदर किया जाता है।','Yes. Scriptures are not placed on the floor, are handled with clean hands, and are honoured on Shrut Panchami.','जी। ग्रंथों को भूमि पर नहीं रखा जाता, शुद्ध हाथों से छुआ जाता है, और श्रुत पंचमी पर उनका सम्मान किया जाता है।'],
+['m65','adults','scripture',1,'The Samayasara teaches that the soul alone is the agent of its own karma.','समयसार का उपदेश है कि आत्मा ही अपने कर्मों की कर्ता है।','Correct. Kundakunda insists that the soul, not the body or the world, binds and sheds karma — and so the soul alone can free itself.','सही। कुन्दकुन्द कहते हैं कि कर्म का बंध और निर्जरा शरीर या लोक नहीं, आत्मा स्वयं करती है — अतः मुक्ति भी आत्मा ही साध सकती है।'],
+['m66','both','scripture',0,'Jain scriptures teach that ritual alone brings liberation.','जैन ग्रंथ कहते हैं कि केवल कर्मकांड से मोक्ष मिलता है।','Ritual without right faith, knowledge and conduct is empty. The texts insist that inner transformation is what liberates.','सम्यक् दर्शन, ज्ञान और चारित्र के बिना कर्मकांड निष्फल है। ग्रंथ कहते हैं कि मुक्ति भीतर का परिवर्तन ही दिलाता है।'],
+['m67','adults','scripture',1,'Umasvati is also known as Umasvami.','उमास्वाति को उमास्वामी भी कहा जाता है।','Correct. Both forms of the name are used for the author of the Tattvartha Sutra.','सही। तत्त्वार्थसूत्र के रचयिता हेतु दोनों रूप प्रचलित हैं।'],
+['m68','both','digambar',0,'Digambara means white-clad.','दिगंबर का अर्थ है श्वेत वस्त्रधारी।','Digambara means sky-clad — clothed in the directions alone, owning nothing. Shvetambara is the tradition that means white-clad.','दिगंबर का अर्थ है आकाश-वस्त्र — केवल दिशाओं को ही वस्त्र मानने वाले, जो कुछ भी परिग्रह नहीं रखते। श्वेत वस्त्रधारी को श्वेतांबर कहते हैं।'],
+['m69','both','digambar',1,'Digambar tradition holds that Mahavira never married.','दिगंबर परंपरा मानती है कि महावीर ने विवाह नहीं किया।','Correct. The Digambar tradition records him as unmarried, while other traditions differ on this point.','सही। दिगंबर परंपरा में उन्हें अविवाहित बताया जाता है, जबकि अन्य परंपराएँ इस विषय में भिन्न मत रखती हैं।'],
+['m70','adults','digambar',0,'Digambar and Shvetambara disagree on every doctrine.','दिगंबर और श्वेतांबर हर सिद्धांत पर असहमत हैं।','They agree on the essentials — the Tirthankaras, karma, the three jewels and the five great vows. Their differences are chiefly monastic practice and a few details.','मूल बातों पर दोनों सहमत हैं — तीर्थंकर, कर्म, रत्नत्रय और पाँच महाव्रत। भेद मुख्यतः मुनि-आचार और कुछ विवरणों में है।'],
+['m71','kids','digambar',1,'Digambar temples often have very simple, calm images.','दिगंबर मंदिरों की मूर्तियाँ प्रायः अति सरल और शांत होती हैं।','Yes. The images are unadorned and face serene, reflecting a soul wholly free of attachment.','जी। मूर्तियाँ अलंकृत नहीं होतीं और मुख शांत होता है — यह सब आसक्ति से पूर्णतः मुक्त आत्मा का बोध कराता है।'],
+['m72','adults','digambar',1,'Digambar tradition reveres the Samavasarana as a universal assembly.','दिगंबर परंपरा समवसरण को सार्वभौम सभा के रूप में आदरती है।','Correct. It is the divine assembly where a Tirthankara’s teaching reaches every being in its own language, without exclusion.','सही। यह वह दिव्य सभा है जहाँ तीर्थंकर का उपदेश हर जीव तक उसकी अपनी भाषा में पहुँचता है, किसी को बाहर रखे बिना।']
+];
+
+/* ============================================================
+   UI DICTIONARY · every visible string lives here
+   ============================================================ */
+var UI = {
+  en: {
+    brandHi: 'मिथक भंजन', brandEn: 'Myth Busters',
+    langSwitch: 'हिंदी', hub: 'All games', restart: 'Restart',
+    soundOn: 'Sound on', soundOff: 'Sound off',
+    s1Title: 'Choose your language', s1Sub: 'अपनी भाषा चुनिए',
+    s2Title: 'Who is playing?',
+    s2Sub: 'The children’s round keeps to everyday questions. The adults’ round goes deeper into doctrine, scripture and tradition.',
+    kids: 'Kids', kidsNote: 'Baalak · everyday questions',
+    adults: 'Adults', adultsNote: 'Vyask · doctrine and scripture',
+    s3Title: 'Set up your round',
+    s3Sub: 'Choose how many statements you want, and how much time each one gets.',
+    nameLabel: 'Your name (kept on this device only)', namePh: 'e.g. Vraddhim',
+    roundLabel: 'How many statements?', roundAll: 'All of them',
+    timerLabel: 'Time per statement',
+    timer: { relaxed: 'Relaxed · 20s', standard: 'Standard · 12s', quick: 'Quick · 8s', none: 'No timer' },
+    start: 'Begin', leaderboard: 'Leaderboard',
+    setupHint: 'Press T for true and F for false, or tap a button. When you are wrong, a short lesson follows.',
+    nameNeeded: 'Please write your name first.',
+    hudScore: 'Points', hudStreak: 'Streak', hudAcc: 'Accuracy', hudNum: 'Statement',
+    btnTrue: 'TRUE', btnFalse: 'FALSE',
+    correctTitle: 'Correct!', wrongTitle: 'Not quite.', timeoutTitle: 'Time is up.',
+    mythStamp: 'MYTH BUSTED',
+    trueLead: 'True — ', falseLead: 'It is false — ',
+    points: '+{n} points',
+    next: 'Next statement →',
+    quit: 'Leave this round',
+    quitConfirm: 'Leave this round?', quitBody: 'Your progress in this round will be lost.',
+    yes: 'Yes, leave', no: 'Keep playing',
+    resTitle: ['Curious beginner', 'Solid seeker', 'Myth-busting master', 'Tirthankara-level'],
+    resSub: ['Every journey starts with one step. You learned something new today.',
+             'Good effort. Revisit the myths that caught you and try again.',
+             'Excellent. Your knowledge shines like a diya on Diwali.',
+             'Perfect. You truly understand the Jain path. Micchami Dukkadam.'],
+    statScore: 'Points', statAcc: 'Accuracy', statCorrect: 'Correct', statBest: 'Best streak',
+    rankLine: 'You are #{n} on this device',
+    cheers: ['Sadhu! Sadhu! A clear mind sees the truth.',
+             'Well done — knowledge is the lamp that guides conduct.',
+             'Sadhu! Every myth you released makes room for understanding.',
+             'Beautiful. Right knowledge is one of the three jewels.',
+             'Sadhu! Sadhu! You answered with a steady mind.'],
+    again: 'Play again', changeSetup: 'Change set-up', showLb: 'Leaderboard',
+    reviewTitle: 'The statements that caught you',
+    reviewEmpty: 'Nothing was missed — here are four worth remembering.',
+    lbTitle: 'Leaderboard · highest scores', lbClear: 'Clear',
+    lbEmpty: 'No records yet. Be the first!',
+    lbConfirmTitle: 'Clear the leaderboard?',
+    lbConfirmBody: 'Every record for this game will be removed from this device.',
+    lbCleared: 'Records cleared.',
+    thRank: '#', thLbName: 'Name', thLbLevel: 'Level', thLbTime: 'Time', thLbScore: 'Points',
+    storageOff: 'Records cannot be saved in a private window — the game still plays.',
+    saved: 'Round saved · {n} points',
+    foot: 'Rooted in the Digambar Jain tradition. Understanding varies by family and lineage — always ask your elders.'
+  },
+  hi: {
+    brandHi: 'मिथक भंजन', brandEn: 'Myth Busters',
+    langSwitch: 'English', hub: 'सभी खेल', restart: 'पुनः आरंभ',
+    soundOn: 'ध्वनि चालू', soundOff: 'ध्वनि बंद',
+    s1Title: 'अपनी भाषा चुनिए', s1Sub: 'Choose your language',
+    s2Title: 'कौन खेल रहा है?',
+    s2Sub: 'बालकों की बारी में रोज़मर्रा के प्रश्न हैं। व्यस्कों की बारी में सिद्धांत, ग्रंथ और परंपरा की गहराई है।',
+    kids: 'बालक', kidsNote: 'रोज़मर्रा के प्रश्न',
+    adults: 'व्यस्क', adultsNote: 'सिद्धांत और ग्रंथ',
+    s3Title: 'अपनी बारी सजाइए',
+    s3Sub: 'तय कीजिए कि कितने कथन लेने हैं और प्रत्येक को कितना समय मिले।',
+    nameLabel: 'आपका नाम (केवल इसी उपकरण में संचित)', namePh: 'जैसे वृद्धिम',
+    roundLabel: 'कितने कथन?', roundAll: 'सभी',
+    timerLabel: 'प्रति कथन समय',
+    timer: { relaxed: 'विश्राम · 20 से', standard: 'सामान्य · 12 से', quick: 'शीघ्र · 8 से', none: 'कोई समय-सीमा नहीं' },
+    start: 'आरंभ कीजिए', leaderboard: 'उपलब्धि सूची',
+    setupHint: 'सत्य हेतु T और मिथ्या हेतु F दबाइए, या बटन छूइए। उत्तर भूल होने पर एक छोटा पाठ दिखाया जाता है।',
+    nameNeeded: 'कृपया पहले अपना नाम लिखिए।',
+    hudScore: 'अंक', hudStreak: 'क्रम', hudAcc: 'सटीकता', hudNum: 'कथन',
+    btnTrue: 'सत्य', btnFalse: 'मिथ्या',
+    correctTitle: 'बिल्कुल सही!', wrongTitle: 'ठीक नहीं।', timeoutTitle: 'समय समाप्त।',
+    mythStamp: 'मिथक भंजन',
+    trueLead: 'सत्य है — ', falseLead: 'यह मिथ्या है — ',
+    points: '+{n} अंक',
+    next: 'अगला कथन →',
+    quit: 'यह बारी छोड़िए',
+    quitConfirm: 'यह बारी छोड़ें?', quitBody: 'इस बारी की प्रगति मिट जाएगी।',
+    yes: 'हाँ, छोड़ दीजिए', no: 'खेलते रहिए',
+    resTitle: ['जिज्ञासु आरंभ', 'दृढ़ साधक', 'मिथक-भंजक निपुण', 'तीर्थंकर-कोटि'],
+    resSub: ['हर यात्रा एक कदम से आरंभ होती है। आज आपने कुछ नया सीखा।',
+             'अच्छा प्रयास। जिन मिथकों ने पकड़ा उन्हें पुनः पढ़िए और फिर खेलिए।',
+             'उत्कृष्ट। आपका ज्ञान दीपावली के दीप जैसा प्रकाशमान है।',
+             'पूर्ण। आप जैन पथ को सचमुच समझते हैं। मिच्छामि दुक्कड़म्।'],
+    statScore: 'अंक', statAcc: 'सटीकता', statCorrect: 'सही', statBest: 'श्रेष्ठ क्रम',
+    rankLine: 'इस उपकरण पर आप #{n} स्थान पर हैं',
+    cheers: ['साधु! साधु! निर्मल मन ही सत्य देख पाता है।',
+             'बहुत सुंदर — ज्ञान ही वह दीप है जो आचरण को दिशा देता है।',
+             'साधु! हर मिथक का त्याग समझ के लिए स्थान बनाता है।',
+             'अद्भुत। सम्यक् ज्ञान भी तीन रत्नों में से एक है।',
+             'साधु! साधु! आपने स्थिर मन से उत्तर दिया।'],
+    again: 'पुनः खेलिए', changeSetup: 'सेटिंग बदलिए', showLb: 'उपलब्धि सूची',
+    reviewTitle: 'जिन कथनों ने पकड़ा',
+    reviewEmpty: 'कोई भूल नहीं हुई — ये चार याद रखने योग्य हैं।',
+    lbTitle: 'उपलब्धि सूची · सर्वाधिक अंक', lbClear: 'हटाइए',
+    lbEmpty: 'अभी कोई रिकॉर्ड नहीं। पहले खिलाड़ी बनिए!',
+    lbConfirmTitle: 'उपलब्धि सूची हटाएँ?',
+    lbConfirmBody: 'इस खेल के सभी रिकॉर्ड इस उपकरण से हट जाएँगे।',
+    lbCleared: 'रिकॉर्ड हटा दिए गए।',
+    thRank: '#', thLbName: 'नाम', thLbLevel: 'स्तर', thLbTime: 'समय', thLbScore: 'अंक',
+    storageOff: 'निजी विंडो में रिकॉर्ड संचित नहीं हो सकते — खेल सामान्य रूप से चलता रहेगा।',
+    saved: 'बारी संचित हुई · {n} अंक',
+    foot: 'दिगंबर जैन परंपरा से प्रेरित। समझ परिवार और परंपरा अनुसार भिन्न हो सकती है — अपने बड़ों से अवश्य पूछिए।'
+  }
+};
+
+/* ============================================================
+   CORE HELPERS · storage, i18n, formatting (all guarded)
+   ============================================================ */
+var $ = function (id) { return document.getElementById(id); };
+var mem = {}, memOn = false;
+
+function getLS() {
+  try {
+    if (typeof localStorage !== 'undefined' && localStorage) {
+      localStorage.setItem('__p__', '1'); localStorage.removeItem('__p__');
+      return localStorage;
+    }
+  } catch (e) { /* private mode */ }
+  memOn = true;
+  return null;
+}
+function rawGet(k) {
+  var ls = getLS();
+  try { if (ls) return ls.getItem(k); } catch (e) { /* ignore */ }
+  return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null;
+}
+function rawSet(k, v) {
+  var ls = getLS();
+  try { if (ls) { ls.setItem(k, v); return true; } } catch (e) { /* ignore */ }
+  try { mem[k] = v; } catch (e2) { return false; }
+  return true;
+}
+function rawDel(k) {
+  var ls = getLS();
+  try { if (ls) ls.removeItem(k); } catch (e) { /* ignore */ }
+  try { delete mem[k]; } catch (e2) { /* ignore */ }
+}
+function parseJSON(s, fb) {
+  if (!s) return fb;
+  try { var v = JSON.parse(s); return (v === null || v === undefined) ? fb : v; }
+  catch (e) { return fb; }
+}
+
+function sanitizeName(raw) {
+  var s = String(raw == null ? '' : raw);
+  s = s.replace(/[\u0000-\u001f\u007f]/g, '');
+  s = s.replace(/[<>"'`\\\/]/g, '');
+  s = s.replace(/\s+/g, ' ').trim();
+  if (s.length > 20) s = s.slice(0, 20).trim();
+  return s;
+}
+
+var PREF_DEF = { lang: 'hi', aud: 'kids', sound: true, name: '', lastGame: '' };
+function readPrefs() {
+  var p = parseJSON(rawGet(PREF_KEY), {}), o = {};
+  for (var k in PREF_DEF) {
+    if (!Object.prototype.hasOwnProperty.call(PREF_DEF, k)) continue;
+    o[k] = (p && p[k] !== undefined && p[k] !== null) ? p[k] : PREF_DEF[k];
+  }
+  o.lang = (o.lang === 'en') ? 'en' : 'hi';
+  o.aud = (o.aud === 'adults') ? 'adults' : 'kids';
+  o.sound = o.sound !== false;
+  o.name = sanitizeName(o.name);
+  return o;
+}
+function writePrefs(patch) {
+  var c = readPrefs();
+  if (patch) for (var k in patch) {
+    if (Object.prototype.hasOwnProperty.call(patch, k) &&
+        Object.prototype.hasOwnProperty.call(PREF_DEF, k)) c[k] = patch[k];
+  }
+  c.name = sanitizeName(c.name);
+  rawSet(PREF_KEY, JSON.stringify(c));
+  return c;
+}
+
+var DEV = ['\u0966','\u0967','\u0968','\u0969','\u096A','\u096B','\u096C','\u096D','\u096E','\u096F'];
+function devNum(n) { return String(n).replace(/\d/g, function (d) { return DEV[+d]; }); }
+function fmtTime(sec) {
+  var s = Math.max(0, Math.floor(sec || 0)), m = Math.floor(s / 60), r = s % 60;
+  var out = m + ':' + (r < 10 ? '0' : '') + r;
+  return S.lang === 'hi' ? devNum(out) : out;
+}
+function fmtClock(sec) {
+  var s = Math.max(0, Math.floor(sec || 0));
+  if (s < 3600) return fmtTime(s);
+  var h = Math.floor(s / 3600);
+  return S.lang === 'hi' ? devNum(h) + 'h ' + devNum(Math.floor((s % 3600) / 60)) + 'm'
+                         : h + 'h ' + Math.floor((s % 3600) / 60) + 'm';
+}
+function t(key, vars) {
+  var v = UI[S.lang] || UI.hi;
+  var s = v[key];
+  if (s === undefined) s = UI.hi[key];
+  if (typeof s !== 'string') return s;
+  if (!vars) return s;
+  for (var k in vars) {
+    if (!Object.prototype.hasOwnProperty.call(vars, k)) continue;
+    s = s.split('{' + k + '}').join(String(vars[k]));
+  }
+  return s;
+}
+/** Pick the right language field off a data record. */
+function L(obj, fieldHi, fieldEn) { return S.lang === 'hi' ? obj[fieldHi] : obj[fieldEn]; }
+
+function shuffle(arr) {                 // Fisher-Yates, unbiased
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  }
+  return arr;
+}
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function reduced() {
+  try {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) { return false; }
+}
+
+
+/* ============================================================
+   AUDIO · WebAudio only, created inside the first user gesture
+   ============================================================ */
+var AC = null;
+function ac() {
+  if (AC) return AC;
+  try {
+    var C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return null;
+    AC = new C();
+    if (AC.state === 'suspended' && AC.resume) AC.resume();
+  } catch (e) { AC = null; }
+  return AC;
+}
+function tone(freq, dur, type, gain, delay) {
+  if (!S.sound) return;
+  var c = ac(); if (!c) return;
+  try {
+    var t0 = c.currentTime + (delay || 0);
+    var o = c.createOscillator(), g = c.createGain();
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, gain || 0.06), t0 + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + (dur || 0.12));
+    o.connect(g); g.connect(c.destination);
+    o.start(t0); o.stop(t0 + (dur || 0.12) + 0.03);
+  } catch (e) { /* audio is never fatal */ }
+}
+/** Temple bell: fundamental + two harmonics, long exponential decay. */
+function bell(vol) {
+  if (!S.sound) return;
+  var v = (vol === undefined) ? 0.07 : vol;
+  tone(392, 1.5, 'sine', v, 0);
+  tone(588, 1.2, 'sine', v * 0.45, 0.01);
+  tone(784, 0.9, 'sine', v * 0.25, 0.02);
+}
+var sfx = {
+  tap:    function () { tone(660, 0.05, 'triangle', 0.035); },
+  flip:   function () { tone(520, 0.07, 'sine', 0.045); },
+  match:  function () { tone(659.25, 0.22, 'sine', 0.06, 0); tone(987.77, 0.34, 'sine', 0.05, 0.1); },
+  miss:   function () { tone(233, 0.16, 'sine', 0.04); },
+  finish: function () { bell(0.08); tone(523.25, 0.5, 'sine', 0.05, 0.35); }
+};
+
+/* ============================================================
+   SVG ART · generated at runtime, no images, no icon fonts
+   ============================================================ */
+function svgWrap(inner, vb, title) {
+  var a = title
+    ? 'role="img" aria-label="' + title.replace(/"/g, '') + '"'
+    : 'aria-hidden="true" focusable="false"';
+  return '<svg viewBox="0 0 ' + (vb || 64) + ' ' + (vb || 64) + '" ' + a +
+         ' xmlns="http://www.w3.org/2000/svg">' + inner + '</svg>';
+}
+/* Jain Swastika — four arms, three dots (ratnatraya) and the siddhashila
+   crescent-and-dot above. Drawn from paths so no font can ever mirror it. */
+function artSwastika(title) {
+  var s = 'fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="square"';
+  var arms =
+    '<path ' + s + ' d="M26 22 H42 V38"/>' +
+    '<path ' + s + ' d="M42 26 V42 H26"/>' +
+    '<path ' + s + ' d="M38 42 H22 V26"/>' +
+    '<path ' + s + ' d="M22 38 V22 H38"/>';
+  var dots = '<circle cx="26" cy="52" r="2.3" fill="currentColor"/>' +
+             '<circle cx="32" cy="54.4" r="2.3" fill="currentColor"/>' +
+             '<circle cx="38" cy="52" r="2.3" fill="currentColor"/>';
+  var cres = '<path d="M22 12 A12 12 0 0 0 42 12 A10 10 0 0 1 22 12 Z" fill="currentColor"/>' +
+             '<circle cx="32" cy="5.4" r="2.4" fill="currentColor"/>';
+  return svgWrap('<g transform="translate(0,2)">' + arms + '</g>' + dots + cres, 64, title);
+}
+/* 8-fold radially symmetric lotus rosette — mirroring is invisible by design. */
+function artRosette(title) {
+  var p = '';
+  for (var i = 0; i < 8; i++) {
+    p += '<path d="M32 32 C24 22 24 12 32 5 C40 12 40 22 32 32 Z" fill="currentColor" ' +
+         'opacity="' + (i % 2 ? '.38' : '.62') + '" transform="rotate(' + (i * 45) + ' 32 32)"/>';
+  }
+  p += '<circle cx="32" cy="32" r="6.4" fill="none" stroke="currentColor" stroke-width="2"/>';
+  p += '<circle cx="32" cy="32" r="2.6" fill="currentColor"/>';
+  return svgWrap(p, 64, title);
+}
+function artDiya(title) {
+  return svgWrap(
+    '<path d="M12 40 C12 50 22 56 32 56 C42 56 52 50 52 40 Z" fill="currentColor" opacity=".85"/>' +
+    '<ellipse cx="32" cy="40" rx="20" ry="4.6" fill="currentColor"/>' +
+    '<path d="M32 14 C37 22 39 27 39 31 A7 7 0 0 1 25 31 C25 27 27 22 32 14 Z" ' +
+    'fill="currentColor" opacity=".62"/>', 64, title);
+}
+function artBell(on, title) {
+  var body = '<path d="M32 10 C22 10 18 19 18 29 C18 38 15 42 13 45 H51 C49 42 46 38 46 29 ' +
+             'C46 19 42 10 32 10 Z" fill="none" stroke="currentColor" stroke-width="3.4"/>' +
+             '<path d="M26 50 A6 6 0 0 0 38 50" fill="none" stroke="currentColor" stroke-width="3.4"/>' +
+             '<circle cx="32" cy="7.6" r="2.6" fill="currentColor"/>';
+  if (!on) body += '<path d="M10 56 L54 12" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/>';
+  return svgWrap(body, 64, title);
+}
+function artMedal(title) {
+  return svgWrap(
+    '<circle cx="32" cy="38" r="18" fill="none" stroke="currentColor" stroke-width="3.2"/>' +
+    '<path d="M22 6 L28 22 M42 6 L36 22" stroke="currentColor" stroke-width="4" ' +
+    'stroke-linecap="round" fill="none"/>' +
+    '<path d="M32 29 L34.6 35.4 L41.4 35.9 L36.2 40.3 L37.8 47 L32 43.4 L26.2 47 L27.8 40.3 ' +
+    'L22.6 35.9 L29.4 35.4 Z" fill="currentColor"/>', 64, title);
+}
+
+
+/* ---- the 24 lanchan (emblems) as simple line art ---- */
+var STK = 'fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"';
+var EMBLEM = {
+  bull:      '<path ' + STK + ' d="M18 20 C10 14 8 24 14 30 M46 20 C54 14 56 24 50 30"/>' +
+             '<path ' + STK + ' d="M20 26 C20 44 26 52 32 52 C38 52 44 44 44 26 Z"/>' +
+             '<circle cx="26" cy="36" r="2" fill="currentColor"/><circle cx="38" cy="36" r="2" fill="currentColor"/>',
+  elephant:  '<path ' + STK + ' d="M16 24 C8 22 8 40 18 42 M48 24 C56 22 56 40 46 42"/>' +
+             '<path ' + STK + ' d="M20 24 C20 14 44 14 44 24 C44 34 42 40 40 44"/>' +
+             '<path ' + STK + ' d="M40 44 C44 50 40 56 34 54 C30 53 30 48 33 47"/>',
+  horse:     '<path ' + STK + ' d="M22 52 C20 38 22 26 30 20 C36 16 44 18 46 24 C48 30 44 34 40 34"/>' +
+             '<path ' + STK + ' d="M30 20 C26 14 22 12 18 14 C22 18 22 22 22 26"/>' +
+             '<circle cx="38" cy="25" r="2" fill="currentColor"/>',
+  monkey:    '<circle cx="32" cy="34" r="14" ' + STK + '/>' +
+             '<circle cx="15" cy="30" r="6" ' + STK + '/><circle cx="49" cy="30" r="6" ' + STK + '/>' +
+             '<path ' + STK + ' d="M25 30 C27 26 37 26 39 30 C40 38 36 44 32 44 C28 44 24 38 25 30 Z"/>' +
+             '<circle cx="28" cy="34" r="1.8" fill="currentColor"/><circle cx="36" cy="34" r="1.8" fill="currentColor"/>',
+  curlew:    '<path ' + STK + ' d="M14 44 C22 30 38 24 52 22"/>' +
+             '<path ' + STK + ' d="M52 22 C46 30 40 34 34 36"/>' +
+             '<path ' + STK + ' d="M24 40 C28 48 36 52 44 50"/>' +
+             '<circle cx="48" cy="25" r="2" fill="currentColor"/>',
+  lotusRed:  '<path ' + STK + ' d="M32 48 C20 44 14 34 14 26 C22 26 28 32 32 40 C36 32 42 26 50 26 C50 34 44 44 32 48 Z"/>' +
+             '<path ' + STK + ' d="M32 40 C30 30 30 20 32 12 C34 20 34 30 32 40 Z"/>',
+  swastika:  '<path ' + STK + ' d="M26 22 H42 V38"/><path ' + STK + ' d="M42 26 V42 H26"/>' +
+             '<path ' + STK + ' d="M38 42 H22 V26"/><path ' + STK + ' d="M22 38 V22 H38"/>' +
+             '<circle cx="26" cy="52" r="2" fill="currentColor"/><circle cx="32" cy="54" r="2" fill="currentColor"/>' +
+             '<circle cx="38" cy="52" r="2" fill="currentColor"/>',
+  moon:      '<path ' + STK + ' d="M42 12 A22 22 0 1 0 42 52 A17 17 0 1 1 42 12 Z"/>',
+  makara:    '<path ' + STK + ' d="M10 38 C18 28 30 26 40 30 C46 32 50 30 54 24"/>' +
+             '<path ' + STK + ' d="M10 38 C18 48 32 50 42 44 C48 40 52 42 54 48"/>' +
+             '<path ' + STK + ' d="M40 30 L44 22 L48 30"/>' +
+             '<circle cx="20" cy="35" r="2" fill="currentColor"/>',
+  shrivatsa: '<path ' + STK + ' d="M32 12 L50 32 L32 52 L14 32 Z"/>' +
+             '<path ' + STK + ' d="M32 22 L41 32 L32 42 L23 32 Z"/>',
+  rhino:     '<path ' + STK + ' d="M16 46 C14 32 22 22 34 22 C44 22 50 30 50 40 C50 46 46 50 40 50 L20 50 Z"/>' +
+             '<path ' + STK + ' d="M46 30 L56 20 L52 34"/>' +
+             '<circle cx="26" cy="36" r="2.2" fill="currentColor"/>',
+  buffalo:   '<path ' + STK + ' d="M14 24 C6 22 6 36 16 38 M50 24 C58 22 58 36 48 38"/>' +
+             '<path ' + STK + ' d="M18 28 C18 18 46 18 46 28 C46 42 40 52 32 52 C24 52 18 42 18 28 Z"/>' +
+             '<circle cx="26" cy="36" r="2" fill="currentColor"/><circle cx="38" cy="36" r="2" fill="currentColor"/>',
+  boar:      '<path ' + STK + ' d="M14 40 C14 26 26 20 38 22 C48 24 54 32 52 42 C50 50 40 54 30 52 C20 50 14 46 14 40 Z"/>' +
+             '<path ' + STK + ' d="M50 34 L58 30 L54 40"/><path ' + STK + ' d="M44 46 C48 50 52 50 54 46"/>' +
+             '<circle cx="26" cy="34" r="2" fill="currentColor"/>',
+  falcon:    '<path ' + STK + ' d="M12 30 C22 18 42 16 52 26 C46 28 42 32 40 38 C34 34 26 32 20 34 Z"/>' +
+             '<path ' + STK + ' d="M52 26 L58 30 L50 32"/>' +
+             '<circle cx="44" cy="24" r="2" fill="currentColor"/>',
+  vajra:     '<path ' + STK + ' d="M36 8 L20 34 H30 L26 56 L46 28 H34 Z"/>',
+  deer:      '<path ' + STK + ' d="M24 24 C20 14 14 12 10 14 M24 24 C24 14 28 10 32 10"/>' +
+             '<path ' + STK + ' d="M40 24 C44 14 50 12 54 14 M40 24 C40 14 36 10 32 10"/>' +
+             '<path ' + STK + ' d="M22 30 C22 24 42 24 42 30 C42 44 38 54 32 54 C26 54 22 44 22 30 Z"/>' +
+             '<circle cx="27" cy="36" r="2" fill="currentColor"/><circle cx="37" cy="36" r="2" fill="currentColor"/>',
+  goat:      '<path ' + STK + ' d="M22 26 C14 22 10 14 12 8 M42 26 C50 22 54 14 52 8"/>' +
+             '<path ' + STK + ' d="M22 28 C22 20 42 20 42 28 C42 42 38 54 32 54 C26 54 22 42 22 28 Z"/>' +
+             '<path ' + STK + ' d="M30 54 C30 58 34 58 34 54"/>' +
+             '<circle cx="27" cy="34" r="2" fill="currentColor"/><circle cx="37" cy="34" r="2" fill="currentColor"/>',
+  fish:      '<path ' + STK + ' d="M10 32 C18 20 38 18 48 32 C38 46 18 44 10 32 Z"/>' +
+             '<path ' + STK + ' d="M48 32 L58 22 V42 Z"/>' +
+             '<circle cx="20" cy="30" r="2.2" fill="currentColor"/>',
+  kalash:    '<path ' + STK + ' d="M22 26 H42 L46 34 C48 44 42 54 32 54 C22 54 16 44 18 34 Z"/>' +
+             '<path ' + STK + ' d="M26 26 C26 18 38 18 38 26"/>' +
+             '<path ' + STK + ' d="M32 18 V10"/><circle cx="32" cy="8" r="2.6" fill="currentColor"/>',
+  tortoise:  '<path ' + STK + ' d="M12 40 C12 26 22 18 32 18 C42 18 52 26 52 40 Z"/>' +
+             '<path ' + STK + ' d="M32 18 V40 M18 30 L46 30 M14 38 L50 38"/>' +
+             '<path ' + STK + ' d="M12 40 H52"/>' +
+             '<path ' + STK + ' d="M18 40 L14 50 M46 40 L50 50 M32 40 V50"/>',
+  lotusBlue: '<path ' + STK + ' d="M32 50 C18 46 12 34 12 24 C22 24 28 32 32 42 C36 32 42 24 52 24 C52 34 46 46 32 50 Z"/>' +
+             '<path ' + STK + ' d="M32 42 C29 30 29 18 32 10 C35 18 35 30 32 42 Z"/>' +
+             '<circle cx="32" cy="46" r="2" fill="currentColor"/>',
+  conch:     '<path ' + STK + ' d="M20 46 C12 38 14 22 28 18 C42 14 54 24 52 36 C50 46 40 52 32 48"/>' +
+             '<path ' + STK + ' d="M26 40 C22 34 26 26 34 26 C40 26 44 32 42 38"/>' +
+             '<path ' + STK + ' d="M20 46 L14 54 L26 50"/>',
+  serpent:   '<path ' + STK + ' d="M18 52 C14 40 16 26 24 20 C30 16 38 16 44 22 C50 28 50 40 46 52"/>' +
+             '<path ' + STK + ' d="M24 20 C26 12 38 12 40 20"/>' +
+             '<circle cx="28" cy="26" r="2" fill="currentColor"/><circle cx="36" cy="26" r="2" fill="currentColor"/>' +
+             '<path ' + STK + ' d="M30 34 H34"/>',
+  lion:      '<path ' + STK + ' d="M32 10 L38 18 L48 16 L46 26 L54 32 L46 38 L48 48 L38 46 L32 54 L26 46 L16 48 L18 38 L10 32 L18 26 L16 16 L26 18 Z"/>' +
+             '<circle cx="32" cy="32" r="9" ' + STK + '/>' +
+             '<circle cx="28.5" cy="30" r="1.8" fill="currentColor"/><circle cx="35.5" cy="30" r="1.8" fill="currentColor"/>'
+};
+function artEmblem(key, title) {
+  return svgWrap(EMBLEM[key] || EMBLEM.lotusRed, 64, title);
+}
+
+
+/* ---- attribute art: complexion, posture, nirvana place, birth place ---- */
+function artDisc(hex, title) {
+  return svgWrap(
+    '<circle cx="32" cy="32" r="21" fill="' + hex + '" stroke="#8A6A2A" stroke-width="2.4"/>' +
+    '<circle cx="32" cy="32" r="21" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>' +
+    '<ellipse cx="25" cy="24" rx="7" ry="5" fill="rgba(255,255,255,.34)" transform="rotate(-28 25 24)"/>',
+    64, title);
+}
+/* Abstract, faceless meditative figure — no facial features, ever. */
+function artSilhouette(kind, title) {
+  var body;
+  if (kind === 'seated') {
+    body = '<circle cx="32" cy="16" r="7" fill="currentColor" opacity=".88"/>' +
+           '<path d="M32 24 C22 24 16 32 15 42 L49 42 C48 32 42 24 32 24 Z" fill="currentColor" opacity=".88"/>' +
+           '<path d="M10 44 C16 50 48 50 54 44 L54 50 C48 56 16 56 10 50 Z" fill="currentColor" opacity=".62"/>';
+  } else {
+    body = '<circle cx="32" cy="11" r="6.4" fill="currentColor" opacity=".88"/>' +
+           '<path d="M32 18 C25 18 21 24 21 32 L21 46 L26 46 L26 58 L38 58 L38 46 L43 46 L43 32 ' +
+           'C43 24 39 18 32 18 Z" fill="currentColor" opacity=".88"/>' +
+           '<path d="M17 30 L21 30 M43 30 L47 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>';
+  }
+  return svgWrap(body, 64, title);
+}
+/* Five distinct hill-and-temple skylines, one per nirvana sthal. */
+var MOKSHA_ART = {
+  sammend:    '<path d="M4 56 L18 22 L26 40 L34 12 L44 38 L52 24 L60 56 Z" fill="currentColor" opacity=".8"/>' +
+              '<path d="M30 40 h8 v16 h-8 Z" fill="#FFF8F0" opacity=".75"/>',
+  ashtapada:  '<path d="M4 56 L14 30 L22 44 L32 16 L42 44 L50 30 L60 56 Z" fill="currentColor" opacity=".8"/>' +
+              '<circle cx="32" cy="12" r="4" fill="currentColor"/>',
+  champapuri: '<path d="M6 56 V34 H20 V56 Z M44 56 V34 H58 V56 Z" fill="currentColor" opacity=".72"/>' +
+              '<path d="M22 56 V26 H42 V56 Z" fill="currentColor" opacity=".88"/>' +
+              '<path d="M26 26 C26 16 38 16 38 26 Z" fill="currentColor"/>' +
+              '<path d="M32 12 V6" stroke="currentColor" stroke-width="2.6"/>',
+  girnar:     '<path d="M2 56 L16 18 L28 42 L38 10 L50 40 L62 56 Z" fill="currentColor" opacity=".82"/>' +
+              '<path d="M34 30 h8 v10 h-8 Z" fill="#FFF8F0" opacity=".8"/>',
+  pavapuri:   '<path d="M4 56 C16 48 20 34 32 34 C44 34 48 48 60 56 Z" fill="currentColor" opacity=".55"/>' +
+              '<path d="M24 56 V36 H40 V56 Z" fill="currentColor" opacity=".88"/>' +
+              '<path d="M26 36 C26 24 38 24 38 36 Z" fill="currentColor"/>' +
+              '<path d="M10 56 H54" stroke="#FFF8F0" stroke-width="2.4" opacity=".7"/>'
+};
+function artMoksha(key, title) {
+  return svgWrap(MOKSHA_ART[key] || MOKSHA_ART.sammend, 64, title);
+}
+function artGate(title) {
+  return svgWrap(
+    '<path d="M10 56 V26 H54 V56" fill="none" stroke="currentColor" stroke-width="3.4"/>' +
+    '<path d="M22 56 V36 C22 28 42 28 42 36 V56" fill="none" stroke="currentColor" stroke-width="3.2"/>' +
+    '<path d="M6 26 L32 10 L58 26" fill="none" stroke="currentColor" stroke-width="3.4"/>' +
+    '<circle cx="32" cy="20" r="3" fill="currentColor"/>' +
+    '<path d="M14 30 V56 M50 30 V56" stroke="currentColor" stroke-width="2" opacity=".6"/>',
+    64, title);
+}
+/* The art shown on an attribute card, by attribute key. */
+function attrArt(attr, th) {
+  var title = '';
+  if (attr === 'chinh')  return artEmblem(th.chinhSvg, L(th, 'chinhHi', 'chinhEn'));
+  if (attr === 'varna')  return artDisc(th.varnaHex, L(th, 'varnaHi', 'varnaEn'));
+  if (attr === 'moksha') return artMoksha(th.mokshaKey, L(th, 'mokshaHi', 'mokshaEn'));
+  if (attr === 'aasan')  return artSilhouette(th.aasanKey, AASAN[th.aasanKey][S.lang]);
+  if (attr === 'janma')  return artGate(L(th, 'janmaHi', 'janmaEn'));
+  return artRosette(title);
+}
+/* The text label shown under the attribute art. */
+function attrText(attr, th) {
+  if (attr === 'chinh')  return L(th, 'chinhHi', 'chinhEn');
+  if (attr === 'varna')  return L(th, 'varnaHi', 'varnaEn');
+  if (attr === 'moksha') return L(th, 'mokshaHi', 'mokshaEn');
+  if (attr === 'aasan')  return AASAN[th.aasanKey][S.lang];
+  if (attr === 'janma')  return L(th, 'janmaHi', 'janmaEn');
+  return '';
+}
+/* One-line teaching fact spoken on a successful match. */
+function factLine(th, attr) {
+  var name = L(th, 'hi', 'en');
+  var parts = [name, attrText(attr, th)];
+  if (attr !== 'moksha') parts.push(L(th, 'mokshaHi', 'mokshaEn'));
+  return parts.join(' · ');
+}
+
+
+
+
+/* ============================================================
+   TOAST / DIALOG / PARTICLES
+   ============================================================ */
+var toastId = null;
+function toast(msg) {
+  var el = $('toast');
+  el.textContent = msg;
+  el.classList.add('is-on');
+  if (toastId) clearTimeout(toastId);
+  toastId = setTimeout(function () { el.classList.remove('is-on'); }, 3200);
+}
+function say(msg) { var el = $('live'); if (el) el.textContent = msg; }
+
+var dlgYesFn = null, dlgLastFocus = null;
+function askDialog(title, body, yesLabel, noLabel, onYes) {
+  dlgLastFocus = document.activeElement;
+  $('dlgTitle').textContent = title;
+  $('dlgBody').textContent = body;
+  $('dlgYes').textContent = yesLabel;
+  $('dlgNo').textContent = noLabel;
+  dlgYesFn = onYes;
+  $('dialog').classList.remove('is-hidden');
+  $('dlgNo').focus();
+}
+function closeDialog() {
+  $('dialog').classList.add('is-hidden');
+  dlgYesFn = null;
+  if (dlgLastFocus && dlgLastFocus.focus) dlgLastFocus.focus();
+}
+$('dlgYes').addEventListener('click', function () { var f = dlgYesFn; closeDialog(); if (f) f(); });
+$('dlgNo').addEventListener('click', closeDialog);
+$('dialog').addEventListener('click', function (e) { if (e.target === $('dialog')) closeDialog(); });
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && !$('dialog').classList.contains('is-hidden')) closeDialog();
+});
+
+/** Muted marigold petals — transform + opacity only, skipped for reduced motion. */
+function petals(count) {
+  if (reduced()) return;
+  var host = $('fx');
+  var cols = ['#E8800C', '#C8860A', '#B23A3A', '#D4A574', '#E3B23C'];
+  var n = count || 24;
+  for (var i = 0; i < n; i++) {
+    var p = document.createElement('i');
+    var size = 7 + Math.random() * 8;
+    p.style.left = (Math.random() * 100) + 'vw';
+    p.style.width = size + 'px';
+    p.style.height = (size * 1.35) + 'px';
+    p.style.background = cols[i % cols.length];
+    p.style.opacity = '.8';
+    p.style.animationDuration = (2.6 + Math.random() * 2.2) + 's';
+    p.style.animationDelay = (Math.random() * 0.7) + 's';
+    host.appendChild(p);
+    (function (node) { setTimeout(function () { if (node.parentNode) node.parentNode.removeChild(node); }, 5600); })(p);
+  }
+}
+
+/* ============================================================
+   LEADERBOARD · shared schema, one key for all six games
+   ============================================================ */
+function lbAll() {
+  var o = parseJSON(rawGet(LB_KEY), {});
+  return (o && typeof o === 'object' && !Array.isArray(o)) ? o : {};
+}
+function lbList() {
+  var l = lbAll()[GAME_ID];
+  if (!Array.isArray(l)) return [];
+  var out = [];
+  for (var i = 0; i < l.length; i++) {
+    var e = l[i];
+    if (!e || typeof e !== 'object') continue;
+    out.push({
+      name: sanitizeName(e.name), level: String(e.level || ''), levelKey: String(e.levelKey || ''),
+      duration: Math.max(0, Math.floor(Number(e.duration) || 0)),
+      score: Math.max(0, Math.floor(Number(e.score) || 0)),
+      meta: (e.meta && typeof e.meta === 'object') ? e.meta : {},
+      ts: Math.floor(Number(e.ts) || Date.now())
+    });
+  }
+  out.sort(lbCmp);
+  return out;
+}
+function lbCmp(a, b) { return LB_CMP(a, b); }
+function lbSave(entry) {
+  var all = lbAll();
+  var list = Array.isArray(all[GAME_ID]) ? all[GAME_ID] : [];
+  list.push(entry);
+  list.sort(lbCmp);
+  if (list.length > LB_MAX) list = list.slice(0, LB_MAX);
+  all[GAME_ID] = list;
+  var okSave = rawSet(LB_KEY, JSON.stringify(all));
+  var rank = 0;
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].ts === entry.ts && list[i].name === entry.name &&
+        list[i].levelKey === entry.levelKey) { rank = i + 1; break; }
+  }
+  return { saved: okSave, rank: rank };
+}
+function lbClear() {
+  var all = lbAll();
+  if (Object.prototype.hasOwnProperty.call(all, GAME_ID)) {
+    delete all[GAME_ID];
+    rawSet(LB_KEY, JSON.stringify(all));
+  }
+}
+
+
+
+
+/* ============================================================
+   STATE
+   ============================================================ */
+var S = {
+  lang: 'hi', sound: true, aud: null, name: '', screen: 'lang',
+  round: 10, timerKey: 'standard', timerSec: 12,
+  pool: [], deck: [], idx: 0,
+  score: 0, streak: 0, best: 0, correct: 0, answered: 0,
+  startedAt: 0, clockId: null, timerId: null, elapsed: 0,
+  lock: false, missed: [], lastRank: 0
+};
+
+function setScreen(name) {
+  S.screen = name;
+  ['scrLang', 'scrAud', 'scrSetup', 'scrPlay', 'scrResult'].forEach(function (id) {
+    $(id).classList.toggle('is-hidden',
+      id !== 'scr' + name.charAt(0).toUpperCase() + name.slice(1));
+  });
+  $('restartBtn').classList.toggle('is-hidden', name !== 'play' && name !== 'result');
+  window.scrollTo(0, 0);
+}
+
+/* Row: [id, aud, topic, answer(1|0), enS, hiS, enX, hiX] */
+function qText(q)  { return S.lang === 'hi' ? q[5] : q[4]; }
+function qWhy(q)   { return S.lang === 'hi' ? q[7] : q[6]; }
+function qTrue(q)  { return q[3] === 1; }
+function topicName(key) {
+  for (var i = 0; i < TOPICS.length; i++) {
+    if (TOPICS[i][0] === key) return S.lang === 'hi' ? TOPICS[i][2] : TOPICS[i][1];
+  }
+  return key;
+}
+function timerSecFor(key) {
+  for (var i = 0; i < TIMERS.length; i++) if (TIMERS[i].key === key) return TIMERS[i].sec;
+  return 12;
+}
+
+function buildPool() {
+  S.pool = QUESTIONS.filter(function (q) {
+    return S.aud === 'adults' ? true : (q[1] !== 'adults');
+  });
+}
+
+function stopClock() { if (S.clockId) { clearInterval(S.clockId); S.clockId = null; } }
+function stopTimer() { if (S.timerId) { clearTimeout(S.timerId); S.timerId = null; } }
+function startClock() {
+  if (S.startedAt) return;
+  S.startedAt = Date.now();
+  stopClock();
+  S.clockId = setInterval(function () {
+    S.elapsed = Math.floor((Date.now() - S.startedAt) / 1000);
+  }, 500);
+}
+
+function startRound() {
+  var nm = sanitizeName($('nameInput').value);
+  if (!nm) { toast(t('nameNeeded')); $('nameInput').focus(); return; }
+  S.name = nm;
+  writePrefs({ name: nm, aud: S.aud, lastGame: GAME_ID });
+
+  buildPool();
+  var src = S.pool.slice();
+  shuffle(src);
+  S.deck = (S.round > 0) ? src.slice(0, Math.min(S.round, src.length)) : src;
+  S.timerSec = timerSecFor(S.timerKey);
+
+  S.idx = 0; S.score = 0; S.streak = 0; S.best = 0;
+  S.correct = 0; S.answered = 0;
+  S.startedAt = 0; S.elapsed = 0; S.lock = false; S.missed = []; S.lastRank = 0;
+  stopClock(); stopTimer();
+  clearLesson();
+  $('lbPanel').classList.add('is-hidden');
+
+  setScreen('play');
+  showStatement();
+  bell(0.05);
+}
+
+/* ============================================================
+   PLAY
+   ============================================================ */
+function showStatement() {
+  if (S.idx >= S.deck.length) { endRound(); return; }
+  var q = S.deck[S.idx];
+  S.lock = false;
+  $('statement').textContent = qText(q);
+  $('topicLine').textContent = topicName(q[2]);
+  $('qNum').textContent = (S.lang === 'hi' ? devNum(S.idx + 1) : (S.idx + 1)) +
+    ' / ' + (S.lang === 'hi' ? devNum(S.deck.length) : S.deck.length);
+  $('btnTrue').disabled = false;
+  $('btnFalse').disabled = false;
+  $('statementCard').classList.remove('is-shake');
+  clearLesson();
+  paintHud();
+  startTimerBar();
+  say(qText(q));
+}
+
+function startTimerBar() {
+  stopTimer();
+  var fill = $('timerFill');
+  var bar = fill.parentNode;
+  bar.classList.remove('is-warn');
+  if (!S.timerSec) {                      // "no timer" — hide the bar entirely
+    bar.style.opacity = '0';
+    fill.style.transition = 'none';
+    fill.style.transform = 'scaleX(1)';
+    return;
+  }
+  bar.style.opacity = '1';
+  fill.style.transition = 'none';
+  fill.style.transform = 'scaleX(1)';
+  void fill.offsetWidth;                   // force reflow so the restart is clean
+  if (reduced()) {
+    fill.style.transition = 'none';
+  } else {
+    fill.style.transition = 'transform ' + S.timerSec + 's linear';
+    fill.style.transform = 'scaleX(0)';
+  }
+  S.timerId = setTimeout(function () {
+    if (!S.lock) answer(null);
+  }, S.timerSec * 1000);
+  if (!reduced()) {
+    setTimeout(function () { bar.classList.add('is-warn'); },
+      Math.round(S.timerSec * (1 - WARN_AT) * 1000));
+  }
+}
+
+function paintHud() {
+  var hi = (S.lang === 'hi');
+  $('hudScore').textContent = hi ? devNum(S.score) : String(S.score);
+  $('hudStreak').textContent = hi ? devNum(S.streak) : String(S.streak);
+  var acc = S.answered ? Math.round((S.correct / S.answered) * 100) : null;
+  $('hudAcc').textContent = acc === null ? '—' : (hi ? devNum(acc) : acc) + '%';
+  $('progFill').style.transform =
+    'scaleX(' + (S.deck.length ? (S.idx / S.deck.length) : 0).toFixed(4) + ')';
+}
+
+/** guess === null means the clock ran out. */
+function answer(guess) {
+  if (S.lock || S.idx >= S.deck.length) return;
+  S.lock = true;
+  stopTimer();
+  startClock();
+  $('btnTrue').disabled = true;
+  $('btnFalse').disabled = true;
+
+  var q = S.deck[S.idx];
+  var right = (guess !== null) && (guess === qTrue(q));
+  var gain = BASE + (S.streak >= STREAK_AT ? STREAK_BONUS : 0);
+
+  S.answered++;
+  if (right) {
+    S.correct++;
+    S.streak++;
+    if (S.streak > S.best) S.best = S.streak;
+    S.score += gain;
+    sfx.match();
+  } else {
+    S.streak = 0;
+    S.missed.push(q);
+    $('statementCard').classList.add('is-shake');
+    sfx.miss();
+  }
+  paintHud();
+  renderLesson(q, right, guess === null, gain);
+}
+
+function say(msg) { var e = $('live'); if (e) e.textContent = msg; }
+
+/** Teaching card, inline — built with textContent only, never innerHTML. */
+function renderLesson(q, right, timedOut, gain) {
+  clearLesson();
+  var box = document.createElement('div');
+  box.className = 'g-lesson ' + (right ? 'is-correct' : 'is-wrong');
+
+  if (!right && !qTrue(q)) {
+    var sw = document.createElement('div');
+    sw.className = 'g-stampwrap';
+    var stamp = document.createElement('span');
+    stamp.className = 'g-stamp';
+    stamp.textContent = t('mythStamp');
+    sw.appendChild(stamp);
+    box.appendChild(sw);
+  }
+
+  var head = document.createElement('div');
+  head.className = 'g-lesson-head';
+  var mark = document.createElement('span');
+  mark.className = 'g-lesson-mark';
+  mark.innerHTML = right ? artMedal() : artDiya();
+  head.appendChild(mark);
+  var title = document.createElement('span');
+  title.className = 'g-lesson-title';
+  title.textContent = right ? t('correctTitle')
+    : (timedOut ? t('timeoutTitle') : t('wrongTitle'));
+  head.appendChild(title);
+  box.appendChild(head);
+
+  var body = document.createElement('p');
+  body.className = 'g-lesson-body';
+  var lead = right ? (qTrue(q) ? t('trueLead') : t('falseLead')) : '';
+  body.textContent = lead + qWhy(q);
+  box.appendChild(body);
+
+  var foot = document.createElement('div');
+  foot.className = 'g-lesson-foot';
+  var tag = document.createElement('span');
+  tag.className = 'g-lesson-tag';
+  tag.textContent = right
+    ? t('points', { n: (S.lang === 'hi' ? devNum(gain) : gain) })
+    : topicName(q[2]);
+  foot.appendChild(tag);
+  var next = document.createElement('button');
+  next.type = 'button';
+  next.className = 'g-btn g-btn-sm g-btn-primary g-lesson-next';
+  next.textContent = t('next');
+  next.addEventListener('click', nextStatement);
+  foot.appendChild(next);
+  box.appendChild(foot);
+
+  var anchor = $('statementCard');
+  anchor.parentNode.insertBefore(box, anchor.nextSibling);
+  next.focus();
+  say(title.textContent + ' ' + body.textContent);
+}
+
+function clearLesson() {
+  var old = document.querySelector('.g-lesson');
+  if (old && old.parentNode) old.parentNode.removeChild(old);
+}
+
+function nextStatement() {
+  S.idx++;
+  clearLesson();
+  paintHud();
+  if (S.idx >= S.deck.length) { endRound(); return; }
+  showStatement();
+}
+
+/* ============================================================
+   RESULT
+   ============================================================ */
+function levelKey() {
+  return (S.aud === 'adults' ? 'adults' : 'kids') + '-' +
+         (S.round > 0 ? S.round : 'all') + '-' + S.timerKey;
+}
+function levelLabel() {
+  var who = S.aud === 'adults' ? t('adults') : t('kids');
+  var n = S.round > 0
+    ? (S.lang === 'hi' ? devNum(S.round) : String(S.round))
+    : t('roundAll');
+  return who + ' · ' + n + ' · ' + t('timer')[S.timerKey];
+}
+
+function tierOf() {
+  var pct = S.deck.length ? (S.correct / S.deck.length) : 0;
+  if (pct === 1) return 3;
+  if (pct >= 0.8) return 2;
+  if (pct >= 0.6) return 1;
+  return 0;
+}
+
+function endRound() {
+  stopTimer(); stopClock();
+  if (S.startedAt) S.elapsed = Math.floor((Date.now() - S.startedAt) / 1000);
+
+  var entry = {
+    name: S.name,
+    level: levelLabel(),
+    levelKey: levelKey(),
+    duration: S.elapsed,
+    score: S.score,
+    meta: { correct: S.correct, total: S.deck.length, best: S.best, aud: S.aud },
+    ts: Date.now()
+  };
+  var res = lbSave(entry);
+  S.lastRank = res.saved ? res.rank : 0;
+
+  setScreen('result');
+  paintResultText();
+  renderReview();
+  if (tierOf() >= 1) petals(26);
+  sfx.finish();
+  toast(res.saved ? t('saved', { n: (S.lang === 'hi' ? devNum(S.score) : S.score) })
+                  : t('storageOff'));
+}
+
+function paintResultText() {
+  var tier = tierOf();
+  var hi = (S.lang === 'hi');
+  $('medalMark').innerHTML = artMedal();
+  $('resTitle').textContent = t('resTitle')[tier];
+  $('resSub').textContent = t('resSub')[tier];
+  $('stScore').textContent = hi ? devNum(S.score) : String(S.score);
+  var acc = S.deck.length ? Math.round((S.correct / S.deck.length) * 100) : 0;
+  $('stAcc').textContent = (hi ? devNum(acc) : acc) + '%';
+  $('stCorrect').textContent = (hi ? devNum(S.correct) : S.correct) + '/' +
+                               (hi ? devNum(S.deck.length) : S.deck.length);
+  $('stBest').textContent = hi ? devNum(S.best) : String(S.best);
+  $('cheerLine').textContent = pick(t('cheers'));
+  var rk = $('resRank');
+  if (S.lastRank) {
+    rk.textContent = t('rankLine', { n: hi ? devNum(S.lastRank) : S.lastRank });
+    rk.classList.remove('is-hidden');
+  } else {
+    rk.classList.add('is-hidden');
+  }
+  $('resLbPanel').classList.remove('is-hidden');
+  renderLbInto('resLbBody');
+}
+
+/** Review the misses; when nothing was missed, show four worth remembering. */
+function renderReview() {
+  var host = $('reviewList');
+  host.innerHTML = '';
+  var items = S.missed.length ? S.missed : S.deck.slice(0, 4);
+
+  if (!S.missed.length) {
+    var note = document.createElement('p');
+    note.className = 'g-fb-note';
+    note.textContent = t('reviewEmpty');
+    host.appendChild(note);
+  }
+
+  items.slice(0, 10).forEach(function (q) {
+    var row = document.createElement('div');
+    row.className = 'g-revitem';
+    var topic = document.createElement('span');
+    topic.className = 'g-revtopic';
+    topic.textContent = topicName(q[2]);
+    row.appendChild(topic);
+    var st = document.createElement('div');
+    var b = document.createElement('b');
+    b.textContent = (qTrue(q) ? t('btnTrue') : t('btnFalse')) + ': ';
+    st.appendChild(b);
+    st.appendChild(document.createTextNode(qText(q)));
+    row.appendChild(st);
+    var why = document.createElement('span');
+    why.className = 'g-revwhy';
+    why.textContent = qWhy(q);
+    row.appendChild(why);
+    host.appendChild(row);
+  });
+}
+
+
+/* ============================================================
+   LEADERBOARD
+   ============================================================ */
+function renderLbInto(id) {
+  var host = $(id);
+  if (!host) return;
+  host.innerHTML = '';
+  var list = lbList();
+  if (!list.length) {
+    var p = document.createElement('p');
+    p.className = 'g-lb-empty';
+    p.textContent = t('lbEmpty');
+    host.appendChild(p);
+    return;
+  }
+  var wrap = document.createElement('div');
+  wrap.className = 'g-tablewrap';
+  var tb = document.createElement('table');
+  tb.className = 'g-table';
+  var thead = document.createElement('thead');
+  var hr = document.createElement('tr');
+  [t('thRank'), t('thLbName'), t('thLbLevel'), t('thLbScore'), t('thLbTime')].forEach(function (h) {
+    var th = document.createElement('th');
+    th.textContent = h;
+    hr.appendChild(th);
+  });
+  thead.appendChild(hr);
+  tb.appendChild(thead);
+  var body = document.createElement('tbody');
+  var medals = ['\uD83E\uDD47', '\uD83E\uDD48', '\uD83E\uDD49'];
+  list.slice(0, 10).forEach(function (e, i) {
+    var tr = document.createElement('tr');
+    var vals = [
+      i < 3 ? medals[i] : String(i + 1),
+      e.name || '—',
+      e.level || e.levelKey || '—',
+      (S.lang === 'hi' ? devNum(e.score) : String(e.score)),
+      fmtClock(e.duration)
+    ];
+    vals.forEach(function (v, ci) {
+      var td = document.createElement('td');
+      td.textContent = v;              // textContent only, never innerHTML
+      if (ci === 0 && i < 3) td.className = 'g-medalcell';
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+  tb.appendChild(body);
+  wrap.appendChild(tb);
+  host.appendChild(wrap);
+}
+
+function clearLb() {
+  askDialog(t('lbConfirmTitle'), t('lbConfirmBody'), t('lbClear'), t('no'), function () {
+    lbClear();
+    renderLbInto('lbBody');
+    renderLbInto('resLbBody');
+    toast(t('lbCleared'));
+  });
+}
+
+/* ============================================================
+   SETUP CHIPS
+   ============================================================ */
+function buildRoundChips() {
+  var host = $('roundChips');
+  host.innerHTML = '';
+  ROUNDS.forEach(function (n) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'g-chip' + (S.round === n ? ' is-on' : '');
+    b.textContent = (n === 0) ? t('roundAll') : (S.lang === 'hi' ? devNum(n) : String(n));
+    b.setAttribute('aria-pressed', S.round === n ? 'true' : 'false');
+    b.addEventListener('click', function () { S.round = n; buildRoundChips(); sfx.tap(); });
+    host.appendChild(b);
+  });
+}
+
+function buildTimerChips() {
+  var host = $('timerChips');
+  host.innerHTML = '';
+  TIMERS.forEach(function (tm) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'g-chip' + (S.timerKey === tm.key ? ' is-on' : '');
+    b.textContent = t('timer')[tm.key];
+    b.setAttribute('aria-pressed', S.timerKey === tm.key ? 'true' : 'false');
+    b.addEventListener('click', function () {
+      S.timerKey = tm.key;
+      S.timerSec = tm.sec;
+      buildTimerChips();
+      sfx.tap();
+    });
+    host.appendChild(b);
+  });
+}
+
+
+/* ============================================================
+   RENDER · pure function of state, so a language switch mid-round
+   never loses the deck, the score or the clock
+   ============================================================ */
+function applyText() {
+  document.documentElement.lang = (S.lang === 'hi') ? 'hi' : 'en';
+  document.title = (S.lang === 'hi'
+    ? 'मिथक भंजन · Myth Busters'
+    : 'Myth Busters · मिथक भंजन');
+
+  $('brandMark').innerHTML = artSwastika();
+  $('brandHi').textContent = t('brandHi');
+  $('brandEn').textContent = t('brandEn');
+  $('langBtn').textContent = t('langSwitch');
+  $('hubBtn').textContent = t('hub');
+  $('restartBtn').textContent = t('restart');
+  paintSound();
+
+  $('langGlyph').innerHTML = artRosette();
+  $('s1Title').textContent = t('s1Title');
+  $('s1Sub').textContent = t('s1Sub');
+
+  $('s2Title').textContent = t('s2Title');
+  $('s2Sub').textContent = t('s2Sub');
+  $('kidsLbl').textContent = t('kids');
+  $('kidsNote').textContent = t('kidsNote');
+  $('adultsLbl').textContent = t('adults');
+  $('adultsNote').textContent = t('adultsNote');
+
+  $('s3Title').textContent = t('s3Title');
+  $('s3Sub').textContent = t('s3Sub');
+  $('nameLabel').textContent = t('nameLabel');
+  $('nameInput').placeholder = t('namePh');
+  $('roundLabel').textContent = t('roundLabel');
+  $('timerLabel').textContent = t('timerLabel');
+  $('setupHint').textContent = t('setupHint');
+  $('startBtn').textContent = t('start');
+  $('lbBtn').textContent = t('leaderboard');
+  $('lbTitle').textContent = t('lbTitle');
+  $('lbClearBtn').textContent = t('lbClear');
+
+  $('hudScoreLbl').textContent = t('hudScore');
+  $('hudStreakLbl').textContent = t('hudStreak');
+  $('hudAccLbl').textContent = t('hudAcc');
+  $('btnTrue').textContent = t('btnTrue');
+  $('btnFalse').textContent = t('btnFalse');
+  $('quitBtn').textContent = t('quit');
+
+  $('stScoreLbl').textContent = t('statScore');
+  $('stAccLbl').textContent = t('statAcc');
+  $('stCorrectLbl').textContent = t('statCorrect');
+  $('stBestLbl').textContent = t('statBest');
+  $('againBtn').textContent = t('again');
+  $('changeBtn').textContent = t('changeSetup');
+  $('resLbBtn').textContent = t('showLb');
+  $('resLbTitle').textContent = t('lbTitle');
+  $('resLbClearBtn').textContent = t('lbClear');
+  $('reviewTitle').textContent = t('reviewTitle');
+  $('footTxt').textContent = t('foot');
+
+  buildRoundChips();
+  buildTimerChips();
+  if (!$('lbPanel').classList.contains('is-hidden')) renderLbInto('lbBody');
+  if (!$('resLbPanel').classList.contains('is-hidden')) renderLbInto('resLbBody');
+
+  if (S.screen === 'play') {
+    var q = S.deck[S.idx];
+    if (q) {
+      $('statement').textContent = qText(q);
+      $('topicLine').textContent = topicName(q[2]);
+      $('qNum').textContent = (S.lang === 'hi' ? devNum(S.idx + 1) : (S.idx + 1)) +
+        ' / ' + (S.lang === 'hi' ? devNum(S.deck.length) : S.deck.length);
+    }
+    paintHud();
+    /* re-render the open lesson in the new language, keeping its verdict */
+    var lesson = document.querySelector('.g-lesson');
+    if (lesson && q) {
+      var wasRight = lesson.classList.contains('is-correct');
+      renderLesson(q, wasRight, false, BASE);
+    }
+  }
+  if (S.screen === 'result') { paintResultText(); renderReview(); }
+}
+
+function paintSound() {
+  var b = $('sndBtn');
+  b.innerHTML = artBell(S.sound);
+  b.setAttribute('aria-pressed', S.sound ? 'true' : 'false');
+  b.setAttribute('aria-label', S.sound ? t('soundOn') : t('soundOff'));
+  b.title = S.sound ? t('soundOn') : t('soundOff');
+}
+
+
+/* ============================================================
+   WIRING
+   ============================================================ */
+function setLang(lang) {
+  S.lang = (lang === 'en') ? 'en' : 'hi';
+  writePrefs({ lang: S.lang });
+  applyText();          // text only — deck, score and clock survive
+}
+
+function chooseAud(aud) {
+  S.aud = aud;
+  writePrefs({ aud: aud });
+  buildPool();
+  if (S.round > 0 && S.round > S.pool.length) S.round = 0;
+  buildRoundChips();
+  setScreen('setup');
+  sfx.tap();
+}
+
+document.querySelectorAll('[data-lang]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    ac();
+    setLang(b.dataset.lang);
+    sfx.tap();
+    setScreen('aud');
+  });
+});
+document.querySelectorAll('[data-aud]').forEach(function (b) {
+  b.addEventListener('click', function () { ac(); chooseAud(b.dataset.aud); });
+});
+
+$('langBtn').addEventListener('click', function () {
+  ac();
+  setLang(S.lang === 'hi' ? 'en' : 'hi');
+  sfx.tap();
+});
+$('sndBtn').addEventListener('click', function () {
+  S.sound = !S.sound;
+  writePrefs({ sound: S.sound });
+  paintSound();
+  if (S.sound) { ac(); sfx.tap(); }
+});
+$('hubBtn').addEventListener('click', function () {
+  sfx.tap();
+  try {
+    if (window.parent && window.parent !== window && window.parent.location) {
+      window.parent.location.hash = '#/kids';
+      return;
+    }
+  } catch (e) { /* cross-origin: fall through to the file hub */ }
+  window.location.href = 'index.html';
+});
+$('restartBtn').addEventListener('click', function () {
+  stopTimer(); stopClock();
+  sfx.tap();
+  setScreen(S.aud ? 'setup' : 'aud');
+});
+
+$('startBtn').addEventListener('click', function () { ac(); startRound(); });
+$('nameInput').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') { e.preventDefault(); startRound(); }
+});
+$('btnTrue').addEventListener('click', function () { ac(); answer(true); });
+$('btnFalse').addEventListener('click', function () { ac(); answer(false); });
+$('quitBtn').addEventListener('click', function () {
+  askDialog(t('quitConfirm'), t('quitBody'), t('yes'), t('no'), function () {
+    stopTimer(); stopClock();
+    setScreen('setup');
+    sfx.tap();
+  });
+});
+$('againBtn').addEventListener('click', function () { ac(); startRound(); });
+$('changeBtn').addEventListener('click', function () {
+  stopTimer(); stopClock();
+  sfx.tap();
+  setScreen('setup');
+});
+
+$('lbBtn').addEventListener('click', function () {
+  var p = $('lbPanel');
+  p.classList.toggle('is-hidden');
+  if (!p.classList.contains('is-hidden')) renderLbInto('lbBody');
+  sfx.tap();
+});
+$('resLbBtn').addEventListener('click', function () {
+  var p = $('resLbPanel');
+  p.classList.toggle('is-hidden');
+  if (!p.classList.contains('is-hidden')) renderLbInto('resLbBody');
+  sfx.tap();
+});
+$('lbClearBtn').addEventListener('click', clearLb);
+$('resLbClearBtn').addEventListener('click', clearLb);
+
+/* T / F answer the statement from the keyboard */
+document.addEventListener('keydown', function (e) {
+  if (S.screen !== 'play' || S.lock) return;
+  var k = e.key.toLowerCase();
+  if (k === 't' || k === '1') { e.preventDefault(); ac(); answer(true); }
+  else if (k === 'f' || k === '2') { e.preventDefault(); ac(); answer(false); }
+  else if (k === 'arrowleft') { e.preventDefault(); ac(); answer(true); }
+  else if (k === 'arrowright') { e.preventDefault(); ac(); answer(false); }
+});
+/* Enter advances past a lesson card */
+document.addEventListener('keydown', function (e) {
+  if (S.screen !== 'play' || !S.lock) return;
+  if (e.key === 'Enter' || e.key === ' ') {
+    var nx = document.querySelector('.g-lesson-next');
+    if (nx && document.activeElement !== nx) { e.preventDefault(); nx.click(); }
+  }
+});
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+function parseQuery() {
+  var q = {};
+  try {
+    var sp = new URLSearchParams(window.location.search || '');
+    sp.forEach(function (v, k) { q[k] = v; });
+  } catch (e) { q = {}; }
+  return q;
+}
+
+function storageOk() {
+  try {
+    localStorage.setItem('__jb_t__', '1');
+    localStorage.removeItem('__jb_t__');
+    return true;
+  } catch (e) { return false; }
+}
+
+function boot() {
+  var prefs = readPrefs();
+  S.lang = (prefs.lang === 'en') ? 'en' : 'hi';
+  S.sound = prefs.sound !== false;
+  S.name = prefs.name || '';
+  S.aud = (prefs.aud === 'adults') ? 'adults' : null;
+
+  var q = parseQuery();
+  var qLang = (q.lang === 'en' || q.lang === 'hi') ? q.lang : null;
+  if (qLang) S.lang = qLang;
+  var qAud = (q.aud === 'kids' || q.aud === 'adults') ? q.aud : null;
+  if (qAud) S.aud = qAud;
+  var qn = parseInt(q.n, 10);
+  if (ROUNDS.indexOf(qn) >= 0) S.round = qn;
+  if (q.embed === '1') $('hubBtn').classList.add('is-hidden');
+
+  if (S.name) $('nameInput').value = S.name;
+  writePrefs({ lang: S.lang, sound: S.sound, lastGame: GAME_ID });
+
+  applyText();
+  if (qLang && qAud) { buildPool(); setScreen('setup'); }
+  else if (qLang) setScreen('aud');
+  else setScreen('lang');
+
+  if (!storageOk()) setTimeout(function () { toast(t('storageOff')); }, 400);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
+
+})();
+</script>
+</body>
+</html>

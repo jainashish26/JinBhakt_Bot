@@ -78,6 +78,9 @@ async function boot(hash, mobile, setup) {
   // run the REAL app code (order mirrors index.html)
   window.eval(fs.readFileSync(path.join(ROOT, 'js', 'speech.js'), 'utf8'));
   window.eval(fs.readFileSync(path.join(ROOT, 'js', 'translit.js'), 'utf8'));
+  window.eval(fs.readFileSync(path.join(ROOT, 'js', 'nav.js'), 'utf8'));
+  window.eval(fs.readFileSync(path.join(ROOT, 'js', 'kids.js'), 'utf8'));
+  window.eval(fs.readFileSync(path.join(ROOT, 'js', 'panchang.js'), 'utf8'));
   window.eval(fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8'));
 
   // jsdom fires its own DOMContentLoaded; only dispatch manually if the
@@ -86,7 +89,7 @@ async function boot(hash, mobile, setup) {
     window.document.dispatchEvent(new window.Event('DOMContentLoaded', { bubbles: true }));
   }
 
-  await new Promise(r => setTimeout(r, 800));
+  await new Promise(r => setTimeout(r, 1500));
   return { window, document: window.document, jsErrors };
 }
 

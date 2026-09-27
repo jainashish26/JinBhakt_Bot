@@ -217,8 +217,8 @@ module.exports = async function (ctx) {
   ok('latin query highlights the romanized line',
      box.querySelector('.result-latin').querySelectorAll('mark.hit').length > 0,
      box.querySelector('.result-latin').innerHTML.slice(0, 120));
-  ok('highlight bridges the vowel-length gap ("aarti" -> "Arati")',
-     /^Arati$/i.test(txt(box.querySelector('.result-latin mark.hit'))),
+  ok('highlight bridges the vowel-length gap ("aarti" -> "Arati" or "Āratī")',
+     /^(A|a|Ā|ā)rat(i|ī)$/.test(txt(box.querySelector('.result-latin mark.hit'))),
      txt(box.querySelector('.result-latin mark.hit')));
   ok('highlighting stays precise — unrelated words are not marked', (() => {
     const lat = box.querySelector('.result-latin');
@@ -515,4 +515,84 @@ module.exports = async function (ctx) {
      rApp.isTransliterated() === false &&
      DEV.test(rBody()),
      rBody().replace(/\s+/g, ' ').slice(0, 60));
+
+  /* ------------------------------------------------------------------ */
+  console.log('\n[14g] IAST transliteration engine');
+
+  ok('module exports romanizeIAST', typeof T.romanizeIAST === 'function');
+  ok('module exports stripIast', typeof T.stripIast === 'function');
+
+  // Anusvara assimilation — keyed off the DEVANAGARI letter
+  ok('IAST anusvara before velar → ṅ',
+     T.romanizeIAST('संकल्प') === 'saṅkalpa', T.romanizeIAST('संकल्प'));
+  ok('IAST anusvara before palatal → ñ',
+     T.romanizeIAST('वाञ्छा') === 'vāñchā', T.romanizeIAST('वाञ्छा'));
+  ok('IAST anusvara before retroflex → ṇ',
+     T.romanizeIAST('कण्ठ') === 'kaṇṭha', T.romanizeIAST('कण्ठ'));
+  ok('IAST anusvara before dental → n',
+     T.romanizeIAST('बन्ध') === 'bandha', T.romanizeIAST('बन्ध'));
+  ok('IAST anusvara before labial → m',
+     T.romanizeIAST('सम्भव') === 'sambhava', T.romanizeIAST('सम्भव'));
+  ok('IAST anusvara before sibilant (non-strict) → n',
+     T.romanizeIAST('संहार') === 'sanhāra', T.romanizeIAST('संहार'));
+  ok('IAST anusvara before sibilant (strict) → ṃ',
+     T.romanizeIAST('संहार', { anusvara: 'strict' }) === 'saṃhāra',
+     T.romanizeIAST('संहार', { anusvara: 'strict' }));
+  ok('IAST anusvara word-final → ṃ',
+     T.romanizeIAST('केवलं') === 'kevalaṃ', T.romanizeIAST('केवलं'));
+
+  // Candrabindu — always ṃ, never assimilated
+  ok('IAST candrabindu always → ṃ',
+     T.romanizeIAST('म\u0948\u0901ने') === 'maiṃne',
+     T.romanizeIAST('म\u0948\u0901ने'));
+
+  // Prakrit hiatus
+  ok('IAST Prakrit hiatus: हवइ → havaï',
+     T.romanizeIAST('हवइ') === 'havaï', T.romanizeIAST('हवइ'));
+  ok('IAST Prakrit hiatus: आइ → āï',
+     T.romanizeIAST('आइ') === 'āï', T.romanizeIAST('आइ'));
+  ok('IAST no hiatus for independent ए',
+     T.romanizeIAST('लोए') === 'loe', T.romanizeIAST('लोए'));
+
+  // Basic IAST
+  ok('IAST ॐ → oṃ', T.romanizeIAST('ॐ') === 'oṃ');
+  ok('IAST visarga → ḥ', T.romanizeIAST('नमः') === 'namaḥ');
+  ok('IAST danda → .', T.romanizeIAST('स्वामी ।') === 'svāmī.');
+  ok('IAST double danda → ||', T.romanizeIAST('॥टेक॥') === '||ṭeka||');
+  ok('IAST retroflexes distinct from dentals',
+     T.romanizeIAST('ट') !== T.romanizeIAST('त'));
+  ok('IAST ś/ṣ distinct from s',
+     T.romanizeIAST('श') !== T.romanizeIAST('स') &&
+     T.romanizeIAST('ष') !== T.romanizeIAST('स'));
+  ok('IAST empty/null safe', T.romanizeIAST('') === '' && T.romanizeIAST(null) === '');
+
+  // Nine Prakrit golden examples
+  ok('IAST: णमो अरिहंताणं', T.romanizeIAST('णमो अरिहंताणं') === 'ṇamo arihantāṇaṃ');
+  ok('IAST: णमो सिद्धाणं', T.romanizeIAST('णमो सिद्धाणं') === 'ṇamo siddhāṇaṃ');
+  ok('IAST: णमो आइरियाणं', T.romanizeIAST('णमो आइरियाणं') === 'ṇamo āïriyāṇaṃ');
+  ok('IAST: णमो उवज्झायाणं', T.romanizeIAST('णमो उवज्झायाणं') === 'ṇamo uvajjhāyāṇaṃ');
+  ok('IAST: णमो केवलिणं', T.romanizeIAST('णमो केवलिणं') === 'ṇamo kevaliṇaṃ');
+  ok('IAST: णमोक्कारो', T.romanizeIAST('णमोक्कारो') === 'ṇamokkāro');
+
+  // stripIast and fold
+  ok('stripIast removes diacritics',
+     T.stripIast('ṇamo arihantāṇaṃ') === 'namo arihantanam');
+  ok('fold(IAST) === fold(ASCII)',
+     T.fold('ṇamo arihantāṇaṃ') === T.fold('namo arihantanam'));
+
+  // display() and transliterateText() with style:'iast'
+  ok('display(style:iast)',
+     T.display('णमोकार', { style: 'iast' }) === 'Ṇamokāra',
+     T.display('णमोकार', { style: 'iast' }));
+  ok('display() default is ASCII',
+     T.display('णमोकार') === 'Namokar', T.display('णमोकार'));
+  ok('transliterateText style:iast verse',
+     T.transliterateText('ॐ जय शीतलनाथ स्वामी ।', { style: 'iast' }) ===
+       'Oṃ jaya śītalanātha svāmī.',
+     T.transliterateText('ॐ जय शीतलनाथ स्वामी ।', { style: 'iast' }));
+  ok('transliterateText default is ASCII',
+     T.transliterateText('समयसार') === 'Samaysar',
+     T.transliterateText('समयसार'));
+
+  // IAST style switch UI tests are in [14h] below via a fresh boot
 };
