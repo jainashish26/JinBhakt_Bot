@@ -76,6 +76,71 @@
 
 
   /* ---------------------------------------------------------
+   * IAST (International Alphabet of Sanskrit Transliteration)
+   *
+   * Purely compositional — no schwa deletion, no cluster
+   * heuristics.  Each Devanagari letter maps to a fixed Latin
+   * form; the output is losslessly reversible to Devanagari by
+   * any standard back-converter.
+   *
+   * Anusvara is assimilated to the following consonant's place
+   * of articulation (keyed off the DEVANAGARI letter, not the
+   * romanised output, so ट/त are distinguishable).  Candrabindu
+   * is always ṃ and is never assimilated.
+   *
+   * Prakrit hiatus: an independent इ immediately after a
+   * consonant that carries its inherent 'a' renders as ï, so
+   * that havaï (हवइ) is not confused with havi (हवि).
+   * ------------------------------------------------------- */
+
+  var CONS_IAST = {
+    'क': 'k',   'ख': 'kh',  'ग': 'g',   'घ': 'gh',  'ङ': 'ṅ',
+    'च': 'c',   'छ': 'ch',  'ज': 'j',   'झ': 'jh',  'ञ': 'ñ',
+    'ट': 'ṭ',   'ठ': 'ṭh',  'ड': 'ḍ',   'ढ': 'ḍh',  'ण': 'ṇ',
+    'त': 't',   'थ': 'th',  'द': 'd',   'ध': 'dh',  'न': 'n',
+    'प': 'p',   'फ': 'ph',  'ब': 'b',   'भ': 'bh',  'म': 'm',
+    'य': 'y',   'र': 'r',   'ल': 'l',   'व': 'v',
+    'श': 'ś',   'ष': 'ṣ',   'स': 's',   'ह': 'h',
+    'ळ': 'ḷ',
+    // Nukta forms — stored with the base letter; looked up after NUKTA.
+    'क़': 'q',  'ख़': 'ḵh', 'ग़': 'ġ',  'ज़': 'z',
+    'ड़': 'ṛ',  'ढ़': 'ṛh', 'फ़': 'f',  'य़': 'ẏ',
+    'ऱ': 'r',   'ऴ': 'ḷ'
+  };
+
+  var VOWEL_IAST = {
+    'अ': 'a',  'आ': 'ā', 'इ': 'i',  'ई': 'ī', 'उ': 'u',
+    'ऊ': 'ū',  'ऋ': 'ṛ', 'ॠ': 'ṝ', 'ऌ': 'ḷ', 'ॡ': 'ḹ',
+    'ए': 'e',  'ऐ': 'ai', 'ओ': 'o',  'औ': 'au',
+    'ऑ': 'ŏ',  'ऍ': 'ĕ',  'ऎ': 'e',  'ऒ': 'o'
+  };
+
+  var MATRA_IAST = {
+    'ा': 'ā', 'ि': 'i',  'ी': 'ī', 'ु': 'u',  'ू': 'ū',
+    'ृ': 'ṛ', 'ॄ': 'ṝ', 'ॢ': 'ḷ', 'ॣ': 'ḹ',
+    'े': 'e',  'ै': 'ai', 'ो': 'o',  'ौ': 'au',
+    'ॉ': 'ŏ',  'ॅ': 'ĕ',  'ॊ': 'o',  'ॎ': 'e',  'ॏ': 'o'
+  };
+
+  /**
+   * Place-of-articipation class for every consonant.  Anusvara
+   * assimilates to the matching nasal before stops; before
+   * semivowels/sibilants/h it resolves to 'n' (default) or 'ṃ'
+   * (strict IAST).
+   *
+   * Values: 'ṅ' velar, 'ñ' palatal, 'ṇ' retroflex, 'n' dental,
+   *         'm' labial, '~' semivowel/sibilant/h (needs strict check).
+   */
+  var NASAL_CLASS = {};
+  'कखगघङ'.split('').forEach(function (c) { NASAL_CLASS[c] = 'ṅ'; });
+  'चछजझञ'.split('').forEach(function (c) { NASAL_CLASS[c] = 'ñ'; });
+  'टठडढण'.split('').forEach(function (c) { NASAL_CLASS[c] = 'ṇ'; });
+  'तथदधन'.split('').forEach(function (c) { NASAL_CLASS[c] = 'n'; });
+  'पफबभम'.split('').forEach(function (c) { NASAL_CLASS[c] = 'm'; });
+  'यरलळवशषसह'.split('').forEach(function (c) { NASAL_CLASS[c] = '~'; });
+
+
+  /* ---------------------------------------------------------
    * Romanization
    * ------------------------------------------------------- */
 
@@ -249,13 +314,206 @@
     return out.replace(/\s+/g, ' ').trim();
   }
 
+  /* ---------------------------------------------------------
+   * IAST romanization — purely compositional, no heuristics
+   * ------------------------------------------------------- */
+
+  /**
+   * Find the next Devanagari consonant after position `from` in `s`,
+   * skipping viramas, nukta, matras and anusvara/candrabindu.
+   * Returns the consonant character, or '' if none found.
+   */
+  function nextConsonant(s, from) {
+    for (var j = from; j < s.length; j++) {
+      var c = s.charAt(j);
+      if (CONS[c]) return c;
+      if (c === VIRAMA || c === NUKTA || c === ANUSVARA || c === CHANDRA) continue;
+      if (MATRA[c] || MATRA_IAST[c]) continue;
+      if (VOWEL[c] || VOWEL_IAST[c]) return '';
+      if (/[\s.,;:!?।\u0964\u0965]/.test(c)) return '';
+    }
+    return '';
+  }
+
+  /**
+   * Devanagari → IAST.  Purely compositional: every Devanagari
+   * letter maps to a fixed IAST form.  No schwa deletion, no
+   * cluster table, no vowel-length heuristics.
+   *
+   * opts.anusvara  'strict' → ṃ before semivowels/sibilants/h;
+   *                anything else → 'n' (the user's rule).
+   */
+  function romanizeIAST(input, opts) {
+    var s = String(input == null ? '' : input);
+    if (!s) return '';
+    opts = opts || {};
+    var strict = opts.anusvara === 'strict';
+
+    var out = '';
+    var i = 0;
+    // Track whether the last output ended with a vowel sound — used for
+    // the Prakrit hiatus rule: an independent इ right after any vowel
+    // sound (from a consonant's inherent 'a', a matra, or an independent
+    // vowel) becomes ï.
+    var lastEndedVowel = false;
+
+    while (i < s.length) {
+      var ch = s.charAt(i);
+
+      // ॐ → oṃ
+      if (ch === OM) { out += 'oṃ'; lastEndedVowel = true; i++; continue; }
+
+      // Consonant
+      if (CONS[ch] || CONS_IAST[ch]) {
+        var base = CONS_IAST[ch] || CONS[ch];
+        var ci = i + 1;
+
+        // Nukta
+        if (s.charAt(ci) === NUKTA) {
+          var nuktaKey = ch + NUKTA;
+          if (CONS_IAST[nuktaKey]) base = CONS_IAST[nuktaKey];
+          ci++;
+        }
+
+        // Virama: half-consonant, no inherent 'a'
+        if (s.charAt(ci) === VIRAMA) {
+          out += base;
+          lastEndedVowel = false;
+          i = ci + 1;
+          continue;
+        }
+
+        // Matra
+        if (s.charAt(ci) && (MATRA_IAST[s.charAt(ci)] || MATRA[s.charAt(ci)])) {
+          var matraVal = MATRA_IAST[s.charAt(ci)] || MATRA[s.charAt(ci)];
+          out += base + matraVal;
+          lastEndedVowel = true;
+          i = ci + 1;
+          continue;
+        }
+
+        // Inherent 'a'
+        out += base + 'a';
+        lastEndedVowel = true;
+        i = ci;
+        continue;
+      }
+
+      // Independent vowel
+      if (VOWEL_IAST[ch] || VOWEL[ch]) {
+        var vow = VOWEL_IAST[ch] || VOWEL[ch];
+        // Prakrit hiatus: independent इ after any vowel sound → ï
+        if (ch === '\u0907' && lastEndedVowel) vow = '\u0069\u0308'; // ï (NFD: i + diaeresis)
+        out += vow;
+        lastEndedVowel = true;
+        i++;
+        continue;
+      }
+
+      // Stray matra
+      if (MATRA[ch] || MATRA_IAST[ch]) {
+        out += MATRA_IAST[ch] || MATRA[ch];
+        lastEndedVowel = true;
+        i++;
+        continue;
+      }
+
+      // Anusvara — assimilation keyed off the DEVANAGARI letter
+      if (ch === ANUSVARA) {
+        var nasal = '\u1e43'; // ṃ (default: word-final / pre-vowel)
+        var nc = nextConsonant(s, i + 1);
+        if (nc) {
+          var cls = NASAL_CLASS[nc];
+          if (cls && cls !== '~') {
+            nasal = cls;
+          } else if (cls === '~') {
+            nasal = strict ? '\u1e43' : 'n';
+          }
+        }
+        out += nasal;
+        lastEndedVowel = false;
+        i++;
+        continue;
+      }
+
+      // Candrabindu — always ṃ, never assimilated
+      if (ch === CHANDRA) {
+        out += '\u1e43';
+        lastEndedVowel = false;
+        i++;
+        continue;
+      }
+
+      if (ch === VISARGA) { out += '\u1e25'; lastEndedVowel = false; i++; continue; } // ḥ
+      if (ch === AVAGRAHA) { out += "'"; lastEndedVowel = false; i++; continue; }
+      if (ch === VIRAMA) { lastEndedVowel = false; i++; continue; }
+      if (ch === NUKTA) { i++; continue; }
+
+      // Devanagari digits
+      if (ch >= '\u0966' && ch <= '\u096F') {
+        out += String(ch.charCodeAt(0) - 0x0966);
+        lastEndedVowel = false;
+        i++;
+        continue;
+      }
+
+      if (ch === '\u0964' || ch === '\u0965') {
+        out += (ch === '\u0965') ? '||' : '.';
+        lastEndedVowel = false;
+        i++;
+        continue;
+      }
+
+      if (ch === '\u0970') { i++; continue; }
+      if (ch >= '\u0900' && ch <= '\u097F') { lastEndedVowel = false; i++; continue; }
+
+      out += ch;
+      lastEndedVowel = false;
+      i++;
+    }
+
+    out = out.replace(/[ \t]+([.,;:!?|])/g, '$1');
+    out = out.replace(/  +/g, ' ').trim();
+    if (typeof out.normalize === 'function') out = out.normalize('NFC');
+    return out;
+  }
+
+  /**
+   * Strip IAST diacritics from a string, returning plain ASCII.
+   * Used by fold() so that pasted IAST queries reach the same
+   * entries as ASCII queries.
+   */
+  function stripIast(str) {
+    var s = String(str == null ? '' : str);
+    if (typeof s.normalize === 'function') {
+      return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+    return s;
+  }
+
   /** Vowel-length tidy-up used only for on-screen romanization. */
   var DISPLAY_RULES = [
     ['aa', 'a'], ['ee', 'i'], ['ii', 'i'], ['oo', 'u'], ['uu', 'u']
   ].sort(function (a, b) { return b[0].length - a[0].length; });
 
-  /** Pretty, human-readable romanization for display in search results. */
-  function display(input) {
+  /**
+   * Pretty, human-readable romanization for display in search results.
+   * opts.style  'iast' → IAST output; anything else → the existing
+   *             ASCII-with-short-vowels form.
+   */
+  function display(input, opts) {
+    opts = opts || {};
+    if (opts.style === 'iast') {
+      var s = romanizeIAST(input);
+      if (!s) return '';
+      // Capitalize first letter of each word — the regex must cover
+      // Latin Extended-A (ā ī ū ṛ etc.) and Latin Extended Additional
+      // (ṇ ṭ ḍ ś ṣ ḥ ṃ ṅ ñ etc.) in the U+1E00–U+1EFF range.
+      return s.replace(/\s+/g, ' ').trim()
+        .replace(/(^|\s)([a-z\u00c0-\u024f\u1e00-\u1eff])/g, function (m, sp, c) {
+          return sp + c.toUpperCase();
+        });
+    }
     var s = romanize(input, 'alt');
     if (!s) return '';
     s = applyRulesWith(s.toLowerCase(), DISPLAY_RULES);
@@ -297,18 +555,57 @@
    *   'देख्या मैंने नेमिजी प्यारा ॥टेक॥'
    *      -> 'Dekhya maine nemiji pyara ||Tek||'
    *
-   * opts.mode        romanization mode (default 'alt' — the natural Hindi reading)
+   * opts.mode        romanization mode (default 'alt' — the natural Hindi reading).
+   *                  Ignored when opts.style is 'iast'.
    * opts.vowels      'short' (default) folds long vowels the way display() does,
    *                  so the reader and the search subtitles agree: "Bhagvan",
    *                  "Sitalnath". 'long' keeps them: "Bhagvaan", "Sheetalnaath".
+   *                  Ignored when opts.style is 'iast'.
    * opts.capitalize  capitalise the first letter of the result (default true —
    *                  the reader paints one line per call, so verses keep
    *                  looking like verses instead of one long lowercase run)
+   * opts.style       'iast' → IAST output (no schwa deletion, no vowel
+   *                  shortening, diacritics preserved); anything else → the
+   *                  existing ASCII form.
    */
   function transliterateText(input, opts) {
     var s = String(input == null ? '' : input);
     if (!s) return '';
     opts = opts || {};
+
+    // IAST path — purely compositional, no schwa deletion or vowel shortening
+    if (opts.style === 'iast') {
+      var out2 = '';
+      var run2 = '';
+
+      function flushIAST() {
+        if (!run2) return;
+        out2 += romanizeIAST(run2);
+        run2 = '';
+      }
+
+      for (var j = 0; j < s.length; j++) {
+        var ch2 = s.charAt(j);
+        var code2 = s.charCodeAt(j);
+        if (isDevLetter(code2)) { run2 += ch2; continue; }
+        flushIAST();
+        if (DEV_PUNCT[ch2]) { out2 += DEV_PUNCT[ch2]; continue; }
+        if (code2 === 0x0970) continue;
+        out2 += ch2;
+      }
+      flushIAST();
+
+      out2 = out2.replace(/[ \t]+([.,;:!?|])/g, '$1');
+
+      if (opts.capitalize !== false) {
+        out2 = out2.replace(/(^|\n)([ \t]*)([a-z\u00c0-\u024f\u1e00-\u1eff])/g, function (m, nl, sp, c) {
+          return nl + sp + c.toUpperCase();
+        });
+      }
+      return out2;
+    }
+
+    // ASCII path — the existing engine
     var mode = opts.mode || 'alt';
     var shorten = opts.vowels !== 'long';
 
@@ -411,7 +708,10 @@
    * "Vaasupujya", "वासुपूज्य" and "Baasupoojya" all land on "vasupujy".
    */
   function fold(str) {
-    var s = stripMarks(String(str == null ? '' : str)).toLowerCase();
+    // Strip IAST diacritics first so that pasted IAST queries
+    // (e.g. "ṇamo arihantāṇaṃ") reach the same entries as ASCII
+    // queries ("namo arihantanam").
+    var s = stripIast(stripMarks(String(str == null ? '' : str))).toLowerCase();
     s = s.replace(/[\u0966-\u096f]/g, function (d) { return String(d.charCodeAt(0) - 0x0966); });
     s = s.replace(/[\u0900-\u097f\u200b-\u200f\u2060\ufeff]/g, ' ');
     s = s.replace(/[^a-z0-9]+/g, ' ').trim();
@@ -554,9 +854,11 @@
 
   return {
     romanize: romanize,
+    romanizeIAST: romanizeIAST,
     display: display,
     transliterateText: transliterateText,
     fold: fold,
+    stripIast: stripIast,
     skeleton: skeleton,
     devNorm: devNorm,
     hasDevanagari: hasDevanagari,

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jain Myth Busters 🕉️</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --saffron:#ff9933; --maroon:#7b1e3a; --gold:#ffc93c; --purple:#4a1d6e;
+    --cream:#fff8ec; --green:#2ecc71; --red:#ff5e57; --ink:#2d1b3d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    font-family:'Fredoka',sans-serif; min-height:100vh; color:var(--ink);
+    background:linear-gradient(160deg,#4a1d6e 0%,#7b1e3a 55%,#c8501f 100%);
+    background-attachment:fixed; display:flex; align-items:center; justify-content:center; padding:16px;
+    overflow-x:hidden;
+  }
+  /* floating symbols backdrop */
+  .floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .floaters span{position:absolute;font-size:28px;opacity:.14;animation:drift linear infinite}
+  @keyframes drift{from{transform:translateY(105vh) rotate(0)}to{transform:translateY(-10vh) rotate(360deg)}}
+
+  .app{position:relative;z-index:2;width:100%;max-width:520px}
+
+  .card{
+    background:var(--cream); border-radius:26px; padding:28px 24px;
+    box-shadow:0 24px 60px rgba(0,0,0,.45), inset 0 0 0 4px rgba(255,201,60,.35);
+    animation:popIn .5s cubic-bezier(.2,1.4,.4,1);
+  }
+  @keyframes popIn{from{transform:scale(.85) translateY(30px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+
+  /* ---------- START SCREEN ---------- */
+  .logo{font-family:'Baloo 2';font-weight:800;font-size:clamp(30px,7vw,42px);text-align:center;
+    background:linear-gradient(90deg,var(--maroon),var(--saffron));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.1}
+  .sub{text-align:center;font-size:15px;color:#6b5878;margin:10px 0 4px}
+  .ahimsa-hand{font-size:64px;text-align:center;margin:14px 0;animation:handWave 2.4s ease-in-out infinite}
+  @keyframes handWave{0%,100%{transform:rotate(-6deg) scale(1)}50%{transform:rotate(6deg) scale(1.08)}}
+  .rules{background:#fff;border-radius:16px;padding:14px 16px;margin:16px 0;font-size:14px;border:2px dashed var(--gold)}
+  .rules li{margin:6px 0 6px 18px}
+  .btn{
+    display:block;width:100%;border:none;cursor:pointer;font-family:'Baloo 2';font-weight:800;
+    font-size:20px;padding:15px;border-radius:16px;color:#fff;
+    background:linear-gradient(90deg,var(--saffron),#e0551f);
+    box-shadow:0 6px 0 #a33d12; transition:transform .12s, box-shadow .12s;
+  }
+  .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #a33d12}
+
+  /* ---------- QUIZ SCREEN ---------- */
+  .hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-weight:600;font-size:14px}
+  .pill{background:#fff;border-radius:999px;padding:6px 14px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+  .pill b{color:var(--maroon)}
+  .streak{color:#e0551f}
+  .progressWrap{height:10px;background:#e8dccb;border-radius:99px;overflow:hidden;margin-bottom:14px}
+  .progressBar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--saffron));border-radius:99px;transition:width .4s ease}
+
+  .timerWrap{height:8px;background:#e8dccb;border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .timerBar{height:100%;width:100%;background:linear-gradient(90deg,var(--green),#a8e063);border-radius:99px}
+  .timerBar.warn{background:linear-gradient(90deg,#ff9f43,var(--red))}
+
+  .qNum{text-align:center;font-size:13px;color:#9b8aa5;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+  .statement{
+    font-family:'Baloo 2';font-weight:600;font-size:clamp(19px,4.6vw,24px);text-align:center;
+    min-height:110px;display:flex;align-items:center;justify-content:center;padding:10px 6px;line-height:1.35;
+  }
+  .statement.shake{animation:shake .45s}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
+
+  .tfRow{display:flex;gap:14px}
+  .tfBtn{
+    flex:1;border:none;cursor:pointer;font-family:'Baloo 2';font-weight:800;font-size:22px;color:#fff;
+    padding:16px 0;border-radius:16px;transition:transform .12s, box-shadow .12s;
+  }
+  .tfBtn.true{background:linear-gradient(135deg,#2ecc71,#1e9e56);box-shadow:0 5px 0 #157a42}
+  .tfBtn.false{background:linear-gradient(135deg,#ff5e57,#d63031);box-shadow:0 5px 0 #a12424}
+  .tfBtn:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+  .tfBtn:disabled{opacity:.55;cursor:not-allowed}
+
+  /* ---------- FEEDBACK OVERLAY ---------- */
+  .overlay{
+    position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;
+    background:rgba(30,10,40,.72);backdrop-filter:blur(4px);padding:20px;
+  }
+  .overlay.show{display:flex}
+  .fbCard{
+    background:var(--cream);border-radius:24px;max-width:440px;width:100%;padding:26px 22px;text-align:center;
+    animation:popIn .45s cubic-bezier(.2,1.5,.4,1);box-shadow:0 20px 50px rgba(0,0,0,.5);
+  }
+  .fbEmoji{font-size:58px;animation:bounceIn .6s cubic-bezier(.2,1.8,.4,1)}
+  @keyframes bounceIn{0%{transform:scale(0)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
+  .fbTitle{font-family:'Baloo 2';font-weight:800;font-size:26px;margin:8px 0 4px}
+  .fbTitle.good{color:#1e9e56}.fbTitle.bad{color:#d63031}
+  .mythStamp{
+    display:inline-block;font-family:'Baloo 2';font-weight:800;color:#d63031;border:3px solid #d63031;
+    border-radius:10px;padding:2px 14px;transform:rotate(-8deg);font-size:18px;letter-spacing:2px;
+    animation:stampIn .5s cubic-bezier(.2,2,.4,1);margin-bottom:10px;
+  }
+  @keyframes stampIn{0%{transform:rotate(-8deg) scale(3);opacity:0}100%{transform:rotate(-8deg) scale(1);opacity:1}}
+  .fbText{font-size:15.5px;line-height:1.55;color:#4a3a58;animation:slideUp .5s .15s both}
+  @keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .bulb{display:inline-block;animation:glowPulse 1.4s ease-in-out infinite}
+  @keyframes glowPulse{0%,100%{filter:drop-shadow(0 0 2px #ffc93c)}50%{filter:drop-shadow(0 0 12px #ffc93c);transform:scale(1.12)}}
+  .nextBtn{margin-top:18px;background:linear-gradient(90deg,var(--purple),var(--maroon));box-shadow:0 5px 0 #2e0f47}
+
+  /* ---------- END SCREEN ---------- */
+  .medal{font-size:74px;text-align:center;animation:bounceIn .8s cubic-bezier(.2,1.8,.4,1)}
+  .endTitle{font-family:'Baloo 2';font-weight:800;font-size:28px;text-align:center;margin:6px 0;color:var(--maroon)}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+  .stat{background:#fff;border-radius:16px;padding:14px;text-align:center;box-shadow:0 3px 10px rgba(0,0,0,.1)}
+  .stat .num{font-family:'Baloo 2';font-weight:800;font-size:30px;color:var(--saffron)}
+  .stat .lbl{font-size:12.5px;color:#8a7a95;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .endMsg{text-align:center;font-size:15px;color:#5c4a6b;margin-bottom:16px;line-height:1.5}
+
+  /* confetti */
+  .confetti{position:fixed;top:-12px;z-index:20;pointer-events:none;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.6}}
+
+  .hidden{display:none!important}
+  .foot{text-align:center;color:rgba(255,255,255,.55);font-size:12px;margin-top:14px}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="app">
+
+  <!-- START -->
+  <div class="card" id="startScreen">
+    <div class="ahimsa-hand">🖐️</div>
+    <h1 class="logo">Jain Myth Busters</h1>
+    <p class="sub">Think you know Jainism? Rapid-fire True or False — beat the clock! ⚡</p>
+    <div class="rules">
+      <li>⏱️ You get <b>10 seconds</b> per statement</li>
+      <li>✅ Correct = <b>+10 points</b> (streak bonus!)</li>
+      <li>💡 Wrong answers unlock a <b>Myth-Buster lesson</b></li>
+      <li>🏆 20 statements. Can you bust them all?</li>
+    </div>
+    <button class="btn" onclick="startGame()">🚀 Start Busting!</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="card hidden" id="quizScreen">
+    <div class="hud">
+      <span class="pill">⭐ Score: <b id="score">0</b></span>
+      <span class="pill streak" id="streakPill">🔥 0</span>
+      <span class="pill">🎯 <b id="accuracy">–</b></span>
+    </div>
+    <div class="progressWrap"><div class="progressBar" id="progressBar"></div></div>
+    <div class="timerWrap"><div class="timerBar" id="timerBar"></div></div>
+    <div class="qNum" id="qNum">Statement 1 of 20</div>
+    <div class="statement" id="statement"></div>
+    <div class="tfRow">
+      <button class="tfBtn true" id="btnTrue" onclick="answer(true)">✔ TRUE</button>
+      <button class="tfBtn false" id="btnFalse" onclick="answer(false)">✘ FALSE</button>
+    </div>
+  </div>
+
+  <!-- END -->
+  <div class="card hidden" id="endScreen">
+    <div class="medal" id="medal">🏆</div>
+    <h2 class="endTitle" id="endTitle"></h2>
+    <div class="stats">
+      <div class="stat"><div class="num" id="finalScore">0</div><div class="lbl">Points</div></div>
+      <div class="stat"><div class="num" id="finalAcc">0%</div><div class="lbl">Accuracy</div></div>
+      <div class="stat"><div class="num" id="finalCorrect">0</div><div class="lbl">Correct</div></div>
+      <div class="stat"><div class="num" id="finalStreak">0</div><div class="lbl">Best Streak</div></div>
+    </div>
+    <p class="endMsg" id="endMsg"></p>
+    <button class="btn" onclick="startGame()">🔄 Play Again</button>
+  </div>
+
+  <p class="foot">परस्परोपग्रहो जीवानाम् • Souls render service to one another 🙏</p>
+</div>
+
+<!-- FEEDBACK OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="fbCard">
+    <div class="fbEmoji" id="fbEmoji">💡</div>
+    <div class="mythStamp hidden" id="mythStamp">MYTH BUSTED!</div>
+    <div class="fbTitle" id="fbTitle"></div>
+    <p class="fbText" id="fbText"></p>
+    <button class="btn nextBtn" onclick="nextQuestion()">Next ➜</button>
+  </div>
+</div>
+
+<script>
+/* ================= QUESTION BANK ================= */
+const QUESTIONS = [
+ {s:"Jainism was founded by Lord Mahavira.", a:false,
+  x:"Mahavira was the <b>24th and last Tirthankara</b> — a teacher who revived the path. Jains believe the tradition is eternal, with Lord Rishabhadeva (Adinath) as the first Tirthankara of this cycle."},
+ {s:"Jains believe a Creator God made the universe.", a:false,
+  x:"Jainism teaches that the universe is <b>uncreated and eternal</b> — it was never made by anyone and runs on its own natural laws. Liberated souls (Siddhas) are revered, not a creator."},
+ {s:"'Ahimsa Paramo Dharmah' means non-violence is the supreme duty.", a:true,
+  x:"Correct! Ahimsa — non-violence in thought, word and deed — is the highest principle in Jainism, for all beings, great and tiny."},
+ {s:"Digambara monks wear bright saffron robes.", a:false,
+  x:"<b>Digambara literally means 'sky-clad'</b> — Digambara monks own nothing at all, not even clothes, as the ultimate practice of non-possession (Aparigraha). It is <b>Shvetambara</b> monks who wear simple white robes."},
+ {s:"The Namokar Mantra asks God for wishes and boons.", a:false,
+  x:"The Navkar Mantra asks for <b>nothing</b>! It simply bows to the virtues of the five supreme beings (Panch Parmeshthi) — Arihants, Siddhas, Acharyas, Upadhyayas and Sadhus — to inspire us to be like them."},
+ {s:"Jains believe every living being — even insects — has a soul.", a:true,
+  x:"Exactly! Every being from elephants to microbes has a soul (jiva) with infinite potential. That's why Jains work so hard to avoid harming any of them."},
+ {s:"In Jainism, karma is a kind of subtle matter that sticks to the soul.", a:true,
+  x:"Right! Jains describe karma as <b>tiny karmic particles (pudgala)</b> that cling to the soul through passions and actions — like dust on a wet cloth. Purifying the soul is the path to liberation."},
+ {s:"Jains celebrate Diwali because Lord Mahavira attained Nirvana on that day.", a:true,
+  x:"Yes! For Jains, Diwali marks Lord Mahavira's attainment of <b>Moksha (liberation)</b> at Pavapuri. The next day is Jain New Year — Veer Samvat."},
+ {s:"Anekantavada means there is only one correct way to see anything.", a:false,
+  x:"It's the opposite! <b>Anekantavada = many-sidedness of truth.</b> Reality can be viewed from many valid angles — like the blind men and the elephant. It teaches intellectual humility and tolerance."},
+ {s:"'Parasparopagraho Jivanam' means souls help and support one another.", a:true,
+  x:"Correct! This phrase from the Tattvartha Sutra is the Jain motto: <b>all life is interconnected</b> and souls render service to one another."},
+ {s:"Jain monks gently sweep the path before walking to protect tiny creatures.", a:true,
+  x:"Yes! They use a soft broom (called <b>rajoharana</b> in the Digambara tradition) to carefully move insects out of harm's way before stepping."},
+ {s:"The five Great Vows (Mahavratas) include truthfulness and non-stealing.", a:true,
+  x:"Right! The five are: <b>Ahimsa</b> (non-violence), <b>Satya</b> (truth), <b>Achaurya</b> (non-stealing), <b>Brahmacharya</b> (chastity) and <b>Aparigraha</b> (non-possession)."},
+ {s:"Jains believe the soul dies when the body dies.", a:false,
+  x:"The soul (jiva) is <b>eternal</b>! It never dies — it simply moves to a new body through rebirth, shaped by its karma, until it achieves liberation (Moksha)."},
+ {s:"The Jain emblem shows a hand with 'Ahimsa' written on the palm.", a:true,
+  x:"Correct! The raised palm means <b>'Stop! Do no harm.'</b> The hand also holds the wheel of birth and rebirth, and the outline is the universe."},
+ {s:"Jains pray to the Tirthankaras so they will grant wishes and fix problems.", a:false,
+  x:"Tirthankaras are <b>liberated souls beyond the universe</b> — they don't intervene or grant boons. Jains venerate them to <b>absorb their qualities</b> and find inspiration to follow the path themselves."},
+ {s:"Lord Mahavira was born in Kundagrama, near Vaishali.", a:true,
+  x:"Yes! Mahavira Swami was born in <b>Kundagrama</b> to King Siddhartha and Queen Trishala. His birth is celebrated as Mahavir Janma Kalyanak."},
+ {s:"Strict Jains avoid eating root vegetables like potatoes and onions.", a:true,
+  x:"Correct! Uprooting a plant kills the whole being and harms countless tiny organisms in the soil — so observant Jains avoid root vegetables to minimise harm."},
+ {s:"Kundakunda, author of the Samayasara, was a great Digambara Acharya.", a:true,
+  x:"Right! Acharya Kundakunda (c. 2nd century CE) is one of the most revered <b>Digambara</b> philosopher-monks. His works like Samayasara and Pravachanasara are jewels of Jain thought."},
+ {s:"Jainism teaches that only humans can ever achieve liberation.", a:false,
+  x:"Every soul — including animals and even beings in other states — <b>can attain Moksha</b>. Any jiva can rise to liberation through its own effort; the soul's potential is infinite."},
+ {s:"The Ratnatraya (Three Jewels) are Right Faith, Right Knowledge and Right Conduct.", a:true,
+  x:"Exactly! <b>Samyak Darshana, Samyak Jnana, Samyak Charitra</b> — faith, knowledge and conduct together form the Jain path to liberation."}
+];
+
+/* ================= STATE ================= */
+let deck=[], idx=0, score=0, correct=0, streak=0, bestStreak=0, timer=null, timeLeft=0, locked=false;
+const TIME=10;
+
+const $=id=>document.getElementById(id);
+
+/* floating symbols */
+(function(){
+  const syms=["🕉️","☸️","🖐️","🪷","✨","🙏"];
+  const f=$("floaters");
+  for(let i=0;i<14;i++){
+    const s=document.createElement("span");
+    s.textContent=syms[i%syms.length];
+    s.style.left=Math.random()*100+"%";
+    s.style.animationDuration=(14+Math.random()*18)+"s";
+    s.style.animationDelay=(-Math.random()*20)+"s";
+    s.style.fontSize=(18+Math.random()*26)+"px";
+    f.appendChild(s);
+  }
+})();
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function startGame(){
+  deck=shuffle([...QUESTIONS]);
+  idx=0;score=0;correct=0;streak=0;bestStreak=0;
+  $("startScreen").classList.add("hidden");
+  $("endScreen").classList.add("hidden");
+  $("quizScreen").classList.remove("hidden");
+  showQuestion();
+}
+
+function showQuestion(){
+  locked=false;
+  const q=deck[idx];
+  $("qNum").textContent=`Statement ${idx+1} of ${deck.length}`;
+  $("statement").textContent=q.s;
+  $("statement").classList.remove("shake");
+  $("progressBar").style.width=(idx/deck.length*100)+"%";
+  $("btnTrue").disabled=$("btnFalse").disabled=false;
+  updateHUD();
+  startTimer();
+}
+
+function startTimer(){
+  clearInterval(timer);
+  timeLeft=TIME;
+  const bar=$("timerBar");
+  bar.style.transition="none";bar.style.width="100%";bar.classList.remove("warn");
+  void bar.offsetWidth;
+  bar.style.transition=`width ${TIME}s linear`;
+  bar.style.width="0%";
+  setTimeout(()=>bar.classList.add("warn"),TIME*600);
+  timer=setTimeout(()=>{ if(!locked) answer(null); },TIME*1000);
+}
+
+function updateHUD(){
+  $("score").textContent=score;
+  $("streakPill").textContent="🔥 "+streak;
+  const done=correct+ (idx - correct); // answered count handled below
+  const answered=idx;
+  $("accuracy").textContent= answered? Math.round(correct/answered*100)+"%":"–";
+}
+
+function answer(guess){
+  if(locked)return;
+  locked=true;
+  clearInterval(timer);
+  $("btnTrue").disabled=$("btnFalse").disabled=true;
+  const q=deck[idx];
+  const isRight = guess===q.a;
+
+  if(isRight){
+    correct++; streak++; bestStreak=Math.max(bestStreak,streak);
+    score+=10+(streak>=3?5:0);
+    confetti(24);
+    showFeedback(true,q);
+  }else{
+    streak=0;
+    $("statement").classList.add("shake");
+    showFeedback(false,q,guess===null);
+  }
+  updateHUD();
+}
+
+function showFeedback(isRight,q,timedOut){
+  $("fbEmoji").textContent = isRight? "🎉" : (timedOut? "⏰":"💡");
+  $("fbTitle").className="fbTitle "+(isRight?"good":"bad");
+  $("fbTitle").textContent = isRight? "Correct!" : (timedOut? "Time's up!" : "Not quite!");
+  $("mythStamp").classList.toggle("hidden", isRight || q.a!==false);
+  $("fbText").innerHTML = isRight
+    ? (q.a ? "True! "+q.x : "Right — it's false! "+q.x)
+    : "<span class='bulb'>💡</span> "+q.x;
+  $("overlay").classList.add("show");
+}
+
+function nextQuestion(){
+  $("overlay").classList.remove("show");
+  idx++;
+  if(idx>=deck.length) endGame();
+  else showQuestion();
+}
+
+function endGame(){
+  $("quizScreen").classList.add("hidden");
+  $("endScreen").classList.remove("hidden");
+  const acc=Math.round(correct/deck.length*100);
+  $("finalScore").textContent=score;
+  $("finalAcc").textContent=acc+"%";
+  $("finalCorrect").textContent=correct+"/"+deck.length;
+  $("finalStreak").textContent=bestStreak;
+  let medal,title,msg;
+  if(acc===100){medal="👑";title="Tirthankara-Level Genius!";msg="Perfect score! You truly understand the Jain path. Micchami Dukkadam — you've earned every point! 🙏";}
+  else if(acc>=80){medal="🏆";title="Myth-Busting Master!";msg="Amazing! Your knowledge shines bright like a diya on Diwali. Just a few myths slipped past you.";}
+  else if(acc>=60){medal="🥈";title="Solid Seeker!";msg="Great effort! You know your basics well — revisit the myths that busted you and try again!";}
+  else{medal="🌱";title="Curious Beginner!";msg="Every great journey starts with one step! You learned something new today — that's what matters. Play again!";}
+  $("medal").textContent=medal;$("endTitle").textContent=title;$("endMsg").textContent=msg;
+  if(acc>=80) confetti(60);
+}
+
+function confetti(n){
+  const colors=["#ff9933","#ffc93c","#7b1e3a","#4a1d6e","#2ecc71","#fff"];
+  for(let i=0;i<n;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    const size=6+Math.random()*8;
+    c.style.cssText=`left:${Math.random()*100}vw;width:${size}px;height:${size*0.6}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      border-radius:${Math.random()>.5?"50%":"2px"};
+      animation-duration:${1.6+Math.random()*1.8}s;animation-delay:${Math.random()*.4}s`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+</script>
+</body>
+</html>

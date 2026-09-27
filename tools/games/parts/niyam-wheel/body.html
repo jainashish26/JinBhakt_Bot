@@ -1,0 +1,155 @@
+<div class="g-wrap">
+
+  <header class="g-head">
+    <div class="g-brand">
+      <span class="g-mark" id="brandMark" aria-hidden="true"></span>
+      <span class="g-brand-txt">
+        <span class="g-brand-hi" id="brandHi"></span>
+        <span class="g-brand-en" id="brandEn"></span>
+      </span>
+    </div>
+    <div class="g-head-actions">
+      <button type="button" class="g-pill is-hidden" id="streakPill"></button>
+      <button type="button" class="g-iconbtn" id="sndBtn" aria-pressed="true"></button>
+      <button type="button" class="g-pill" id="langBtn"></button>
+      <button type="button" class="g-pill" id="hubBtn"></button>
+      <button type="button" class="g-pill is-hidden" id="restartBtn"></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- S1 · LANGUAGE GATE -->
+    <section class="g-screen" id="scrLang">
+      <div class="g-card">
+        <span class="g-glyph" id="langGlyph" aria-hidden="true"></span>
+        <h1 class="g-title" id="s1Title"></h1>
+        <p class="g-sub" id="s1Sub"></p>
+        <div class="g-rule"></div>
+        <div class="g-choices">
+          <button type="button" class="g-choice" data-lang="en">
+            <span class="g-choice-name">English</span>
+            <span class="g-choice-note">Continue in English</span>
+          </button>
+          <button type="button" class="g-choice" data-lang="hi">
+            <span class="g-choice-name" lang="hi">हिंदी</span>
+            <span class="g-choice-note" lang="hi">हिंदी में जारी रखें</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 · AUDIENCE GATE -->
+    <section class="g-screen is-hidden" id="scrAud">
+      <div class="g-card">
+        <h1 class="g-title" id="s2Title"></h1>
+        <p class="g-sub" id="s2Sub"></p>
+        <div class="g-rule"></div>
+        <div class="g-choices">
+          <button type="button" class="g-choice" data-aud="kids">
+            <span class="g-choice-name" id="kidsLbl"></span>
+            <span class="g-choice-note" id="kidsNote"></span>
+          </button>
+          <button type="button" class="g-choice" data-aud="adults">
+            <span class="g-choice-name" id="adultsLbl"></span>
+            <span class="g-choice-note" id="adultsNote"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- S4 · THE RITUAL -->
+    <section class="g-screen is-hidden" id="scrMain">
+      <div class="g-card" style="padding-bottom:18px">
+        <div class="g-field" style="margin-top:0">
+          <label class="g-label" for="nameInput" id="nameLabel"></label>
+          <input class="g-input" type="text" id="nameInput" maxlength="20"
+                 autocomplete="off" spellcheck="false">
+          <p class="g-hint" id="nameNote" style="margin-top:8px"></p>
+        </div>
+      </div>
+
+      <div class="g-card">
+        <h2 class="g-cat-title" id="catTitle"></h2>
+        <div class="g-chips g-chips-scroll" id="chips" role="group"></div>
+      </div>
+
+      <div class="g-stage">
+        <div class="g-wheelwrap" id="wheelWrap">
+          <span class="g-pointer" aria-hidden="true"></span>
+          <svg class="g-wheel" id="wheelSvg" viewBox="0 0 400 400" role="img">
+            <circle cx="200" cy="200" r="196" fill="#FFF8F0" stroke="#C8860A" stroke-width="4"/>
+            <g id="wheelG"></g>
+            <circle cx="200" cy="200" r="196" fill="none" stroke="#E8800C" stroke-width="2.4"/>
+            <circle cx="200" cy="200" r="46" fill="#FFF8F0" stroke="#C8860A" stroke-width="3"/>
+          </svg>
+          <span class="g-hub" id="wheelHub" aria-hidden="true"></span>
+        </div>
+        <p class="g-hint" id="hintLine"></p>
+        <div class="g-btn-row">
+          <button type="button" class="g-btn g-btn-primary" id="actBtn"></button>
+        </div>
+        <p class="g-meta" id="metaLine"></p>
+      </div>
+
+      <div class="g-card is-hidden" id="resultCard">
+        <span class="g-catbadge" id="rCat"></span>
+        <h2 class="g-title" id="resTitle"></h2>
+        <p class="g-vowname" id="rName"></p>
+        <div class="g-vowbox"><span class="g-vowlab" id="labP"></span>
+          <p class="g-vowtxt" id="rP"></p></div>
+        <div class="g-vowbox"><span class="g-vowlab" id="labT"></span>
+          <p class="g-vowtxt" id="rT"></p></div>
+        <p class="g-cheer" id="rCheer"></p>
+        <div class="g-btn-row">
+          <button type="button" class="g-btn g-btn-primary" id="acceptBtn"></button>
+          <button type="button" class="g-btn" id="againBtn"></button>
+          <button type="button" class="g-btn" id="listBtn"></button>
+          <button type="button" class="g-btn" id="resLbBtn"></button>
+        </div>
+      </div>
+
+      <div class="g-card is-hidden" id="resLbPanel">
+        <div class="g-lb-head">
+          <span class="g-lb-title" id="resLbTitle"></span>
+          <button type="button" class="g-btn g-btn-sm" id="resLbClearBtn"></button>
+        </div>
+        <div id="resLbBody"></div>
+      </div>
+
+      <div class="g-card is-hidden" id="listPanel">
+        <h3 class="g-lb-title" id="listTitle"></h3>
+        <div id="listBody"></div>
+      </div>
+
+      <div class="g-card">
+        <div id="todayList"></div>
+        <div class="g-lb-head" style="margin-top:16px">
+          <span class="g-lb-title" id="lbTitle"></span>
+          <div class="g-btn-row" style="margin-top:0">
+            <button type="button" class="g-btn g-btn-sm" id="lbBtn"></button>
+            <button type="button" class="g-btn g-btn-sm" id="lbClearBtn"></button>
+          </div>
+        </div>
+        <div class="is-hidden" id="lbPanel"><div id="lbBody"></div></div>
+      </div>
+
+      <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="g-foot" id="footTxt"></footer>
+</div>
+
+<div class="g-toast" id="toast" role="status" aria-live="polite"></div>
+<div class="g-fx" id="fx" aria-hidden="true"></div>
+<div class="g-dialog is-hidden" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+  <div class="g-dialog-card">
+    <h2 id="dlgTitle"></h2>
+    <p id="dlgBody"></p>
+    <div class="g-btn-row">
+      <button type="button" class="g-btn g-btn-primary" id="dlgYes"></button>
+      <button type="button" class="g-btn" id="dlgNo"></button>
+    </div>
+  </div>
+</div>
+

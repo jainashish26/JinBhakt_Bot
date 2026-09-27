@@ -8,7 +8,12 @@
     "icons": "node tools/make-icons.js",
     "verify:subpath": "node tools/verify-subpath.js",
     "serve": "python -m http.server 8000",
-    "check": "node --check js/app.js && node --check js/speech.js && node --check service-worker.js && npm test && npm run verify:subpath"
+    "build:katha": "node tools/build-katha.js",
+    "build:stories-en": "node tools/build-stories-en.js",
+    "check:stories-en": "node tools/check-stories-en.js",
+    "build:games": "node tools/games/build.js",
+    "check:games": "node tools/check-games.js",
+    "check": "node --check js/app.js && node --check js/kids.js && node --check js/speech.js && node --check service-worker.js && node tools/check-games.js && npm test && npm run check:stories-en"
   },
   "devDependencies": {
     "jsdom": "^28.1.0",

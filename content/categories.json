@@ -15,6 +15,16 @@
     "icon": "📖"
   },
   {
+    "id": "katha",
+    "label": "कथा-कोश",
+    "icon": "📚"
+  },
+  {
+    "id": "stories-en",
+    "label": "Stories (EN)",
+    "icon": "📖"
+  },
+  {
     "id": "stotra",
     "label": "स्तोत्र",
     "icon": "📜"

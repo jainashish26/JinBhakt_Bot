@@ -29,12 +29,39 @@
       if (!t) return null;
       return { raw: t, dn: t, lt: t, lts: [t], sk: '' };
     },
-    display: function () { return ''; },
-    transliterateText: function (s) { return String(s == null ? '' : s); },
+    display: function (s, opts) { return String(s == null ? '' : s); },
+    transliterateText: function (s, opts) { return String(s == null ? '' : s); },
     hasDevanagari: function () { return false; },
     levenshtein: function () { return 99; },
     skeleton: function () { return ''; },
     fold: function (s) { return String(s == null ? '' : s).toLowerCase(); }
+  };
+
+  /**
+   * Panchang engine (js/panchang.js).  Falls back to a no-op stub if the
+   * module is missing — the home page simply omits the Panchang Patra.
+   */
+  var Panchang = window.jinbhaktPanchang || null;
+
+  /**
+   * Kids Learning engine (js/kids.js).  Owns the six offline learning games,
+   * the bilingual hub copy and the shared on-device leaderboard.  Falls back
+   * to a stub so a stale cache can never take the rest of the app down — the
+   * menu section is simply omitted.
+   */
+  var Kids = window.JinBhaktKids || {
+    getGames: function () { return []; },
+    gameById: function () { return null; },
+    hubCopy: function () { return {}; },
+    fill: function (s) { return String(s == null ? '' : s); },
+    readPrefs: function () { return { lang: 'hi' }; },
+    writePrefs: function () {},
+    lbRead: function () { return []; },
+    lbBest: function () { return null; },
+    lbClear: function () {},
+    lbPlays: function () { return 0; },
+    formatDuration: function (s) { return String(s); },
+    storageAvailable: function () { return false; }
   };
 
   /* ---------------------------------------------------------
@@ -47,7 +74,11 @@
     searchIndex: [],  // flattened catalogue for search
     contentCache: {}, // "catId/cref" -> {hCont,hBrief}  (lazy-loaded bodies)
     activeResult: -1, // keyboard-selected search result
-    ready: false
+    ready: false,
+    navReady: false,
+    taxonomy: null,
+    activeLens: 'browse',
+    panchangData: null   // lazy-loaded content/panchang.json
   };
 
   var dom = {};
@@ -64,6 +95,7 @@
    * button simply keeps showing the original text.
    * ------------------------------------------------------- */
   var TRANSLIT_KEY = 'jinbhakt:translit';
+  var TRANSLIT_STYLE_KEY = 'jinbhakt:translit-style';
 
   function readTranslitPref() {
     try { return window.localStorage.getItem(TRANSLIT_KEY) === '1'; }
@@ -77,10 +109,26 @@
     } catch (e) { /* ignore — the toggle still works for this session */ }
   }
 
+  function readTranslitStylePref() {
+    try {
+      var v = window.localStorage.getItem(TRANSLIT_STYLE_KEY);
+      return v === 'ascii' ? 'ascii' : 'iast';     // default IAST
+    } catch (e) { return 'iast'; }
+  }
+
+  function writeTranslitStylePref(style) {
+    try {
+      if (style === 'ascii') window.localStorage.setItem(TRANSLIT_STYLE_KEY, 'ascii');
+      else window.localStorage.removeItem(TRANSLIT_STYLE_KEY);
+    } catch (e) { /* ignore */ }
+  }
+
   var translitOn = readTranslitPref();
+  var translitStyle = readTranslitStylePref();
   var readerRaw = { body: '', brief: '' };   // untouched source of the open prayer
   var readerDevText = '';                    // plain Devanagari text, used by narration
   var readerLoaded = false;
+  var readerCatId = '';                      // current reader's category id
 
   /* ---------------------------------------------------------
    * Small helpers
@@ -182,7 +230,10 @@
   /** Devanagari -> Roman, degrading to the input if the engine is missing. */
   function toRoman(str, capitalize) {
     if (!T.transliterateText) return String(str == null ? '' : str);
-    return T.transliterateText(str, { capitalize: capitalize !== false });
+    return T.transliterateText(str, {
+      capitalize: capitalize !== false,
+      style: translitStyle
+    });
   }
 
   /**
@@ -280,7 +331,15 @@
     // every other chrome label built with swapSpan() — top, list, prev/next arrows, meta
     var labels = document.querySelectorAll('.reader [data-swap]');
     for (var j = 0; j < labels.length; j++) swapLabel(labels[j]);
-    if (document.body) document.body.classList.toggle('translit-on', translitOn);
+    if (document.body) {
+      document.body.classList.toggle('translit-on', translitOn);
+      document.body.classList.toggle('translit-iast', translitOn && translitStyle === 'iast');
+    }
+    // Show/hide the style switch — visible only when transliteration is on
+    var styleGroup = document.querySelector('.translit-style-group');
+    if (styleGroup) {
+      styleGroup.style.display = translitOn ? '' : 'none';
+    }
     paintTranslitButtons();
   }
 
@@ -288,12 +347,15 @@
   function paintReaderContent() {
     if (!readerLoaded) { paintTranslitChrome(); return; }
 
+    var isLatin = readerCatId === 'stories-en';
+
     var body = document.getElementById('prayer-body');
     if (body) {
       body.innerHTML = sanitizeHTML(normalizeContent(readerRaw.body || ''));
       wrapTables(body);
       readerDevText = extractSpeechText(body);       // captured before any rewriting
       body.classList.toggle('is-translit', translitOn);
+      body.classList.toggle('is-latin', isLatin);
       if (translitOn) transliterateTree(body);
     }
 
@@ -302,11 +364,12 @@
       slot.innerHTML = '';
       if (readerRaw.brief) {
         var aside = el('aside', 'reader-brief');
-        aside.appendChild(el('h3', null, translitOn ? 'Summary' : '\u0938\u093E\u0930\u093E\u0902\u0936'));
+        aside.appendChild(el('h3', null, (translitOn || isLatin) ? 'Summary' : '\u0938\u093E\u0930\u093E\u0902\u0936'));
         var bb = el('div', 'brief-body');
         bb.innerHTML = sanitizeHTML(normalizeContent(readerRaw.brief));
         wrapTables(bb);
         bb.classList.toggle('is-translit', translitOn);
+        bb.classList.toggle('is-latin', isLatin);
         if (translitOn) transliterateTree(bb);
         aside.appendChild(bb);
         slot.appendChild(aside);
@@ -326,6 +389,13 @@
         ? 'Showing English letters \u2014 tap for Devanagari'
         : 'Show this text in English (Roman) letters');
     }
+    // Sync the IAST / Simple style switch
+    var styleBtns = document.querySelectorAll('[data-action="translit-style"]');
+    for (var j = 0; j < styleBtns.length; j++) {
+      var isActive = styleBtns[j].getAttribute('data-style') === translitStyle;
+      styleBtns[j].classList.toggle('is-active', isActive);
+      styleBtns[j].setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    }
     // speech.js owns the listen/stop wording — ask it to repaint in this script
     if (window.jinbhaktSpeech && typeof window.jinbhaktSpeech.paintButtons === 'function') {
       window.jinbhaktSpeech.paintButtons();
@@ -344,6 +414,15 @@
 
   function toggleTransliteration() {
     return setTransliteration(!translitOn);
+  }
+
+  function setTranslitStyle(style) {
+    style = style === 'ascii' ? 'ascii' : 'iast';
+    if (style === translitStyle) { paintTranslitButtons(); return translitStyle; }
+    translitStyle = style;
+    writeTranslitStylePref(style);
+    paintReaderContent();
+    return translitStyle;
   }
 
   /** Tidy raw JSON markup: CRLF, stray indentation, blank-line spam. */
@@ -404,6 +483,7 @@
     dom.searchInput   = document.getElementById('search-input');
     dom.searchResults = document.getElementById('search-results-box');
     dom.categoryList  = document.getElementById('category-list');
+    dom.quickBar      = document.getElementById('quick-bar');
     dom.main          = document.getElementById('main-content');
   }
 
@@ -431,6 +511,16 @@
       return Promise.all(jobs).then(function () {
         buildSearchIndex();
         state.ready = true;
+        return loadJSON(CONTENT_DIR + 'taxonomy.json').then(function (taxonomy) {
+          state.taxonomy = taxonomy;
+          if (window.Nav && typeof Nav.init === 'function') {
+            Nav.init(taxonomy, state.items);
+            state.navReady = true;
+          }
+        }).catch(function (err) {
+          console.warn('Could not load taxonomy.json:', err);
+          state.navReady = false;
+        });
       });
     });
   }
@@ -509,7 +599,15 @@
         entry.b = { lt: lt.join(' '), sk: sk.join(' '), dn: dn.join(' ') };
 
         // Human-readable romanization shown under the Devanagari title.
-        entry.latin = T.hasDevanagari(hName) ? T.display(hName) : '';
+        // Both ASCII and IAST forms are precomputed so that flipping the
+        // style switch never rebuilds the index.
+        if (T.hasDevanagari(hName)) {
+          entry.latin = T.display(hName);
+          entry.latinIast = T.display(hName, { style: 'iast' });
+        } else {
+          entry.latin = '';
+          entry.latinIast = '';
+        }
 
         state.searchIndex.push(entry);
       });
@@ -587,62 +685,229 @@
   }
 
   /* ---------------------------------------------------------
-   * Sidebar: category accordion
+   * Sidebar: 4-lens navigation (Path / Browse / Index / Mine)
+   * Uses Nav engine when available, falls back to raw state.
    * ------------------------------------------------------- */
   function renderNav() {
-    dom.categoryList.innerHTML = '';
+    renderLensTabs();
+    renderLensContent(state.activeLens);
+  }
 
-    // "Home" shortcut
+  /** Render the lens tab bar above the category list. */
+  function renderLensTabs() {
+    var existing = dom.navPanel.querySelector('.lens-tabs');
+    if (existing) existing.remove();
+
+    var lenses = (state.navReady && window.Nav) ? Nav.getLenses() : [
+      { id: 'path', label: 'क्रम', latin: 'Daily Path', icon: '\uD83E\uDE94' },
+      { id: 'browse', label: 'विषय', latin: 'Browse', icon: '\uD83D\uDCDA' },
+      { id: 'index', label: 'अ–क्ष', latin: 'Index', icon: '\uD83D\uDD24' },
+      { id: 'mine', label: 'मेरे', latin: 'Mine', icon: '⭐' }
+    ];
+
+    var tabs = el('div', 'lens-tabs');
+    tabs.setAttribute('role', 'tablist');
+    tabs.setAttribute('aria-label', 'नेविगेशन दृश्य');
+
+    lenses.forEach(function (lens) {
+      var btn = el('button', 'lens-tab' + (state.activeLens === lens.id ? ' is-active' : ''));
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-selected', state.activeLens === lens.id ? 'true' : 'false');
+      btn.setAttribute('data-lens', lens.id);
+      btn.setAttribute('title', lens.latin || lens.label);
+      btn.appendChild(el('span', 'lens-tab-icon', lens.icon || ''));
+      btn.appendChild(el('span', 'lens-tab-label', lens.label));
+      btn.addEventListener('click', function () { switchLens(lens.id); });
+      tabs.appendChild(btn);
+    });
+
+    dom.navPanel.insertBefore(tabs, dom.categoryList);
+  }
+
+  /** Switch the active lens and re-render sidebar content. */
+  function switchLens(lensId) {
+    state.activeLens = lensId;
+    if (state.navReady && window.Nav) Nav.setPrefs({ lens: lensId });
+
+    var tabs = dom.navPanel.querySelectorAll('.lens-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      var isActive = tabs[i].getAttribute('data-lens') === lensId;
+      tabs[i].classList.toggle('is-active', isActive);
+      tabs[i].setAttribute('aria-selected', isActive ? 'true' : 'false');
+    }
+    renderLensContent(lensId);
+  }
+
+  /** Render the sidebar content for the given lens. */
+  function renderLensContent(lensId) {
+    dom.categoryList.innerHTML = '';
+    switch (lensId) {
+      case 'path':    renderLensPath(); break;
+      case 'browse':  renderLensBrowse(); break;
+      case 'index':   renderLensIndex(); break;
+      case 'mine':    renderLensMine(); break;
+      default:        renderLensBrowse(); break;
+    }
+    /* Kids Learning is always the last section of the menu bar, in every lens. */
+    var kidsSection = buildKidsMenuSection();
+    if (kidsSection) dom.categoryList.appendChild(kidsSection);
+  }
+
+  /* Browse lens: category accordion (same DOM as legacy renderNav). */
+  function renderLensBrowse() {
     var homeLink = el('a', 'nav-home-link', '\u2638  मुख्य पृष्ठ');
     homeLink.href = '#/';
     homeLink.setAttribute('data-route', 'home');
     dom.categoryList.appendChild(homeLink);
 
-    state.categories.forEach(function (cat) {
+    var catList = (state.navReady && window.Nav) ? Nav.getCategories() : state.categories;
+    catList.forEach(function (cat) {
       var all = state.items[cat.id] || [];
       var ready = state.readable[cat.id] || [];
-
       var details = el('details', 'category-item');
       details.setAttribute('data-cat', cat.id);
-
       var summary = el('summary', 'category-header');
       summary.appendChild(el('span', 'cat-icon', cat.icon || ''));
       summary.appendChild(el('span', 'cat-label', cat.label));
-
       var badge = el('span', 'cat-count', String(ready.length));
-      badge.title = ready.length + ' पठनीय / ' + all.length + ' कुल';
-      badge.setAttribute('aria-label', ready.length + ' पठनीय सामग्री');
+      var isEn = (cat.id === 'stories-en');
+      badge.title = ready.length + (isEn ? ' readable / ' : ' पठनीय / ') + all.length + (isEn ? ' total' : ' कुल');
+      badge.setAttribute('aria-label', ready.length + (isEn ? ' readable items' : ' पठनीय सामग्री'));
       summary.appendChild(badge);
-
       var links = el('div', 'category-links');
       links.id = 'cat-links-' + cat.id;
-
       if (ready.length === 0) {
-        links.appendChild(el('p', 'cat-empty', 'इस खंड की सामग्री शीघ्र ही जोड़ी जाएगी।'));
+        links.appendChild(el('p', 'cat-empty', isEn ? 'Content for this section will be added soon.' : 'इस खंड की सामग्री शीघ्र ही जोड़ी जाएगी।'));
       } else {
         ready.forEach(function (item) {
-          var a = el('a', 'link-pill', item.hName || item.eName || item._id);
+          // For English stories category, prefer eName; for all others prefer hName.
+          var label = isEn
+            ? (item.eName || item.hName || item._id)
+            : (item.hName || item.eName || item._id);
+          var a = el('a', 'link-pill', label);
           a.href = '#/' + cat.id + '/' + encodeURIComponent(item._id);
           a.setAttribute('data-route', 'reader');
           a.setAttribute('data-cat', cat.id);
           a.setAttribute('data-id', item._id);
           links.appendChild(a);
         });
-
         var pending = all.length - ready.length;
         if (pending > 0) {
-          var more = el('a', 'link-pill pill-more', '+ ' + pending + ' अन्य शीर्षक');
+          var more = el('a', 'link-pill pill-more', '+ ' + pending + (isEn ? ' more titles' : ' अन्य शीर्षक'));
           more.href = '#/' + cat.id;
           more.setAttribute('data-route', 'category');
-          more.title = 'पूरी सूची देखें';
+          more.title = isEn ? 'View full list' : 'पूरी सूची देखें';
           links.appendChild(more);
         }
       }
-
       details.appendChild(summary);
       details.appendChild(links);
       dom.categoryList.appendChild(details);
     });
+  }
+
+  /* Path lens: daily worship steps as accordion. */
+  function renderLensPath() {
+    if (!state.navReady || !window.Nav) {
+      dom.categoryList.appendChild(el('p', 'nav-loading', 'क्रम शीघ्र ही उपलब्ध होगा।'));
+      return;
+    }
+    var homeLink = el('a', 'nav-home-link', '\uD83E\uDE94  नित्य पूजा क्रम');
+    homeLink.href = '#/path';
+    homeLink.setAttribute('data-route', 'path');
+    dom.categoryList.appendChild(homeLink);
+
+    var steps = Nav.getPathSteps();
+    steps.forEach(function (step, idx) {
+      var details = el('details', 'category-item');
+      details.setAttribute('data-path-step', step.id);
+      var summary = el('summary', 'category-header');
+      summary.appendChild(el('span', 'cat-icon', String(idx + 1) + '.'));
+      summary.appendChild(el('span', 'cat-label', step.label));
+      var badge = el('span', 'cat-count', String(step.count));
+      badge.setAttribute('aria-label', step.count + ' पाठ');
+      summary.appendChild(badge);
+      var links = el('div', 'category-links');
+      var items = Nav.getPathStep(step.id);
+      items.slice(0, 20).forEach(function (item) {
+        var a = el('a', 'link-pill', item.hName || item.eName || item._id);
+        a.href = '#/' + item.catId + '/' + encodeURIComponent(item._id);
+        a.setAttribute('data-route', 'reader');
+        a.setAttribute('data-cat', item.catId);
+        a.setAttribute('data-id', item._id);
+        links.appendChild(a);
+      });
+      if (items.length > 20) {
+        var more = el('a', 'link-pill pill-more', '+ ' + (items.length - 20) + ' अन्य');
+        more.href = '#/path/' + step.id;
+        more.setAttribute('data-route', 'path-step');
+        links.appendChild(more);
+      }
+      details.appendChild(summary);
+      details.appendChild(links);
+      dom.categoryList.appendChild(details);
+    });
+  }
+
+  /* Index lens: Devanagari letter grid in sidebar. */
+  function renderLensIndex() {
+    if (!state.navReady || !window.Nav) {
+      dom.categoryList.appendChild(el('p', 'nav-loading', 'अक्षर सूची शीघ्र ही उपलब्ध होगी।'));
+      return;
+    }
+    var homeLink = el('a', 'nav-home-link', '\uD83D\uDD24  अक्षर माला');
+    homeLink.href = '#/index';
+    homeLink.setAttribute('data-route', 'index');
+    dom.categoryList.appendChild(homeLink);
+
+    var letters = Nav.getLetters();
+    var grid = el('div', 'nav-letter-grid');
+    grid.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;padding:8px 12px;';
+    letters.forEach(function (l) {
+      var a = el('a', 'link-pill', l.letter);
+      a.href = '#/index/' + encodeURIComponent(l.letter);
+      a.title = l.count + ' पाठ';
+      a.style.cssText = 'min-width:32px;text-align:center;';
+      a.setAttribute('data-route', 'letter');
+      grid.appendChild(a);
+    });
+    dom.categoryList.appendChild(grid);
+  }
+
+  /* Mine lens: favorites list + settings. */
+  function renderLensMine() {
+    if (!state.navReady || !window.Nav) {
+      dom.categoryList.appendChild(el('p', 'nav-loading', 'प्रिय पाठ शीघ्र ही उपलब्ध होंगे।'));
+      return;
+    }
+    var homeLink = el('a', 'nav-home-link', '⭐  मेरे प्रिय पाठ');
+    homeLink.href = '#/fav';
+    homeLink.setAttribute('data-route', 'fav');
+    dom.categoryList.appendChild(homeLink);
+
+    var favIds = Nav.getFavs();
+    if (favIds.length === 0) {
+      dom.categoryList.appendChild(el('p', 'cat-empty',
+        'अभी कोई प्रिय पाठ नहीं। पाठ पढ़ते समय ⭐ दबाएँ।'));
+      return;
+    }
+    var links = el('div', 'category-links');
+    links.style.padding = '8px 12px';
+    favIds.forEach(function (favId) {
+      var parts = favId.split('::');
+      if (parts.length < 2) return;
+      var catId = parts[0];
+      var itemId = parts[1];
+      var found = findItem(catId, itemId);
+      var name = found ? (found.hName || found.eName || itemId) : itemId;
+      var a = el('a', 'link-pill', name);
+      a.href = '#/' + catId + '/' + encodeURIComponent(itemId);
+      a.setAttribute('data-route', 'reader');
+      a.setAttribute('data-cat', catId);
+      a.setAttribute('data-id', itemId);
+      links.appendChild(a);
+    });
+    dom.categoryList.appendChild(links);
   }
 
   /** Highlight the sidebar entry matching the current route. */
@@ -652,6 +917,16 @@
 
     var details = dom.categoryList.querySelectorAll('details.category-item');
     for (var d = 0; d < details.length; d++) details[d].classList.remove('cat-active');
+
+    // Highlight the matching lens tab
+    var tabs = dom.navPanel.querySelectorAll('.lens-tab');
+    var lensMap = { path: 'path', 'path-step': 'path', index: 'index',
+      letter: 'index', fav: 'mine', reader: 'browse', category: 'browse', home: 'browse',
+      kids: 'browse', 'kids-game': 'browse' };
+    var activeLens = lensMap[route.type] || state.activeLens;
+    for (var t = 0; t < tabs.length; t++) {
+      tabs[t].classList.toggle('is-active', tabs[t].getAttribute('data-lens') === activeLens);
+    }
 
     if (!route) return;
 
@@ -667,16 +942,50 @@
         if (route.type === 'reader' && isMobile()) target.open = true;
       }
     }
+
+    if (route.type === 'path-step') {
+      var stepTarget = dom.categoryList.querySelector('details[data-path-step="' + route.step + '"]');
+      if (stepTarget) {
+        stepTarget.classList.add('cat-active');
+        if (isMobile()) stepTarget.open = true;
+      }
+    }
+
+    if (route.type === 'kids' || route.type === 'kids-game') {
+      var kidsTarget = dom.categoryList.querySelector('details.kids-category');
+      if (kidsTarget) {
+        kidsTarget.classList.add('cat-active');
+        if (route.type === 'kids-game') {
+          var gamePill = kidsTarget.querySelector('.link-pill[data-id="' + route.game + '"]');
+          if (gamePill) gamePill.classList.add('active');
+        }
+        if (isMobile()) kidsTarget.open = true;
+      }
+    }
   }
 
   /* ---------------------------------------------------------
-   * Hash router — #/ , #/cat , #/cat/id
+   * Hash router — #/ , #/cat , #/cat/id , #/path , #/path/step ,
+   *               #/index , #/index/letter , #/fav
    * ------------------------------------------------------- */
   function parseHash() {
     var raw = String(window.location.hash || '').replace(/^#\/?/, '');
     var parts = raw.split('/').filter(Boolean).map(decodeURIComponent);
 
     if (parts.length === 0) return { type: 'home' };
+    if (parts[0] === 'path') {
+      if (parts.length >= 2) return { type: 'path-step', step: parts[1] };
+      return { type: 'path' };
+    }
+    if (parts[0] === 'index') {
+      if (parts.length >= 2) return { type: 'letter', letter: parts[1] };
+      return { type: 'index' };
+    }
+    if (parts[0] === 'fav') return { type: 'fav' };
+    if (parts[0] === 'kids') {
+      if (parts.length >= 2) return { type: 'kids-game', game: parts[1] };
+      return { type: 'kids' };
+    }
     if (parts.length === 1) return { type: 'category', cat: parts[0] };
     return { type: 'reader', cat: parts[0], id: parts[1] };
   }
@@ -691,7 +1000,21 @@
     var route = parseHash();
     hideSearchResults();
 
-    if (route.type === 'category' && categoryById(route.cat)) {
+    if (route.type === 'path') {
+      renderPathView();
+    } else if (route.type === 'path-step') {
+      renderPathStepView(route.step);
+    } else if (route.type === 'index') {
+      renderIndexView();
+    } else if (route.type === 'letter') {
+      renderLetterView(route.letter);
+    } else if (route.type === 'fav') {
+      renderFavView();
+    } else if (route.type === 'kids') {
+      renderKidsView();
+    } else if (route.type === 'kids-game') {
+      renderKidsGameView(route.game);
+    } else if (route.type === 'category' && categoryById(route.cat)) {
       renderCategoryView(route.cat);
     } else if (route.type === 'reader' && categoryById(route.cat)) {
       renderReaderView(route.cat, route.id);
@@ -705,8 +1028,125 @@
   }
 
   /* ---------------------------------------------------------
+   * Panchang Patra — today's lunar almanac strip
+   * ------------------------------------------------------- */
+  var panchangFetchPromise = null;
+
+  function fetchPanchangData() {
+    if (state.panchangData) return Promise.resolve(state.panchangData);
+    if (panchangFetchPromise) return panchangFetchPromise;
+    panchangFetchPromise = fetch(CONTENT_DIR + 'panchang.json')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data) state.panchangData = data;
+        return data;
+      })
+      .catch(function () { return null; });
+    return panchangFetchPromise;
+  }
+
+  function buildMoonSVG(illumination, waxing) {
+    var R = 46, cx = 50, cy = 50;
+    var f = illumination;
+    if (f < 0.02) {
+      return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'
+        + '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#2A1A0A"/>'
+        + '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="none" stroke="#554430" stroke-width="1"/>'
+        + '</svg>';
+    }
+    if (f > 0.98) {
+      return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'
+        + '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#F5E6C8"/>'
+        + '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="none" stroke="#D4B88A" stroke-width="0.5"/>'
+        + '</svg>';
+    }
+    var rx = R * Math.abs(1 - 2 * f);
+    var shadowLeft = waxing;
+    var path;
+    if (shadowLeft) {
+      path = 'M' + cx + ',' + (cy - R)
+        + ' A' + R + ',' + R + ' 0 1,0 ' + cx + ',' + (cy + R)
+        + ' A' + rx.toFixed(1) + ',' + R + ' 0 0,' + (f < 0.5 ? '0' : '1') + ' ' + cx + ',' + (cy - R)
+        + ' Z';
+    } else {
+      path = 'M' + cx + ',' + (cy - R)
+        + ' A' + R + ',' + R + ' 0 1,1 ' + cx + ',' + (cy + R)
+        + ' A' + rx.toFixed(1) + ',' + R + ' 0 0,' + (f < 0.5 ? '1' : '0') + ' ' + cx + ',' + (cy - R)
+        + ' Z';
+    }
+    return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'
+      + '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#F5E6C8"/>'
+      + '<path d="' + path + '" fill="#2A1A0A"/>'
+      + '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="none" stroke="#D4B88A" stroke-width="0.5"/>'
+      + '</svg>';
+  }
+
+  /* ---------------------------------------------------------
    * View: Home — catalogue overview
    * ------------------------------------------------------- */
+  function renderTodayStrip() {
+    if (!Panchang || !state.panchangData) return null;
+    var info = Panchang.getTodayInfo(new Date(), state.panchangData);
+    var ld = info.lunar;
+    if (!ld) return null;
+
+    var section = el('section', 'panchang-patra');
+    section.setAttribute('aria-label', 'आज का पंचांग');
+
+    var header = el('div', 'patra-header');
+    header.appendChild(el('h3', 'patra-title', 'पंचांग पत्र'));
+    var ds = ld.date.getDate() + '/' + (ld.date.getMonth() + 1) + '/' + ld.date.getFullYear();
+    header.appendChild(el('time', 'patra-date', ds));
+    section.appendChild(header);
+
+    var body = el('div', 'patra-body');
+    var moonDiv = el('div', 'patra-moon');
+    moonDiv.innerHTML = buildMoonSVG(ld.illumination, ld.waxing);
+    moonDiv.setAttribute('role', 'img');
+    moonDiv.setAttribute('aria-label', 'चन्द्रमा ' + Math.round(ld.illumination * 100) + '% प्रकाशित');
+    body.appendChild(moonDiv);
+
+    var infoDiv = el('div', 'patra-info');
+    infoDiv.appendChild(el('div', 'patra-tithi', ld.tithiDev + ' · ' + ld.pakshaH));
+    infoDiv.appendChild(el('div', 'patra-month', ld.monthH + ' · ' + ld.monthLatin));
+    if (ld.nakshatra) {
+      infoDiv.appendChild(el('div', 'patra-nakshatra', 'नक्षत्र: ' + ld.nakshatra));
+    }
+    var sv = ld.samvat;
+    infoDiv.appendChild(el('div', 'patra-samvat',
+      'वी.नि.सं. ' + sv.vns + ' · वि.सं. ' + sv.vs + ' · शाक ' + sv.shaka));
+    body.appendChild(infoDiv);
+    section.appendChild(body);
+
+    if (info.parvs && info.parvs.length > 0) {
+      info.parvs.forEach(function (p) {
+        var parvDiv = el('div', 'patra-parv');
+        var nameHtml = '';
+        if (p.icon) nameHtml += '<span class="patra-parv-icon">' + p.icon + '</span>';
+        nameHtml += '<span class="patra-parv-name">' + p.h + '</span>';
+        if (p.totalDays > 1) {
+          nameHtml += '<span class="patra-parv-day">दिन ' + p.day + '/' + p.totalDays + '</span>';
+        }
+        var nameEl = el('div');
+        nameEl.innerHTML = nameHtml;
+        parvDiv.appendChild(nameEl);
+        if (p.blurb) parvDiv.appendChild(el('div', 'patra-parv-blurb', p.blurb));
+        section.appendChild(parvDiv);
+      });
+    }
+
+    if (info.kalyanaks && info.kalyanaks.length > 0) {
+      info.kalyanaks.forEach(function (k) {
+        var kDiv = el('div', 'patra-kalyanak');
+        kDiv.innerHTML = '<span class="patra-kalyanak-label">' + k.typeH + '</span>'
+          + ' — ' + k.tirthankarH + ' (' + k.tirthankarLatin + ', तीर्थंकर ' + k.no + ')';
+        section.appendChild(kDiv);
+      });
+    }
+
+    return section;
+  }
+
   function totalReadable() {
     var n = 0;
     state.categories.forEach(function (c) { n += (state.readable[c.id] || []).length; });
@@ -735,6 +1175,22 @@
     stat.appendChild(document.createTextNode(' खंड'));
     hero.appendChild(stat);
     wrap.appendChild(hero);
+
+    /* Panchang Patra — non-fatal: if panchang.js or the data file
+     * is unavailable the strip is simply omitted. */
+    if (Panchang) {
+      fetchPanchangData().then(function (data) {
+        if (!data) return;
+        /* Re-check we're still on the home view before inserting. */
+        if (!wrap.parentNode) return;
+        var strip = renderTodayStrip();
+        if (strip) {
+          /* Insert after hero, before the grid title. */
+          var gridTitle = wrap.querySelector('.section-title');
+          wrap.insertBefore(strip, gridTitle || null);
+        }
+      });
+    }
 
     var gridTitle = el('h3', 'section-title', 'विषय चुनें');
     wrap.appendChild(gridTitle);
@@ -766,6 +1222,29 @@
       grid.appendChild(card);
     });
     wrap.appendChild(grid);
+
+    /* Kids Learning banner — deliberately OUTSIDE .cat-grid so the category
+     * card count (and its test assertion) is unaffected. */
+    var kidsGames = Kids.getGames();
+    if (kidsGames.length) {
+      var kPrefs = Kids.readPrefs();
+      var kCopy = Kids.hubCopy(kPrefs.lang === 'en' ? 'en' : 'hi');
+      var banner = el('a', 'kids-banner');
+      banner.href = '#/kids';
+      banner.setAttribute('data-route', 'kids');
+      var bMark = el('span', 'kids-banner-mark');
+      bMark.appendChild(kidsSwastikaSVG());
+      banner.appendChild(bMark);
+      var bCopy = el('span', 'kids-banner-copy');
+      bCopy.appendChild(el('strong', null, kCopy.bannerTitle));
+      bCopy.appendChild(el('span', null, kCopy.bannerBlurb));
+      banner.appendChild(bCopy);
+      banner.appendChild(el('span', 'kids-banner-chip',
+        Kids.fill(kCopy.bannerChip, {
+          n: kPrefs.lang === 'en' ? String(kidsGames.length) : Kids.toDevNum(kidsGames.length)
+        })));
+      wrap.appendChild(banner);
+    }
 
     dom.main.appendChild(wrap);
   }
@@ -866,8 +1345,658 @@
   }
 
   /* ---------------------------------------------------------
-   * View: Reader — a single prayer / text
+   * View: Path — daily worship sequence
    * ------------------------------------------------------- */
+  function renderPathView() {
+    if (!state.navReady || !window.Nav) {
+      renderHomeView();
+      return;
+    }
+    document.title = 'नित्य पूजा क्रम — जिनभक्त';
+    dom.main.innerHTML = '';
+
+    var wrap = el('div', 'path-view');
+
+    var crumb = el('nav', 'breadcrumb');
+    crumb.setAttribute('aria-label', 'ब्रेडक्रम्ब');
+    var cHome = el('a', null, 'मुख्य पृष्ठ');
+    cHome.href = '#/';
+    crumb.appendChild(cHome);
+    crumb.appendChild(el('span', 'crumb-sep', '›'));
+    crumb.appendChild(el('span', 'crumb-current', 'नित्य पूजा क्रम'));
+    wrap.appendChild(crumb);
+
+    var hero = el('section', 'home-hero');
+    hero.style.marginBottom = '20px';
+    hero.appendChild(el('span', 'om-symbol', '\uD83E\uDE94'));
+    hero.appendChild(el('h2', null, 'नित्य पूजा क्रम'));
+    hero.appendChild(el('p', 'hero-sub',
+      'पारम्परिक दैनिक पूजा का क्रम — पहले मंगल, फिर प्रतिक्रमण, अन्त में क्षमापना।'));
+    wrap.appendChild(hero);
+
+    var steps = Nav.getPathSteps();
+    var stepper = el('div', 'path-stepper');
+    steps.forEach(function (step, idx) {
+      var card = el('a', 'path-step-card');
+      card.href = '#/path/' + step.id;
+      card.setAttribute('data-route', 'path-step');
+
+      card.appendChild(el('span', 'path-step-num', String(idx + 1)));
+
+      var info = el('div', 'path-step-info');
+      info.appendChild(el('span', 'path-step-label', step.label));
+      if (step.latin) info.appendChild(el('span', 'path-step-meta', step.latin));
+      card.appendChild(info);
+
+      card.appendChild(el('span', 'path-step-count', step.count + ' पाठ'));
+
+      stepper.appendChild(card);
+    });
+    wrap.appendChild(stepper);
+    dom.main.appendChild(wrap);
+  }
+
+  /* ---------------------------------------------------------
+   * View: Path Step — items within a single worship step
+   * ------------------------------------------------------- */
+  function renderPathStepView(stepId) {
+    if (!state.navReady || !window.Nav) {
+      renderHomeView();
+      return;
+    }
+    var step = Nav.getPathStep(stepId);
+    if (!step || step.length === 0) {
+      renderPathView();
+      return;
+    }
+    var steps = Nav.getPathSteps();
+    var stepMeta = null;
+    var stepIdx = -1;
+    for (var i = 0; i < steps.length; i++) {
+      if (steps[i].id === stepId) { stepMeta = steps[i]; stepIdx = i; break; }
+    }
+    var title = stepMeta ? stepMeta.label : stepId;
+    document.title = title + ' — जिनभक्त';
+    dom.main.innerHTML = '';
+
+    var wrap = el('div', 'path-step-view');
+
+    var crumb = el('nav', 'breadcrumb');
+    crumb.setAttribute('aria-label', 'ब्रेडक्रम्ब');
+    var cHome = el('a', null, 'मुख्य पृष्ठ');
+    cHome.href = '#/';
+    var cPath = el('a', null, 'नित्य क्रम');
+    cPath.href = '#/path';
+    crumb.appendChild(cHome);
+    crumb.appendChild(el('span', 'crumb-sep', '›'));
+    crumb.appendChild(cPath);
+    crumb.appendChild(el('span', 'crumb-sep', '›'));
+    crumb.appendChild(el('span', 'crumb-current', title));
+    wrap.appendChild(crumb);
+
+    var head = el('div', 'path-step-header');
+    head.appendChild(el('h2', null, (stepIdx >= 0 ? (stepIdx + 1) + '. ' : '') + title));
+    if (stepMeta && stepMeta.latin) {
+      head.appendChild(el('p', null, stepMeta.latin));
+    }
+    if (steps.length > 0) {
+      var pct = Math.round(((stepIdx + 1) / steps.length) * 100);
+      var prog = el('div', 'path-progress');
+      var bar = el('div', 'path-progress-bar');
+      var fill = el('div', 'path-progress-fill');
+      fill.style.width = pct + '%';
+      bar.appendChild(fill);
+      prog.appendChild(bar);
+      prog.appendChild(el('span', 'path-progress-text',
+        'चरण ' + (stepIdx + 1) + ' / ' + steps.length));
+      head.appendChild(prog);
+    }
+    wrap.appendChild(head);
+
+    // Render items grouped by category
+    var byCat = {};
+    var catOrder = [];
+    step.forEach(function (item) {
+      var c = item.catId || 'other';
+      if (!byCat[c]) { byCat[c] = []; catOrder.push(c); }
+      byCat[c].push(item);
+    });
+    catOrder.forEach(function (catId) {
+      var cat = categoryById(catId);
+      var catLabel = cat ? (cat.icon || '') + ' ' + cat.label : catId;
+      wrap.appendChild(el('h3', 'section-title', catLabel + ' (' + byCat[catId].length + ')'));
+      wrap.appendChild(buildItemList(catId, byCat[catId]));
+    });
+
+    dom.main.appendChild(wrap);
+  }
+
+  /* ---------------------------------------------------------
+   * View: Index — Devanagari letter grid
+   * ------------------------------------------------------- */
+  function renderIndexView() {
+    if (!state.navReady || !window.Nav) {
+      renderHomeView();
+      return;
+    }
+    document.title = 'अक्षर माला — जिनभक्त';
+    dom.main.innerHTML = '';
+
+    var wrap = el('div', 'index-view');
+
+    var crumb = el('nav', 'breadcrumb');
+    crumb.setAttribute('aria-label', 'ब्रेडक्रम्ब');
+    var cHome = el('a', null, 'मुख्य पृष्ठ');
+    cHome.href = '#/';
+    crumb.appendChild(cHome);
+    crumb.appendChild(el('span', 'crumb-sep', '›'));
+    crumb.appendChild(el('span', 'crumb-current', 'अक्षर माला'));
+    wrap.appendChild(crumb);
+
+    var hero = el('section', 'home-hero');
+    hero.style.marginBottom = '20px';
+    hero.appendChild(el('span', 'om-symbol', '\uD83D\uDD24'));
+    hero.appendChild(el('h2', null, 'अक्षर माला'));
+    hero.appendChild(el('p', 'hero-sub',
+      'हिन्दी अक्षर के अनुसार सभी पाठ खोजें — अ से ह तक।'));
+    wrap.appendChild(hero);
+
+    var letters = Nav.getLetters();
+    var grid = el('div', 'letter-grid');
+    letters.forEach(function (l) {
+      var cell = el('a', 'letter-cell');
+      cell.href = '#/index/' + encodeURIComponent(l.letter);
+      cell.setAttribute('data-route', 'letter');
+      cell.appendChild(el('span', 'letter-char', l.letter));
+      cell.appendChild(el('span', 'letter-count', l.count));
+      grid.appendChild(cell);
+    });
+    wrap.appendChild(grid);
+    dom.main.appendChild(wrap);
+  }
+
+  /* ---------------------------------------------------------
+   * View: Letter — items starting with a specific letter
+   * ------------------------------------------------------- */
+  function renderLetterView(letter) {
+    if (!state.navReady || !window.Nav) {
+      renderHomeView();
+      return;
+    }
+    var items = Nav.getLetterIndex(letter);
+    if (!items || items.length === 0) {
+      renderIndexView();
+      return;
+    }
+    document.title = letter + ' — जिनभक्त';
+    dom.main.innerHTML = '';
+
+    var wrap = el('div', 'letter-view');
+
+    var crumb = el('nav', 'breadcrumb');
+    crumb.setAttribute('aria-label', 'ब्रेडक्रम्ब');
+    var cHome = el('a', null, 'मुख्य पृष्ठ');
+    cHome.href = '#/';
+    var cIdx = el('a', null, 'अक्षर माला');
+    cIdx.href = '#/index';
+    crumb.appendChild(cHome);
+    crumb.appendChild(el('span', 'crumb-sep', '›'));
+    crumb.appendChild(cIdx);
+    crumb.appendChild(el('span', 'crumb-sep', '›'));
+    crumb.appendChild(el('span', 'crumb-current', letter));
+    wrap.appendChild(crumb);
+
+    var head = el('div', 'letter-header');
+    head.appendChild(el('span', 'letter-header-char', letter));
+    var info = el('div', 'letter-header-info');
+    info.appendChild(el('h2', null, letter + ' से शुरू होने वाले पाठ'));
+    info.appendChild(el('p', null, items.length + ' पाठ उपलब्ध'));
+    head.appendChild(info);
+    wrap.appendChild(head);
+
+    // Group items by category
+    var byCat = {};
+    var catOrder = [];
+    items.forEach(function (item) {
+      var c = item.catId || 'other';
+      if (!byCat[c]) { byCat[c] = []; catOrder.push(c); }
+      byCat[c].push(item);
+    });
+    catOrder.forEach(function (catId) {
+      var cat = categoryById(catId);
+      var catLabel = cat ? (cat.icon || '') + ' ' + cat.label : catId;
+      wrap.appendChild(el('h3', 'section-title', catLabel + ' (' + byCat[catId].length + ')'));
+      wrap.appendChild(buildItemList(catId, byCat[catId]));
+    });
+
+    dom.main.appendChild(wrap);
+  }
+
+  /* ---------------------------------------------------------
+   * View: Favorites — user's starred items
+   * ------------------------------------------------------- */
+  function renderFavView() {
+    if (!state.navReady || !window.Nav) {
+      renderHomeView();
+      return;
+    }
+    document.title = 'प्रिय पाठ — जिनभक्त';
+    dom.main.innerHTML = '';
+
+    var wrap = el('div', 'mine-view');
+
+    var crumb = el('nav', 'breadcrumb');
+    crumb.setAttribute('aria-label', 'ब्रेडक्रम्ब');
+    var cHome = el('a', null, 'मुख्य पृष्ठ');
+    cHome.href = '#/';
+    crumb.appendChild(cHome);
+    crumb.appendChild(el('span', 'crumb-sep', '›'));
+    crumb.appendChild(el('span', 'crumb-current', 'प्रिय पाठ'));
+    wrap.appendChild(crumb);
+
+    var favIds = Nav.getFavs();
+    if (favIds.length === 0) {
+      var empty = el('div', 'fav-empty-state');
+      empty.appendChild(el('span', 'fav-empty-icon', '⭐'));
+      empty.appendChild(el('h3', null, 'अभी कोई प्रिय पाठ नहीं'));
+      empty.appendChild(el('p', null,
+        'कोई भी पाठ पढ़ते समय ⭐ बटन दबाकर उसे अपने प्रिय पाठों में जोड़ें।'));
+      wrap.appendChild(empty);
+    } else {
+      var hero = el('section', 'home-hero');
+      hero.style.marginBottom = '20px';
+      hero.appendChild(el('span', 'om-symbol', '⭐'));
+      hero.appendChild(el('h2', null, 'मेरे प्रिय पाठ'));
+      hero.appendChild(el('p', 'hero-sub',
+        favIds.length + ' पाठ आपके प्रिय हैं।'));
+      wrap.appendChild(hero);
+
+      // Group favorites by category
+      var byCat = {};
+      var catOrder = [];
+      favIds.forEach(function (favId) {
+        var parts = favId.split('::');
+        if (parts.length < 2) return;
+        var catId = parts[0];
+        if (!byCat[catId]) { byCat[catId] = []; catOrder.push(catId); }
+        var found = findItem(catId, parts[1]);
+        if (found) byCat[catId].push(found);
+      });
+
+      catOrder.forEach(function (catId) {
+        var cat = categoryById(catId);
+        var catLabel = cat ? (cat.icon || '') + ' ' + cat.label : catId;
+        wrap.appendChild(el('h3', 'section-title',
+          catLabel + ' (' + byCat[catId].length + ')'));
+        wrap.appendChild(buildItemList(catId, byCat[catId]));
+      });
+    }
+
+    dom.main.appendChild(wrap);
+  }
+
+  /* ---------------------------------------------------------
+   * View: Kids Learning (बाल शिक्षा) — hub + game frame
+   *
+   * Each game is a single self-contained offline .html file under
+   * games/. They are embedded in a same-origin <iframe> so their own
+   * palette, CSS reset and class names can never collide with the
+   * app's, while still sharing localStorage with the hub leaderboard.
+   * ------------------------------------------------------- */
+
+  /** Jain Swastika — drawn as SVG paths so no font can ever mirror it. */
+  function kidsSwastikaSVG(size) {
+    var s = 'fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="square"';
+    var inner =
+      '<g transform="translate(0,2)">' +
+        '<path ' + s + ' d="M26 22 H42 V38"/>' +
+        '<path ' + s + ' d="M42 26 V42 H26"/>' +
+        '<path ' + s + ' d="M38 42 H22 V26"/>' +
+        '<path ' + s + ' d="M22 38 V22 H38"/>' +
+      '</g>' +
+      '<circle cx="26" cy="52" r="2.3" fill="currentColor"/>' +
+      '<circle cx="32" cy="54.4" r="2.3" fill="currentColor"/>' +
+      '<circle cx="38" cy="52" r="2.3" fill="currentColor"/>' +
+      '<path d="M22 12 A12 12 0 0 0 42 12 A10 10 0 0 1 22 12 Z" fill="currentColor"/>' +
+      '<circle cx="32" cy="5.4" r="2.4" fill="currentColor"/>';
+    var box = el('span', null);
+    box.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" ' +
+      'xmlns="http://www.w3.org/2000/svg"' +
+      (size ? ' width="' + size + '" height="' + size + '"' : '') + '>' + inner + '</svg>';
+    return box.firstChild;
+  }
+
+  /** The menu section appended last in every lens of the sidebar. */
+  function buildKidsMenuSection() {
+    var games = Kids.getGames();
+    if (!games.length) return null;
+
+    var prefs = Kids.readPrefs();
+    var copy = Kids.hubCopy(prefs.lang === 'en' ? 'en' : 'hi');
+
+    var details = el('details', 'category-item kids-category');
+    details.setAttribute('data-kids', '1');
+
+    var summary = el('summary', 'category-header nav-kids-summary');
+    var icon = el('span', 'cat-icon', '\uD83E\uDEB7');
+    icon.setAttribute('aria-hidden', 'true');
+    summary.appendChild(icon);
+    summary.appendChild(el('span', 'cat-label',
+      copy.navLabel + ' · ' + copy.navLatin));
+    var badge = el('span', 'cat-count', String(games.length));
+    badge.title = games.length + ' games';
+    badge.setAttribute('aria-label', games.length +
+      (prefs.lang === 'en' ? ' games' : ' खेल'));
+    summary.appendChild(badge);
+
+    var links = el('div', 'category-links');
+    links.id = 'cat-links-kids';
+    games.forEach(function (game) {
+      var a = el('a', 'link-pill');
+      var gi = el('span', 'kids-pill-icon', game.icon || '');
+      gi.setAttribute('aria-hidden', 'true');
+      a.appendChild(gi);
+      a.appendChild(document.createTextNode(prefs.lang === 'en' ? game.en : game.hi));
+      a.href = '#/kids/' + game.id;
+      a.setAttribute('data-route', 'kids-game');
+      a.setAttribute('data-id', game.id);
+      a.title = prefs.lang === 'en' ? game.blurbEn : game.blurbHi;
+      links.appendChild(a);
+    });
+    var all = el('a', 'link-pill pill-more',
+      prefs.lang === 'en' ? 'All games →' : 'सभी खेल →');
+    all.href = '#/kids';
+    all.setAttribute('data-route', 'kids');
+    links.appendChild(all);
+
+    details.appendChild(summary);
+    details.appendChild(links);
+    return details;
+  }
+
+  /** Relative src so sub-path hosting keeps working. */
+  function kidsFrameSrc(game) {
+    var prefs = Kids.readPrefs();
+    var q = ['embed=1', 'lang=' + (prefs.lang === 'en' ? 'en' : 'hi')];
+    if (game.audience) q.push('aud=' + (prefs.aud === 'adults' ? 'adults' : 'kids'));
+    return game.file + '?' + q.join('&');
+  }
+
+  /** In-page replacement for window.confirm() — safe inside an iframe too. */
+  function askKidsDialog(copy, title, body, yesLabel, onYes) {
+    var prev = document.querySelector('.kids-dialog');
+    if (prev && prev.parentNode) prev.parentNode.removeChild(prev);
+
+    var wrap = el('div', 'kids-dialog');
+    wrap.setAttribute('role', 'dialog');
+    wrap.setAttribute('aria-modal', 'true');
+    var card = el('div', 'kids-dialog-card');
+    card.appendChild(el('h3', null, title));
+    card.appendChild(el('p', null, body));
+
+    var actions = el('div', 'kids-dialog-actions');
+    var yes = el('button', 'btn btn-primary', yesLabel);
+    yes.type = 'button';
+    var no = el('button', 'btn btn-ghost', copy.lbConfirmNo);
+    no.type = 'button';
+    actions.appendChild(yes);
+    actions.appendChild(no);
+    card.appendChild(actions);
+    wrap.appendChild(card);
+    document.body.appendChild(wrap);
+
+    function close() {
+      if (wrap.parentNode) wrap.parentNode.removeChild(wrap);
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    yes.addEventListener('click', function () { close(); if (onYes) onYes(); });
+    no.addEventListener('click', close);
+    wrap.addEventListener('click', function (e) { if (e.target === wrap) close(); });
+    document.addEventListener('keydown', onKey);
+    no.focus();
+  }
+
+  /** Shared leaderboard panel: 'all' for the hub, or one gameId. */
+  function renderKidsLeaderboardPanel(scope, copy, prefs) {
+    var games = Kids.getGames();
+    var panel = el('section', 'kids-lb');
+
+    var head = el('div', 'kids-lb-head');
+    head.appendChild(el('h3', null, copy.sectionProgress));
+    var actions = el('div', 'kids-lb-actions');
+    panel.appendChild(head);
+
+    var lang = prefs.lang === 'en' ? 'en' : 'hi';
+    var list = (scope === 'all') ? games : games.filter(function (g) { return g.id === scope; });
+    var anyRecords = false;
+
+    list.forEach(function (game) {
+      var entries = Kids.lbRead(game.id);
+      var box = el('div', 'kids-lb-game');
+      var h4 = el('h4');
+      var ic = el('span', null, game.icon || '');
+      ic.setAttribute('aria-hidden', 'true');
+      h4.appendChild(ic);
+      h4.appendChild(document.createTextNode(' ' + (lang === 'en' ? game.en : game.hi)));
+      if (entries.length) {
+        anyRecords = true;
+        h4.appendChild(el('span', 'kids-lb-best',
+          Kids.fill(copy.plays, { n: lang === 'hi' ? Kids.toDevNum(entries.length) : entries.length }) +
+          ' · ' + copy.bestLabel + ' ' + Kids.formatDuration(entries[0].duration, lang)));
+      }
+      box.appendChild(h4);
+
+      if (!entries.length) {
+        box.appendChild(el('p', 'kids-lb-empty', copy.noRecord));
+      } else {
+        var wrap = el('div', 'kids-lb-wrap');
+        var tbl = el('table', 'kids-lb-table');
+        var thead = el('thead');
+        var htr = el('tr');
+        [copy.lbRank, copy.lbName, copy.lbLevel, copy.lbTime].forEach(function (h) {
+          htr.appendChild(el('th', null, h));
+        });
+        thead.appendChild(htr);
+        tbl.appendChild(thead);
+        var tbody = el('tbody');
+        var medals = ['\uD83E\uDD47', '\uD83E\uDD48', '\uD83E\uDD49'];
+        entries.slice(0, 5).forEach(function (e, i) {
+          var tr = el('tr');
+          var rank = el('td', i < 3 ? 'kids-lb-medal' : 'kids-lb-rank',
+            i < 3 ? medals[i] : String(i + 1));
+          tr.appendChild(rank);
+          tr.appendChild(el('td', null, e.name || '—'));
+          tr.appendChild(el('td', null, Kids.formatLevel(game, e, lang)));
+          tr.appendChild(el('td', null, Kids.formatDuration(e.duration, lang)));
+          tbody.appendChild(tr);
+        });
+        tbl.appendChild(tbody);
+        wrap.appendChild(tbl);
+        box.appendChild(wrap);
+
+        var clr = el('button', 'kids-lb-clear', copy.lbClear);
+        clr.type = 'button';
+        clr.setAttribute('data-kids-clear', game.id);
+        clr.addEventListener('click', function () {
+          askKidsDialog(copy, copy.lbConfirmTitle, copy.lbConfirmOne, copy.lbClear, function () {
+            Kids.lbClear(game.id);
+            rerenderKids();
+          });
+        });
+        var clrWrap = el('div', 'kids-lb-actions');
+        clrWrap.appendChild(clr);
+        box.appendChild(clrWrap);
+      }
+      panel.appendChild(box);
+    });
+
+    if (anyRecords && scope === 'all') {
+      var all = el('button', 'kids-lb-clear', copy.lbClearAll);
+      all.type = 'button';
+      all.addEventListener('click', function () {
+        askKidsDialog(copy, copy.lbConfirmTitle, copy.lbConfirmAll, copy.lbClearAll, function () {
+          Kids.lbClear();
+          rerenderKids();
+        });
+      });
+      actions.appendChild(all);
+    }
+    head.appendChild(actions);
+
+    if (!Kids.storageAvailable()) {
+      panel.appendChild(el('p', 'kids-note', copy.storageOff));
+    }
+    return panel;
+  }
+
+  /** Re-render whichever kids screen is currently showing. */
+  function rerenderKids() {
+    var route = parseHash();
+    if (route.type === 'kids-game') renderKidsGameView(route.game);
+    else renderKidsView();
+  }
+
+
+  /** Hub: #/kids — the six games plus the unified on-device leaderboard. */
+  function renderKidsView() {
+    var prefs = Kids.readPrefs();
+    var lang = prefs.lang === 'en' ? 'en' : 'hi';
+    var copy = Kids.hubCopy(lang);
+
+    document.title = copy.title + ' — जिनभक्त';
+    dom.main.innerHTML = '';
+
+    var wrap = el('div', 'kids-view');
+
+    var crumb = el('nav', 'breadcrumb');
+    crumb.setAttribute('aria-label', 'breadcrumb');
+    var cHome = el('a', null, 'मुख्य पृष्ठ');
+    cHome.href = '#/';
+    crumb.appendChild(cHome);
+    crumb.appendChild(el('span', 'crumb-sep', '›'));
+    crumb.appendChild(el('span', 'crumb-current', copy.title));
+    wrap.appendChild(crumb);
+
+    var hero = el('section', 'kids-hero');
+    var mark = el('span', 'kids-hero-mark');
+    mark.appendChild(kidsSwastikaSVG());
+    hero.appendChild(mark);
+    hero.appendChild(el('h2', null, copy.title));
+    hero.appendChild(el('p', null, copy.sub));
+    wrap.appendChild(hero);
+
+    wrap.appendChild(el('h3', 'section-title', copy.sectionGames));
+
+    var grid = el('div', 'kids-grid');
+    Kids.getGames().forEach(function (game) {
+      var card = el('a', 'kids-card');
+      card.href = '#/kids/' + game.id;
+      card.setAttribute('data-route', 'kids-game');
+      card.setAttribute('data-game', game.id);
+
+      var top = el('div', 'kids-card-top');
+      var icon = el('span', 'kids-card-icon', game.icon || '');
+      icon.setAttribute('aria-hidden', 'true');
+      top.appendChild(icon);
+      var titles = el('div', 'kids-card-titles');
+      titles.appendChild(el('span', 'kids-card-title', lang === 'en' ? game.en : game.hi));
+      titles.appendChild(el('span', 'kids-card-en', lang === 'en' ? game.hi : game.en));
+      top.appendChild(titles);
+      card.appendChild(top);
+
+      card.appendChild(el('p', 'kids-card-blurb',
+        lang === 'en' ? game.blurbEn : game.blurbHi));
+
+      var tags = el('div', 'kids-card-tags');
+      tags.appendChild(el('span', 'kids-tag', lang === 'en' ? game.tagEn : game.tagHi));
+      tags.appendChild(el('span', 'kids-ages',
+        copy.agesLabel + ' ' + game.ages));
+      card.appendChild(tags);
+
+      grid.appendChild(card);
+    });
+    wrap.appendChild(grid);
+
+    wrap.appendChild(renderKidsLeaderboardPanel('all', copy, prefs));
+    wrap.appendChild(el('p', 'kids-note', copy.offlineNote));
+    wrap.appendChild(el('p', 'kids-note', copy.footer));
+
+    dom.main.appendChild(wrap);
+  }
+
+  /** Game: #/kids/<gameId> — the standalone file inside a same-origin frame. */
+  function renderKidsGameView(gameId) {
+    var game = Kids.gameById(gameId);
+    if (!game) { renderKidsView(); return; }
+
+    var prefs = Kids.readPrefs();
+    var lang = prefs.lang === 'en' ? 'en' : 'hi';
+    var copy = Kids.hubCopy(lang);
+
+    Kids.writePrefs({ lastGame: game.id });
+
+    document.title = (lang === 'en' ? game.en : game.hi) + ' — ' + copy.title + ' — जिनभक्त';
+    dom.main.innerHTML = '';
+
+    var wrap = el('div', 'kids-game-view');
+
+    var crumb = el('nav', 'breadcrumb');
+    crumb.setAttribute('aria-label', 'breadcrumb');
+    var cHome = el('a', null, 'मुख्य पृष्ठ');
+    cHome.href = '#/';
+    crumb.appendChild(cHome);
+    crumb.appendChild(el('span', 'crumb-sep', '›'));
+    var cHub = el('a', null, copy.title);
+    cHub.href = '#/kids';
+    crumb.appendChild(cHub);
+    crumb.appendChild(el('span', 'crumb-sep', '›'));
+    crumb.appendChild(el('span', 'crumb-current', lang === 'en' ? game.en : game.hi));
+    wrap.appendChild(crumb);
+
+    var bar = el('div', 'kids-game-bar');
+    var title = el('div', 'kids-game-title');
+    var tIcon = el('span', null, game.icon || '');
+    tIcon.setAttribute('aria-hidden', 'true');
+    title.appendChild(tIcon);
+    title.appendChild(document.createTextNode(' ' + (lang === 'en' ? game.en : game.hi)));
+    title.appendChild(el('span', 'kids-game-en', lang === 'en' ? game.hi : game.en));
+    bar.appendChild(title);
+
+    var actions = el('div', 'kids-game-actions');
+    var reload = el('button', 'kids-frame-reload', copy.reload);
+    reload.type = 'button';
+    reload.id = 'kids-reload';
+    var openNew = el('a', 'kids-frame-open', copy.openNewTab);
+    openNew.href = kidsFrameSrc(game);
+    openNew.target = '_blank';
+    openNew.rel = 'noopener noreferrer';
+    actions.appendChild(reload);
+    actions.appendChild(openNew);
+    bar.appendChild(actions);
+    wrap.appendChild(bar);
+
+    var frameBox = el('div', 'kids-game-frame');
+    var frame = el('iframe', 'kids-frame');
+    frame.id = 'kids-frame';
+    frame.setAttribute('src', kidsFrameSrc(game));
+    frame.setAttribute('title', Kids.fill(copy.frameTitle,
+      { name: lang === 'en' ? game.en : game.hi }));
+    frame.setAttribute('loading', 'lazy');
+    frame.setAttribute('referrerpolicy', 'no-referrer');
+    frameBox.appendChild(frame);
+    wrap.appendChild(frameBox);
+
+    reload.addEventListener('click', function () {
+      var f = document.getElementById('kids-frame');
+      if (f) f.setAttribute('src', kidsFrameSrc(game) + '&_r=' + Date.now());
+    });
+
+    dom.main.appendChild(wrap);
+  }
+
+
+
   function renderReaderView(catId, itemId) {
     var cat = categoryById(catId);
     var item = findItem(catId, itemId);
@@ -889,7 +2018,9 @@
     }
 
     var siblings = getSiblings(catId, item._id);
-    var title = item.hName || item.eName || item._id;
+    var title = (catId === 'stories-en')
+      ? (item.eName || item.hName || item._id)
+      : (item.hName || item.eName || item._id);
 
     document.title = title + ' — जिनभक्त';
     dom.main.innerHTML = '';
@@ -899,6 +2030,7 @@
     readerRaw = { body: '', brief: '' };
     readerDevText = '';
     readerLoaded = false;
+    readerCatId = catId;
 
     var art = el('article', 'reader');
 
@@ -968,6 +2100,36 @@
     translitBtn.addEventListener('click', function () { toggleTransliteration(); });
     actions.appendChild(translitBtn);
 
+    /* IAST / Simple style switch — a segmented control shown only while
+     * transliteration is on.  Hidden (display:none) in Devanagari view so
+     * it leaves the tab order and doesn't crowd the action row. */
+    var styleGroup = el('div', 'translit-style-group');
+    styleGroup.setAttribute('role', 'group');
+    styleGroup.setAttribute('aria-label', 'Transliteration style');
+    styleGroup.style.display = translitOn ? '' : 'none';
+
+    var iastBtn = el('button', 'btn btn-ghost btn-style' + (translitStyle === 'iast' ? ' is-active' : ''));
+    iastBtn.type = 'button';
+    iastBtn.setAttribute('data-action', 'translit-style');
+    iastBtn.setAttribute('data-style', 'iast');
+    iastBtn.setAttribute('aria-pressed', translitStyle === 'iast' ? 'true' : 'false');
+    iastBtn.setAttribute('title', 'Scholarly romanization with diacritics (ṇ, ā, ś…)');
+    iastBtn.textContent = 'IAST';
+    iastBtn.addEventListener('click', function () { setTranslitStyle('iast'); });
+    styleGroup.appendChild(iastBtn);
+
+    var asciiBtn = el('button', 'btn btn-ghost btn-style' + (translitStyle === 'ascii' ? ' is-active' : ''));
+    asciiBtn.type = 'button';
+    asciiBtn.setAttribute('data-action', 'translit-style');
+    asciiBtn.setAttribute('data-style', 'ascii');
+    asciiBtn.setAttribute('aria-pressed', translitStyle === 'ascii' ? 'true' : 'false');
+    asciiBtn.setAttribute('title', 'Plain ASCII romanization (no diacritics)');
+    asciiBtn.textContent = 'Simple';
+    asciiBtn.addEventListener('click', function () { setTranslitStyle('ascii'); });
+    styleGroup.appendChild(asciiBtn);
+
+    actions.appendChild(styleGroup);
+
     var topBtn = el('button', 'btn btn-ghost is-translit');
     topBtn.type = 'button';
     topBtn.setAttribute('data-action', 'top');
@@ -977,6 +2139,30 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     actions.appendChild(topBtn);
+
+    /* Fav / star button (only when Nav engine is available) */
+    if (state.navReady && window.Nav) {
+      var favId = catId + '::' + item._id;
+      var isFav = Nav.isFav(favId);
+      var favBtn = el('button', 'btn-fav' + (isFav ? ' is-fav' : ''));
+      favBtn.type = 'button';
+      favBtn.setAttribute('data-action', 'fav');
+      favBtn.setAttribute('aria-pressed', isFav ? 'true' : 'false');
+      favBtn.setAttribute('title', isFav ? 'प्रिय से हटाएँ' : 'प्रिय में जोड़ें');
+      favBtn.appendChild(el('span', 'btn-fav-icon', isFav ? '⭐' : '☆'));
+      favBtn.appendChild(el('span', null, isFav ? 'प्रिय' : 'जोड़ें'));
+      favBtn.addEventListener('click', function () {
+        var added = Nav.toggleFav(favId);
+        favBtn.classList.toggle('is-fav', added);
+        favBtn.setAttribute('aria-pressed', added ? 'true' : 'false');
+        favBtn.setAttribute('title', added ? 'प्रिय से हटाएँ' : 'प्रिय में जोड़ें');
+        favBtn.querySelector('.btn-fav-icon').textContent = added ? '⭐' : '☆';
+        favBtn.querySelector('span:last-child').textContent = added ? 'प्रिय' : 'जोड़ें';
+        // Refresh Mine lens sidebar if it's currently active
+        if (state.activeLens === 'mine') renderLensContent('mine');
+      });
+      actions.appendChild(favBtn);
+    }
 
     art.appendChild(actions);
 
@@ -1503,9 +2689,11 @@
       appendMarked(name, r.hName || r.eName || r.id, dn);
       a.appendChild(name);
 
-      if (r.latin) {
+      // Pick the subtitle form matching the current translit style.
+      var subText = translitStyle === 'iast' ? (r.latinIast || r.latin) : r.latin;
+      if (subText) {
         var lat = el('span', 'result-latin');
-        appendLatinMarked(lat, r.latin, lt);
+        appendLatinMarked(lat, subText, lt);
         a.appendChild(lat);
       }
 
@@ -1611,6 +2799,59 @@
   }
 
   /* ---------------------------------------------------------
+   * Mobile quick bar (bottom toolbar)
+   * ------------------------------------------------------- */
+  function renderQuickBar() {
+    if (!dom.quickBar) return;
+    dom.quickBar.innerHTML = '';
+
+    var items = (state.taxonomy && state.taxonomy.quickBar) ? state.taxonomy.quickBar.slice() : [
+      { id: 'search', icon: '\uD83D\uDD0D', label: 'खोज', action: 'focus-search' },
+      { id: 'path', icon: '\uD83D\uDE4F', label: 'नित्य क्रम', href: '#/path' },
+      { id: 'fav', icon: '⭐', label: 'प्रिय', href: '#/fav' },
+      { id: 'menu', icon: '☰', label: 'सूची', action: 'open-nav' }
+    ];
+
+    /* Kids Learning always sits just before the menu button. Injected here as
+     * well as in taxonomy.json, so a stale cached taxonomy cannot hide it. */
+    var kidsItem = { id: 'kids', icon: '\uD83E\uDEB7', label: 'खेल', href: '#/kids' };
+    var hasKids = items.some(function (i) { return i.id === 'kids'; });
+    if (!hasKids) {
+      var menuIdx = -1;
+      for (var q = 0; q < items.length; q++) {
+        if (items[q].id === 'menu') { menuIdx = q; break; }
+      }
+      if (menuIdx >= 0) items.splice(menuIdx, 0, kidsItem);
+      else items.push(kidsItem);
+    }
+
+    items.forEach(function (item) {
+      if (item.href) {
+        var a = el('a', 'quick-bar-btn');
+        a.href = item.href;
+        a.appendChild(el('span', 'quick-bar-icon', item.icon || ''));
+        a.appendChild(el('span', null, item.label || ''));
+        dom.quickBar.appendChild(a);
+      } else if (item.action) {
+        var btn = el('button', 'quick-bar-btn');
+        btn.type = 'button';
+        btn.setAttribute('data-action', item.action);
+        btn.appendChild(el('span', 'quick-bar-icon', item.icon || ''));
+        btn.appendChild(el('span', null, item.label || ''));
+        btn.addEventListener('click', function () {
+          if (item.action === 'focus-search') {
+            dom.searchInput.focus();
+            if (isMobile()) openNav();
+          } else if (item.action === 'open-nav') {
+            toggleNav();
+          }
+        });
+        dom.quickBar.appendChild(btn);
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------
    * Boot
    * ------------------------------------------------------- */
   function showFatal(message) {
@@ -1669,6 +2910,8 @@
         return t ? (t.textContent || '') : '';
       },
       isTransliterated: function () { return translitOn; },
+      getTranslitStyle: function () { return translitStyle; },
+      setTranslitStyle: setTranslitStyle,
       setTransliteration: setTransliteration,
       toggleTransliteration: toggleTransliteration,
       paintTranslitButtons: paintTranslitButtons,
@@ -1676,12 +2919,24 @@
       navigate: navigateTo,
       sanitizeHTML: sanitizeHTML,
       search: function (q) { return runSearch(q, true); },
-      state: state
+      state: state,
+      /* Panchang Patra hooks for tests */
+      renderTodayStrip: renderTodayStrip,
+      buildMoonSVG: buildMoonSVG,
+      fetchPanchangData: fetchPanchangData,
+      /* Kids Learning hooks for tests */
+      getKidsGames: function () { return Kids.getGames(); },
+      kidsFrameSrc: kidsFrameSrc,
+      buildKidsMenuSection: buildKidsMenuSection,
+      renderKidsView: renderKidsView,
+      renderKidsGameView: renderKidsGameView,
+      kidsSwastikaSVG: kidsSwastikaSVG
     };
 
     loadAllData()
       .then(function () {
         renderNav();
+        renderQuickBar();
         if (!window.location.hash) window.location.replace('#/');
         router();
         registerServiceWorker();

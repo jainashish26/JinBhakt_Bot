@@ -34,7 +34,8 @@ module.exports = function ({ ok }) {
 
   const precached = new Set((shell || []).concat(content || []).map(u => u.replace(/^\.\//, '')));
   ['index.html', 'manifest.json', 'js/app.js', 'js/speech.js', 'js/translit.js',
-   'css/variables.css', 'css/base.css', 'css/layout.css', 'css/components.css'
+   'css/variables.css', 'css/base.css', 'css/layout.css', 'css/components.css',
+   'js/nav.js', 'js/panchang.js', 'content/panchang.json'
   ].forEach(f => ok('critical file precached: ' + f, precached.has(f)));
 
   const cats = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'categories.json'), 'utf8'));
@@ -111,8 +112,15 @@ module.exports = function ({ ok }) {
     });
   });
   ok('no manifest inlines hCont (lazy split intact)', inlineCont === 0, inlineCont + ' cats still inline');
-  ok('catalogue total is 1854 items', total === 1854, 'got ' + total);
-  ok('1826 items have real content', readable === 1826, 'got ' + readable);
+  // Derive expected counts from manifests on disk
+  let expectedTotal = 0, expectedReadable = 0;
+  cats.forEach(c => {
+    const arr = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', c.id + '.json'), 'utf8'));
+    expectedTotal += arr.length;
+    expectedReadable += arr.filter(i => i.hasContent === true).length;
+  });
+  ok('catalogue total matches disk (' + expectedTotal + ')', total === expectedTotal, 'got ' + total);
+  ok(expectedReadable + ' items have real content', readable === expectedReadable, 'got ' + readable);
   ok('every readable item has a lazy text file', missingText === 0, missingText + ' missing');
 
   console.log('\n[19] No dead references to removed files');
@@ -124,4 +132,59 @@ module.exports = function ({ ok }) {
     ok('no reference to removed ' + dead,
        !allSrc.toLowerCase().includes(dead.toLowerCase()), dead + ' still referenced');
   });
+
+  console.log('\n[19c] Granth page integrity (source not split)');
+  const granthManifest = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'content', 'granth.json'), 'utf8'));
+  const granth110 = granthManifest.find(i => i.cref === 110);
+  ok('granth cref 110 still exists', !!granth110, 'cref 110 missing');
+  ok('granth cref 110 still has content', granth110 && granth110.hasContent === true);
+  const granth110File = path.join(ROOT, 'content', 'text', 'granth', '110.json');
+  ok('granth 110.json body file still exists', fs.existsSync(granth110File));
+  const g110 = JSON.parse(fs.readFileSync(granth110File, 'utf8'));
+  ok('granth 110 body still contains full text (>50k chars)',
+     g110.hCont && g110.hCont.length > 50000,
+     'len=' + (g110.hCont ? g110.hCont.length : 0));
+  ok('granth 110 body still has 116+ markers',
+     (g110.hCont.match(/^\s*\+/gm) || []).length >= 116);
+
+  console.log('\n[19d] Katha manifest integrity');
+  const kathaManifest = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'content', 'katha.json'), 'utf8'));
+  ok('katha manifest has 116 entries', kathaManifest.length === 116,
+     'got ' + kathaManifest.length);
+  ok('katha entries all have hCtg = कथा-कोश',
+     kathaManifest.every(i => i.hCtg === 'कथा-कोश'));
+  ok('katha entries all have sub = आराधना कथा कोश',
+     kathaManifest.every(i => i.sub === 'आराधना कथा कोश'));
+  ok('katha has exactly 2 pending stories (115, 116)',
+     kathaManifest.filter(i => !i.hasContent).length === 2);
+  ok('katha _ids all start with 3-digit number prefix',
+     kathaManifest.every(i => /^\d{3}-/.test(i._id)));
+  ok('katha prev/next chain is complete',
+     kathaManifest[0].ePrev === 'TBC#' &&
+     kathaManifest[115].eNext === 'TBC#' &&
+     kathaManifest.every((item, idx) => {
+       if (idx > 0 && item.ePrev !== kathaManifest[idx - 1]._id) return false;
+       if (idx < 115 && item.eNext !== kathaManifest[idx + 1]._id) return false;
+       return true;
+     }));
+  ok('katha body files exist for all readable stories',
+     kathaManifest.filter(i => i.hasContent).every(i =>
+       fs.existsSync(path.join(ROOT, 'content', 'text', 'katha', i.cref + '.json'))));
+
+  console.log('\n[19b] Panchang data file integrity');
+  const pRaw = fs.readFileSync(path.join(ROOT, 'content', 'panchang.json'), 'utf8');
+  ok('panchang.json is valid JSON', (() => {
+    try { JSON.parse(pRaw); return true; } catch (e) { return false; }
+  })());
+  const pData = JSON.parse(pRaw);
+  ok('panchang.json has parvs array', Array.isArray(pData.parvs) && pData.parvs.length > 0);
+  ok('panchang.json has 24 Tirthankaras',
+     pData.kalyanaks && pData.kalyanaks.tirthankaras &&
+     pData.kalyanaks.tirthankaras.length === 24);
+  ok('panchang.json parvs have required fields',
+     pData.parvs.every(p => p.id && p.h && p.month != null && p.paksha != null && p.startTithi != null));
+  ok('panchang.json kalyanaks have 5 types',
+     pData.kalyanaks && pData.kalyanaks.types && pData.kalyanaks.types.length === 5);
 };

@@ -7,7 +7,7 @@
  *  - Lazy prayer bodies (content/text/*): cache-first (static, immutable)
  * ============================================================ */
 
-var CACHE_NAME = 'jinbhakt-v11';
+var CACHE_NAME = 'jinbhakt-v18';
 
 var SHELL_ASSETS = [
   './',
@@ -20,6 +20,9 @@ var SHELL_ASSETS = [
   './js/app.js',
   './js/speech.js',
   './js/translit.js',
+  './js/nav.js',
+  './js/kids.js',
+  './js/panchang.js',
   './img/logo.png',
   './img/favicon.ico',
   './img/icon-192.png',
@@ -28,11 +31,26 @@ var SHELL_ASSETS = [
   './img/apple-touch-icon.png'
 ];
 
+/* Kids Learning — each game is a single self-contained offline .html file.
+ * They are static, so the cache-first branch below serves them offline. */
+var GAMES_ASSETS = [
+  './games/index.html',
+  './games/sattvic-chef.html',
+  './games/myth-busters.html',
+  './games/tirthankar-sort.html',
+  './games/niyam-wheel.html',
+  './games/niyam-lotus.html',
+  './games/memory-match.html'
+];
+
 var CONTENT_ASSETS = [
   './content/categories.json',
+  './content/panchang.json',
   './content/bhajan.json',
   './content/pooja.json',
   './content/granth.json',
+  './content/katha.json',
+  './content/stories-en.json',
   './content/stotra.json',
   './content/aarti.json',
   './content/chalisa.json',
@@ -47,7 +65,7 @@ self.addEventListener('install', function (event) {
       // addAll() rejects on a single 404 — add individually so one
       // missing optional asset can't break the whole install.
       return Promise.all(
-        SHELL_ASSETS.concat(CONTENT_ASSETS).map(function (url) {
+        SHELL_ASSETS.concat(CONTENT_ASSETS).concat(GAMES_ASSETS).map(function (url) {
           return cache.add(url).catch(function (err) {
             console.warn('[SW] skipped', url, err);
           });

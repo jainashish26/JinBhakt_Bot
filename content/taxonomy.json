@@ -1,0 +1,1194 @@
+{
+  "version": 1,
+  "lenses": [
+    {
+      "id": "path",
+      "label": "क्रम",
+      "latin": "Daily Path",
+      "icon": "🪔",
+      "blurb": "नित्य पूजा का पारम्परिक क्रम"
+    },
+    {
+      "id": "browse",
+      "label": "विषय",
+      "latin": "Browse",
+      "icon": "📚",
+      "blurb": "सभी पाठ विषय अनुसार"
+    },
+    {
+      "id": "index",
+      "label": "अ–क्ष",
+      "latin": "Index",
+      "icon": "🔤",
+      "blurb": "हिन्दी अक्षर माला"
+    },
+    {
+      "id": "mine",
+      "label": "मेरे",
+      "latin": "Mine",
+      "icon": "⭐",
+      "blurb": "प्रिय · हाल में पढ़ा · सेटिंग्स"
+    }
+  ],
+  "categories": [
+    {
+      "id": "bhakti",
+      "order": 1,
+      "label": "मूल मंत्र एवं भक्ति",
+      "latin": "Core Mantras",
+      "icon": "🙏",
+      "groups": [
+        {
+          "id": "mul",
+          "label": "मूल मंत्र",
+          "latin": "Core Mantras",
+          "order": 1,
+          "match": {
+            "sub": [
+              "मूल मंत्र"
+            ]
+          }
+        },
+        {
+          "id": "vdj",
+          "label": "भक्ति वन्दना",
+          "latin": "Devotion Songs",
+          "order": 2,
+          "match": {
+            "sub": [
+              "भक्ति-वंदना",
+              "भक्ति-वंदना (जिनवाणी)"
+            ]
+          }
+        },
+        {
+          "id": "any",
+          "label": "अन्य",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    },
+    {
+      "id": "stuti",
+      "order": 2,
+      "label": "स्तुति · पाठ",
+      "latin": "Stuti & Path",
+      "icon": "🕉️",
+      "groups": [
+        {
+          "id": "chh",
+          "label": "छहढाला",
+          "latin": "Chhahdhala",
+          "order": 1,
+          "match": {
+            "sub": [
+              "छहढाला"
+            ]
+          }
+        },
+        {
+          "id": "pth",
+          "label": "पाठ संग्रह",
+          "latin": "Path Collection",
+          "order": 2,
+          "match": {
+            "sub": [
+              "पाठ",
+              "पाठ (जिनवाणी)"
+            ]
+          }
+        },
+        {
+          "id": "any",
+          "label": "अन्य",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    },
+    {
+      "id": "stotra",
+      "order": 3,
+      "label": "स्तोत्र",
+      "latin": "Stotra",
+      "icon": "📜",
+      "groups": [
+        {
+          "id": "bhm",
+          "label": "भक्तामर स्तोत्र",
+          "latin": "Bhaktamar",
+          "order": 1,
+          "match": {
+            "titleAny": [
+              "भक्तामर",
+              "Bhaktaamar"
+            ]
+          }
+        },
+        {
+          "id": "pkrm",
+          "label": "स्तोत्र (पूजा-क्रम)",
+          "latin": "Puja-Kram",
+          "order": 2,
+          "match": {
+            "sub": [
+              "स्तोत्र (पूजा-क्रम)"
+            ]
+          }
+        },
+        {
+          "id": "jvn",
+          "label": "स्तोत्र जिनवाणी",
+          "latin": "Jinvani",
+          "order": 3,
+          "match": {
+            "sub": [
+              "स्तोत्र (जिनवाणी)"
+            ]
+          }
+        },
+        {
+          "id": "any",
+          "label": "अन्य",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    },
+    {
+      "id": "pooja",
+      "order": 4,
+      "label": "पूजा विधि",
+      "latin": "Puja Vidhi",
+      "icon": "🪔",
+      "groups": [
+        {
+          "id": "pr",
+          "label": "१ प्रारम्भ",
+          "latin": "Arambh",
+          "order": 1,
+          "match": {
+            "sub": [
+              "प्रारम्भ"
+            ]
+          }
+        },
+        {
+          "id": "nit",
+          "label": "२ नित्य पूजा",
+          "latin": "Nitya Puja",
+          "order": 2,
+          "match": {
+            "sub": [
+              "नित्य पूजा"
+            ]
+          }
+        },
+        {
+          "id": "tkr",
+          "label": "३ तीर्थंकर पूजा",
+          "latin": "Tirthankar Puja",
+          "order": 3,
+          "match": {
+            "sub": [
+              "तीर्थंकर"
+            ]
+          }
+        },
+        {
+          "id": "parv",
+          "label": "४ पर्व पूजन",
+          "latin": "Festival Puja",
+          "order": 4,
+          "match": {
+            "sub": [
+              "पर्व पूजन"
+            ]
+          }
+        },
+        {
+          "id": "jvn",
+          "label": "५ जिनवाणी पूजा",
+          "latin": "Jinvani Puja",
+          "order": 5,
+          "match": {
+            "sub": [
+              "पूजा (जिनवाणी)"
+            ]
+          }
+        },
+        {
+          "id": "vis",
+          "label": "६ विसर्जन",
+          "latin": "Visarjan",
+          "order": 6,
+          "match": {
+            "sub": [
+              "विसर्जन"
+            ]
+          }
+        },
+        {
+          "id": "any",
+          "label": "अन्य",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    },
+    {
+      "id": "aarti",
+      "order": 5,
+      "label": "आरती",
+      "latin": "Aarti",
+      "icon": "🔔",
+      "groups": [
+        {
+          "id": "jvn",
+          "label": "आरती जिनवाणी",
+          "latin": "Jinvani",
+          "order": 1,
+          "match": {
+            "sub": [
+              "आरती (जिनवाणी)"
+            ]
+          }
+        },
+        {
+          "id": "pkrm",
+          "label": "आरती (पूजा-क्रम)",
+          "latin": "Puja-Kram",
+          "order": 2,
+          "match": {
+            "sub": [
+              "आरती (पूजा-क्रम)"
+            ]
+          }
+        },
+        {
+          "id": "bhj",
+          "label": "आरती भजन",
+          "latin": "Bhajan",
+          "order": 3,
+          "match": {
+            "sub": [
+              "आरती (भजन)"
+            ]
+          }
+        },
+        {
+          "id": "any",
+          "label": "अन्य",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    },
+    {
+      "id": "chalisa",
+      "order": 6,
+      "label": "चालीसा",
+      "latin": "Chalisa",
+      "icon": "📿",
+      "groups": [
+        {
+          "id": "jvn",
+          "label": "चालीसा जिनवाणी",
+          "latin": "Jinvani",
+          "order": 1,
+          "match": {
+            "sub": [
+              "चालीसा (जिनवाणी)"
+            ]
+          }
+        },
+        {
+          "id": "c",
+          "label": "चालीसा संग्रह",
+          "latin": "Collection",
+          "order": 2,
+          "match": {
+            "sub": [
+              "चालीसा"
+            ]
+          }
+        },
+        {
+          "id": "any",
+          "label": "अन्य",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    },
+    {
+      "id": "bhajan",
+      "order": 7,
+      "label": "भजन · कीर्तन",
+      "latin": "Bhajan",
+      "icon": "🎵",
+      "groups": [
+        {
+          "id": "dev",
+          "label": "देव",
+          "latin": "Dev",
+          "order": 1,
+          "match": {
+            "sub": [
+              "देव"
+            ]
+          }
+        },
+        {
+          "id": "tkr",
+          "label": "चौबीस तीर्थंकर",
+          "latin": "24 Tirthankars",
+          "order": 2,
+          "match": {
+            "sub": [
+              "चौबीस तीर्थंकर"
+            ]
+          }
+        },
+        {
+          "id": "guru",
+          "label": "गुरु",
+          "latin": "Guru",
+          "order": 3,
+          "match": {
+            "sub": [
+              "गुरु"
+            ]
+          }
+        },
+        {
+          "id": "kly",
+          "label": "कल्याणक",
+          "latin": "Kalyanak",
+          "order": 4,
+          "match": {
+            "sub": [
+              "कल्याणक"
+            ]
+          }
+        },
+        {
+          "id": "adhy",
+          "label": "अध्यात्म",
+          "latin": "Spiritual",
+          "order": 5,
+          "match": {
+            "sub": [
+              "अध्यात्म"
+            ]
+          }
+        },
+        {
+          "id": "shast",
+          "label": "शास्त्र-धर्म",
+          "latin": "Scripture",
+          "order": 6,
+          "match": {
+            "sub": [
+              "शास्त्र",
+              "धर्म",
+              "दस धर्म"
+            ]
+          }
+        },
+        {
+          "id": "parv",
+          "label": "पर्व",
+          "latin": "Festival",
+          "order": 7,
+          "match": {
+            "sub": [
+              "पर्व"
+            ]
+          }
+        },
+        {
+          "id": "tir",
+          "label": "तीर्थ",
+          "latin": "Tirth",
+          "order": 8,
+          "match": {
+            "sub": [
+              "तीर्थ"
+            ]
+          }
+        },
+        {
+          "id": "bacch",
+          "label": "बच्चों के भजन",
+          "latin": "Children",
+          "order": 9,
+          "match": {
+            "sub": [
+              "बच्चों के भजन"
+            ]
+          }
+        },
+        {
+          "id": "marw",
+          "label": "मारवाड़ी",
+          "latin": "Marwari",
+          "order": 10,
+          "match": {
+            "sub": [
+              "मारवाड़ी"
+            ]
+          }
+        },
+        {
+          "id": "sel",
+          "label": "चुनिंदा",
+          "latin": "Selected",
+          "order": 11,
+          "match": {
+            "sub": [
+              "selected"
+            ]
+          }
+        },
+        {
+          "id": "misc",
+          "label": "विविध",
+          "latin": "Miscellaneous",
+          "order": 12,
+          "match": {
+            "sub": [
+              "सहजानन्द वर्णी",
+              "बाहुबली भगवान"
+            ]
+          }
+        },
+        {
+          "id": "auth",
+          "label": "रचियता अनुसार",
+          "latin": "By Author",
+          "order": 20,
+          "match": {
+            "subRegex": "^पं "
+          },
+          "nested": "author"
+        },
+        {
+          "id": "any",
+          "label": "अन्य",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    },
+    {
+      "id": "granth",
+      "order": 8,
+      "label": "ग्रन्थ",
+      "latin": "Granth",
+      "icon": "📖",
+      "groups": [
+        {
+          "id": "gath",
+          "label": "गाथा",
+          "latin": "Gatha",
+          "order": 1,
+          "match": {
+            "sub": [
+              "गाथा"
+            ]
+          }
+        },
+        {
+          "id": "tika",
+          "label": "टीका",
+          "latin": "Tika",
+          "order": 2,
+          "match": {
+            "sub": [
+              "टीका"
+            ]
+          }
+        },
+        {
+          "id": "eng",
+          "label": "अंग्रेज़ी ग्रन्थ",
+          "latin": "English",
+          "order": 3,
+          "match": {
+            "sub": [
+              "अंग्रेज़ी ग्रन्थ"
+            ]
+          }
+        },
+        {
+          "id": "any",
+          "label": "अन्य",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    },
+    {
+      "id": "katha",
+      "order": 9,
+      "label": "कथा-कोश",
+      "latin": "Katha Kosh",
+      "icon": "📚",
+      "groups": [
+        {
+          "id": "kosh",
+          "label": "आराधना कथा कोश",
+          "latin": "Aradhana Katha Kosh",
+          "order": 1,
+          "match": {
+            "sub": [
+              "आराधना कथा कोश"
+            ]
+          }
+        },
+        {
+          "id": "any",
+          "label": "अन्य",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    },
+    {
+      "id": "stories-en",
+      "order": 11,
+      "label": "Jain Stories (English)",
+      "latin": "Jain Stories",
+      "icon": "📖",
+      "groups": [
+        {
+          "id": "stories",
+          "label": "Aradhana Katha Kosh",
+          "latin": "Aradhana Katha Kosh",
+          "order": 1,
+          "match": {
+            "sub": [
+              "Aradhana Katha Kosh"
+            ]
+          }
+        },
+        {
+          "id": "any",
+          "label": "Other",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "order": 11,
+      "label": "सन्दर्भ",
+      "latin": "Reference",
+      "icon": "📑",
+      "groups": [
+        {
+          "id": "ref",
+          "label": "सन्दर्भ तालिका",
+          "latin": "Reference List",
+          "order": 1,
+          "match": {
+            "sub": [
+              "सन्दर्भ-तालिका"
+            ]
+          }
+        },
+        {
+          "id": "any",
+          "label": "अन्य",
+          "latin": "Other",
+          "order": 99,
+          "catchAll": true
+        }
+      ]
+    }
+  ],
+  "path": [
+    {
+      "id": "mangal",
+      "step": 1,
+      "label": "मंगलाचरण",
+      "latin": "Mangalacharan",
+      "icon": "🙏",
+      "blurb": "प्रथम वन्दना — णमोकार, मंगल, स्वस्ति",
+      "match": {
+        "titleAny": [
+          "मंगल",
+          "णमोकार",
+          "परमेष्ठी",
+          "स्वस्ति"
+        ]
+      }
+    },
+    {
+      "id": "darshan",
+      "step": 2,
+      "label": "दर्शन · वन्दना",
+      "latin": "Darshan & Vandana",
+      "icon": "👁️",
+      "blurb": "दर्शन पाठ और वन्दनाएँ",
+      "match": {
+        "titleAny": [
+          "दर्शन",
+          "वंदना",
+          "स्तुति"
+        ]
+      }
+    },
+    {
+      "id": "stotra",
+      "step": 3,
+      "label": "स्तुति · स्तोत्र",
+      "latin": "Stotra & Stuti",
+      "icon": "📜",
+      "blurb": "भक्तामर, स्तोत्र, छहढाला",
+      "match": {
+        "titleAny": [
+          "स्तोत्र",
+          "भक्तामर",
+          "छहढाला"
+        ]
+      }
+    },
+    {
+      "id": "puja",
+      "step": 4,
+      "label": "पूजा विधि",
+      "latin": "Puja Vidhi",
+      "icon": "🪔",
+      "blurb": "प्रारम्भ से अभिषेक तक",
+      "match": {
+        "cats": [
+          "pooja"
+        ],
+        "sub": [
+          "प्रारम्भ",
+          "नित्य पूजा",
+          "तीर्थंकर",
+          "पूजा (जिनवाणी)"
+        ]
+      }
+    },
+    {
+      "id": "aarti",
+      "step": 5,
+      "label": "आरती",
+      "latin": "Aarti",
+      "icon": "🔔",
+      "blurb": "सभी आरती पाठ",
+      "match": {
+        "cats": [
+          "aarti"
+        ]
+      }
+    },
+    {
+      "id": "visarjan",
+      "step": 6,
+      "label": "अर्घ्य · शांति · विसर्जन",
+      "latin": "Arghya & Visarjan",
+      "icon": "🕊️",
+      "blurb": "शांति पाठ, अर्घ्य, विसर्जन",
+      "match": {
+        "titleAny": [
+          "अर्घ्य",
+          "शांति",
+          "विसर्जन"
+        ]
+      }
+    },
+    {
+      "id": "pratik",
+      "step": 7,
+      "label": "प्रतिक्रमण · सामायिक",
+      "latin": "Pratikraman & Samayik",
+      "icon": "🧘",
+      "blurb": "आलोचना, क्षमा, सामायिक",
+      "match": {
+        "titleAny": [
+          "प्रतिक्रमण",
+          "सामायिक",
+          "आलोचना",
+          "क्षमा"
+        ]
+      }
+    },
+    {
+      "id": "bhajan",
+      "step": 8,
+      "label": "भजन · कीर्तन",
+      "latin": "Bhajan & Kirtan",
+      "icon": "🎵",
+      "blurb": "देव, गुरु, कल्याणक, अध्यात्म",
+      "match": {
+        "cats": [
+          "bhajan"
+        ]
+      }
+    }
+  ],
+  "tirthankaras": [
+    {
+      "id": "01-rishabh",
+      "no": 1,
+      "name": "ऋषभदेव",
+      "latin": "Rishabhdev",
+      "aliases": [
+        "आदिनाथ",
+        "ऋषभदेव",
+        "ऋषभनाथ",
+        "ऋषभ"
+      ]
+    },
+    {
+      "id": "02-ajitnath",
+      "no": 2,
+      "name": "अजितनाथ",
+      "latin": "Ajitnath",
+      "aliases": [
+        "अजितनाथ"
+      ]
+    },
+    {
+      "id": "03-sambhavnath",
+      "no": 3,
+      "name": "संभवनाथ",
+      "latin": "Sambhavnath",
+      "aliases": [
+        "संभवनाथ",
+        "सम्भवनाथ"
+      ]
+    },
+    {
+      "id": "04-abhinandan",
+      "no": 4,
+      "name": "अभिनन्दन",
+      "latin": "Abhinandan",
+      "aliases": [
+        "अभिनन्दन"
+      ]
+    },
+    {
+      "id": "05-sumatinath",
+      "no": 5,
+      "name": "सुमतिनाथ",
+      "latin": "Sumatinath",
+      "aliases": [
+        "सुमतिनाथ"
+      ]
+    },
+    {
+      "id": "06-padmaprabhu",
+      "no": 6,
+      "name": "पद्मप्रभ",
+      "latin": "Padmaprabhu",
+      "aliases": [
+        "पद्मप्रभ",
+        "पद्मप्रभु"
+      ]
+    },
+    {
+      "id": "07-suparshva",
+      "no": 7,
+      "name": "सुपार्श्वनाथ",
+      "latin": "Suparshvanath",
+      "aliases": [
+        "सुपार्श्वनाथ",
+        "सुपार्श्व"
+      ]
+    },
+    {
+      "id": "08-chandraprabhu",
+      "no": 8,
+      "name": "चन्द्रप्रभ",
+      "latin": "Chandraprabhu",
+      "aliases": [
+        "चन्द्रप्रभ"
+      ]
+    },
+    {
+      "id": "09-pushpadant",
+      "no": 9,
+      "name": "पुष्पदन्त",
+      "latin": "Pushpadant",
+      "aliases": [
+        "पुष्पदन्त",
+        "पुष्पदंत"
+      ]
+    },
+    {
+      "id": "10-shitalnath",
+      "no": 10,
+      "name": "शीतलनाथ",
+      "latin": "Shitalnath",
+      "aliases": [
+        "शीतलनाथ"
+      ]
+    },
+    {
+      "id": "11-shreyansnath",
+      "no": 11,
+      "name": "श्रेयांसनाथ",
+      "latin": "Shreyansnath",
+      "aliases": [
+        "श्रेयांसनाथ"
+      ]
+    },
+    {
+      "id": "12-vasupujya",
+      "no": 12,
+      "name": "वासुपूज्य",
+      "latin": "Vasupujya",
+      "aliases": [
+        "वासुपूज्य"
+      ]
+    },
+    {
+      "id": "13-vimalnath",
+      "no": 13,
+      "name": "विमलनाथ",
+      "latin": "Vimalnath",
+      "aliases": [
+        "विमलनाथ"
+      ]
+    },
+    {
+      "id": "14-anantnath",
+      "no": 14,
+      "name": "अनन्तनाथ",
+      "latin": "Anantnath",
+      "aliases": [
+        "अनन्तनाथ",
+        "अनंतनाथ"
+      ]
+    },
+    {
+      "id": "15-dharmanath",
+      "no": 15,
+      "name": "धर्मनाथ",
+      "latin": "Dharmanath",
+      "aliases": [
+        "धर्मनाथ"
+      ]
+    },
+    {
+      "id": "16-shantinath",
+      "no": 16,
+      "name": "शान्तिनाथ",
+      "latin": "Shantinath",
+      "aliases": [
+        "शान्तिनाथ",
+        "शांतिनाथ",
+        "श्रीशांतिनाथ"
+      ]
+    },
+    {
+      "id": "17-kunthunath",
+      "no": 17,
+      "name": "कुन्थुनाथ",
+      "latin": "Kunthunath",
+      "aliases": [
+        "कुन्थुनाथ",
+        "कुंथुनाथ"
+      ]
+    },
+    {
+      "id": "18-aranath",
+      "no": 18,
+      "name": "अरनाथ",
+      "latin": "Aranath",
+      "aliases": [
+        "अरनाथ"
+      ]
+    },
+    {
+      "id": "19-mallinath",
+      "no": 19,
+      "name": "मल्लिनाथ",
+      "latin": "Mallinath",
+      "aliases": [
+        "मल्लिनाथ"
+      ]
+    },
+    {
+      "id": "20-munisuvrat",
+      "no": 20,
+      "name": "मुनिसुव्रत",
+      "latin": "Munisuvrat",
+      "aliases": [
+        "मुनिसुव्रत"
+      ]
+    },
+    {
+      "id": "21-naminath",
+      "no": 21,
+      "name": "नमिनाथ",
+      "latin": "Naminath",
+      "aliases": [
+        "नमिनाथ"
+      ]
+    },
+    {
+      "id": "22-neminath",
+      "no": 22,
+      "name": "नेमिनाथ",
+      "latin": "Neminath",
+      "aliases": [
+        "नेमिनाथ"
+      ]
+    },
+    {
+      "id": "23-parshvanath",
+      "no": 23,
+      "name": "पार्श्वनाथ",
+      "latin": "Parshvanath",
+      "aliases": [
+        "पार्श्वनाथ"
+      ]
+    },
+    {
+      "id": "24-mahavir",
+      "no": 24,
+      "name": "महावीर",
+      "latin": "Mahavir",
+      "aliases": [
+        "महावीर",
+        "वीर"
+      ]
+    }
+  ],
+  "festivals": [
+    {
+      "id": "paryushan",
+      "label": "पर्युषण पर्व",
+      "latin": "Paryushan",
+      "match": {
+        "titleAny": [
+          "पर्युषण"
+        ]
+      }
+    },
+    {
+      "id": "kshamavani",
+      "label": "क्षमावाणी दिवस",
+      "latin": "Kshamavani",
+      "match": {
+        "cats": [
+          "pooja"
+        ],
+        "sub": [
+          "पर्व पूजन"
+        ],
+        "titleAny": [
+          "क्षमा"
+        ]
+      }
+    },
+    {
+      "id": "diwali",
+      "label": "दीपावली",
+      "latin": "Diwali",
+      "match": {
+        "titleAny": [
+          "दीपावली",
+          "दीपवाली"
+        ]
+      }
+    },
+    {
+      "id": "akshaytritiya",
+      "label": "अक्षय तृतीया",
+      "latin": "Akshay Tritiya",
+      "match": {
+        "titleAny": [
+          "अक्षय तृतीया",
+          "अक्षय"
+        ]
+      }
+    },
+    {
+      "id": "rakshabandhan",
+      "label": "रक्षाबंधन",
+      "latin": "Rakshabandhan",
+      "match": {
+        "titleAny": [
+          "रक्षाबंधन"
+        ]
+      }
+    },
+    {
+      "id": "virshasan",
+      "label": "वीरशासन जयंती",
+      "latin": "Virshasan Jayanti",
+      "match": {
+        "titleAny": [
+          "वीरशासन",
+          "वीर शासन"
+        ]
+      }
+    },
+    {
+      "id": "shrutpanchami",
+      "label": "श्रुतपंचमी",
+      "latin": "Shrut Panchami",
+      "match": {
+        "titleAny": [
+          "श्रुतपंचमी",
+          "श्रुत पंचमी"
+        ]
+      }
+    },
+    {
+      "id": "mahavirj",
+      "label": "महावीर जयंती",
+      "latin": "Mahavir Jayanti",
+      "match": {
+        "titleAny": [
+          "महावीर जयंती",
+          "महावीर जयन्ती"
+        ]
+      }
+    },
+    {
+      "id": "holi",
+      "label": "होली",
+      "latin": "Holi",
+      "match": {
+        "titleAny": [
+          "होली",
+          "होरी"
+        ]
+      }
+    }
+  ],
+  "authors": {
+    "extractFromSub": "^पं ",
+    "stripSuffix": " कृत$",
+    "aliases": {
+      "बुध महाचन्द्र": "पं॰ बुध महाचन्द्र"
+    }
+  },
+  "letters": {
+    "devanagari": [
+      "अ",
+      "आ",
+      "इ",
+      "ई",
+      "उ",
+      "ऊ",
+      "ऋ",
+      "ए",
+      "ऐ",
+      "ओ",
+      "औ",
+      "अं",
+      "अः",
+      "क",
+      "ख",
+      "ग",
+      "घ",
+      "ङ",
+      "च",
+      "छ",
+      "ज",
+      "झ",
+      "ञ",
+      "ट",
+      "ठ",
+      "ड",
+      "ढ",
+      "ण",
+      "त",
+      "थ",
+      "द",
+      "ध",
+      "न",
+      "प",
+      "फ",
+      "ब",
+      "भ",
+      "म",
+      "य",
+      "र",
+      "ल",
+      "व",
+      "श",
+      "ष",
+      "स",
+      "ह",
+      "क्ष",
+      "त्र",
+      "ज्ञ"
+    ],
+    "latin": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "R",
+      "S",
+      "T",
+      "V"
+    ]
+  },
+  "quickBar": [
+    {
+      "id": "search",
+      "icon": "🔍",
+      "label": "खोज",
+      "action": "focus-search"
+    },
+    {
+      "id": "path",
+      "icon": "🙏",
+      "label": "नित्य क्रम",
+      "href": "#/path"
+    },
+    {
+      "id": "fav",
+      "icon": "⭐",
+      "label": "प्रिय",
+      "href": "#/fav"
+    },
+    {
+      "id": "kids",
+      "icon": "🪷",
+      "label": "खेल",
+      "href": "#/kids"
+    },
+    {
+      "id": "menu",
+      "icon": "☰",
+      "label": "सूची",
+      "action": "open-nav"
+    }
+  ]
+}

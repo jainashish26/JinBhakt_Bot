@@ -1,0 +1,57 @@
+/* ============================================================
+   UI DICTIONARY · standalone hub, en + hi
+   ============================================================ */
+var UI = {
+  en: {
+    brandHi: 'बाल शिक्षा', brandEn: 'Kids Learning',
+    langSwitch: 'हिंदी', hub: 'All games', restart: 'Restart',
+    soundOn: 'Sound on', soundOff: 'Sound off',
+    s1Title: 'Choose your language', s1Sub: 'अपनी भाषा चुनिए',
+    title: 'Kids Learning',
+    sub: 'Learn ahimsa, restraint and the Tirthankaras through play. Everything is stored on this device — no internet needed.',
+    sectionGames: 'Choose a game',
+    sectionProgress: 'My Progress',
+    plays: 'Played {n} time(s)',
+    bestLabel: 'Best',
+    noRecord: 'No record yet — be the first to play',
+    agesLabel: 'Ages',
+    lbRank: '#', lbName: 'Name', lbLevel: 'Level', lbTime: 'Time', lbScore: 'Score',
+    lbEmpty: 'Nothing recorded yet.',
+    lbClear: 'Clear', lbClearAll: 'Clear all records',
+    lbConfirmTitle: 'Clear records?',
+    lbConfirmOne: 'Every record for this game will be removed from this device.',
+    lbConfirmAll: 'Every record for every game will be removed from this device.',
+    lbConfirmYes: 'Yes, clear them', lbConfirmNo: 'Keep them',
+    lbCleared: 'Records cleared.',
+    offlineNote: 'Every game runs fully offline and records are kept on this device only.',
+    storageOff: 'Record keeping is unavailable in a private window. The games still play normally.',
+    foot: 'Rooted in the Digambar Jain tradition · practice varies by family and lineage — always ask your elders.',
+    appNote: 'Inside the जिनभक्त app, use the menu to return. Opened on its own, this page is the menu.'
+  },
+  hi: {
+    brandHi: 'बाल शिक्षा', brandEn: 'Kids Learning',
+    langSwitch: 'English', hub: 'सभी खेल', restart: 'पुनः आरंभ',
+    soundOn: 'ध्वनि चालू', soundOff: 'ध्वनि बंद',
+    s1Title: 'अपनी भाषा चुनिए', s1Sub: 'Choose your language',
+    title: 'बाल शिक्षा',
+    sub: 'खेल-खेल में अहिंसा, संयम और तीर्थंकरों को जानिए। सब कुछ इसी उपकरण पर संचित होता है — इंटरनेट की आवश्यकता नहीं।',
+    sectionGames: 'खेल चुनिए',
+    sectionProgress: 'मेरी उपलब्धि',
+    plays: '{n} बार खेला',
+    bestLabel: 'श्रेष्ठ',
+    noRecord: 'अभी कोई रिकॉर्ड नहीं — पहली बार खेलिए',
+    agesLabel: 'आयु',
+    lbRank: '#', lbName: 'नाम', lbLevel: 'स्तर', lbTime: 'समय', lbScore: 'अंक',
+    lbEmpty: 'अभी कोई रिकॉर्ड संचित नहीं है।',
+    lbClear: 'हटाइए', lbClearAll: 'सभी रिकॉर्ड हटाएँ',
+    lbConfirmTitle: 'रिकॉर्ड हटाएँ?',
+    lbConfirmOne: 'इस खेल के सभी रिकॉर्ड इस उपकरण से हट जाएँगे।',
+    lbConfirmAll: 'सभी खेलों के सभी रिकॉर्ड इस उपकरण से हट जाएँगे।',
+    lbConfirmYes: 'हाँ, हटा दीजिए', lbConfirmNo: 'रहने दीजिए',
+    lbCleared: 'रिकॉर्ड हटा दिए गए।',
+    offlineNote: 'सभी खेल पूर्णतः ऑफ़लाइन चलते हैं; रिकॉर्ड केवल इसी उपकरण में संचित होते हैं।',
+    storageOff: 'निजी विंडो में रिकॉर्ड संचय उपलब्ध नहीं। खेल सामान्य रूप से चलता रहेगा।',
+    foot: 'दिगंबर जैन परंपरा से प्रेरित · परिवार और परंपरा अनुसार आचरण भिन्न हो सकते हैं — अपने बड़ों से अवश्य पूछिए।',
+    appNote: 'जिनभक्त ऐप के भीतर वापसी हेतु मेन्यू का उपयोग कीजिए। अकेले खोलने पर यही पृष्ठ मेन्यू है।'
+  }
+};

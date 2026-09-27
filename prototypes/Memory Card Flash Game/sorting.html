@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort & Learn - Tirthankar Quest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-game">
+    <header class="game-header">
+        <div><strong id="g-player">Player:</strong> <span id="disp-name"></span></div>
+        <div class="timer-display">⏱️ <span id="timer">00:00</span></div>
+        <button class="btn btn-small" onclick="window.location.href='index.html'">Quit</button>
+    </header>
+
+    <main id="screen-sorting" class="screen active">
+        <p id="sort-instructions" class="instructions">Drag the names to arrange them from 1st to 24th Tirthankar. Colors will update after your first move!</p>
+        <div id="sort-grid" class="sort-grid"></div>
+        <div style="text-align:center; margin-top:20px;">
+            <button class="btn btn-success" id="btn-submit-sort" onclick="finishSorting()">Submit Order</button>
+        </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>initSortingGame();</script>
+</body>
+</html>

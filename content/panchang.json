@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "tradition": "digambar",
+  "monthSystem": "purnimanta",
+
+  "parvs": [
+    {
+      "id": "dashalakshana",
+      "h": "दशलक्षण पर्व",
+      "latin": "Dashalakshana",
+      "icon": "🙏",
+      "month": 5, "paksha": 0, "startTithi": 5, "endTithi": 14,
+      "blurb": "दस दिव्य गुणों की आराधना",
+      "link": null
+    },
+    {
+      "id": "kshamavani",
+      "h": "क्षमावाणी",
+      "latin": "Kshamavani",
+      "icon": "🕊️",
+      "month": 6, "paksha": 1, "startTithi": 1,
+      "blurb": "क्षमा दिवस — मिच्छामि दुक्कडं",
+      "link": null
+    },
+    {
+      "id": "diwali",
+      "h": "दीपावली / महावीर निर्वाण",
+      "latin": "Diwali — Mahavir Nirvan",
+      "icon": "🪔",
+      "month": 7, "paksha": 1, "startTithi": 15,
+      "blurb": "भगवान महावीर का निर्वाण दिवस",
+      "link": null
+    },
+    {
+      "id": "nutan-varsh",
+      "h": "नूतन वर्ष / वीर निर्वाण संवत्",
+      "latin": "Jain New Year",
+      "icon": "🎊",
+      "month": 7, "paksha": 0, "startTithi": 1,
+      "blurb": "जैन नव वर्ष — कार्तिक शुक्ल प्रतिपदा",
+      "link": null
+    },
+    {
+      "id": "gyan-panchami",
+      "h": "ज्ञान पंचमी / शास्त्र पूजन",
+      "latin": "Gyan Panchami",
+      "icon": "📖",
+      "month": 7, "paksha": 0, "startTithi": 5,
+      "blurb": "शास्त्रों की पूजा का दिवस",
+      "link": null
+    },
+    {
+      "id": "bhai-beej",
+      "h": "भाई बीज",
+      "latin": "Bhai Beej",
+      "icon": "👫",
+      "month": 7, "paksha": 0, "startTithi": 2,
+      "blurb": "भाई-बहन का स्नेह पर्व",
+      "link": null
+    },
+    {
+      "id": "mahavir-jayanti",
+      "h": "महावीर जयन्ती",
+      "latin": "Mahavir Jayanti",
+      "icon": "☸️",
+      "month": 0, "paksha": 0, "startTithi": 13,
+      "blurb": "भगवान महावीर का जन्म कल्याणक",
+      "link": null
+    },
+    {
+      "id": "akshaya-tritiya",
+      "h": "अक्षय तृतीया",
+      "latin": "Akshaya Tritiya",
+      "icon": "🍬",
+      "month": 1, "paksha": 0, "startTithi": 3,
+      "blurb": "इक्षु रस से पारण — भगवान आदिनाथ",
+      "link": null
+    },
+    {
+      "id": "shrut-panchami",
+      "h": "श्रुत पंचमी",
+      "latin": "Shrut Panchami",
+      "icon": "📜",
+      "month": 2, "paksha": 0, "startTithi": 5,
+      "blurb": "श्री गणधर वाणी की प्रकट दिवस",
+      "link": null
+    },
+    {
+      "id": "mauna-amavasya",
+      "h": "मौन अमावस्या",
+      "latin": "Mauna Amavasya",
+      "icon": "🤫",
+      "month": 10, "paksha": 1, "startTithi": 15,
+      "blurb": "मौन व्रत एवं तपस्या का दिवस",
+      "link": null
+    },
+    {
+      "id": "holi",
+      "h": "होली / फाग",
+      "latin": "Holi",
+      "icon": "🎨",
+      "month": 11, "paksha": 0, "startTithi": 15,
+      "blurb": "फाल्गुन पूर्णिमा — रंगों का त्योहार",
+      "link": null
+    }
+  ],
+
+  "kalyanaks": {
+    "types": ["garbh", "janma", "tap", "jnan", "moksh"],
+    "typeLabels": {
+      "garbh":  "गर्भ कल्याणक",
+      "janma":  "जन्म कल्याणक",
+      "tap":    "तप कल्याणक",
+      "jnan":   "ज्ञान कल्याणक",
+      "moksh":  "मोक्ष कल्याणक"
+    },
+    "tirthankaras": [
+      {"no":1,  "id":"rishabh",       "h":"ऋषभदेव",       "latin":"Rishabhdev",       "k":{"garbh":{"m":3,"p":1,"t":2},  "janma":{"m":0,"p":1,"t":9},  "tap":{"m":0,"p":1,"t":9},  "jnan":{"m":11,"p":1,"t":11},"moksh":{"m":10,"p":1,"t":14}}},
+      {"no":2,  "id":"ajitnath",      "h":"अजितनाथ",       "latin":"Ajitnath",          "k":{"garbh":{"m":1,"p":0,"t":13}, "janma":{"m":10,"p":0,"t":8}, "tap":{"m":10,"p":0,"t":9}, "jnan":{"m":9,"p":0,"t":11}, "moksh":{"m":0,"p":0,"t":5}}},
+      {"no":3,  "id":"sambhavnath",   "h":"संभवनाथ",      "latin":"Sambhavnath",       "k":{"garbh":{"m":8,"p":0,"t":14}, "janma":{"m":1,"p":0,"t":14}, "tap":{"m":8,"p":0,"t":14}, "jnan":{"m":6,"p":1,"t":5},  "moksh":{"m":0,"p":0,"t":5}}, "verify":true},
+      {"no":4,  "id":"abhinandan",    "h":"अभिनन्दन",      "latin":"Abhinandan",        "k":{"garbh":{"m":1,"p":0,"t":4},  "janma":{"m":10,"p":0,"t":2}, "tap":{"m":10,"p":0,"t":12},"jnan":{"m":6,"p":0,"t":2},  "moksh":{"m":1,"p":0,"t":8}}},
+      {"no":5,  "id":"sumatinath",    "h":"सुमतिनाथ",      "latin":"Sumatinath",        "k":{"garbh":{"m":4,"p":0,"t":2},  "janma":{"m":0,"p":0,"t":11}, "tap":{"m":1,"p":0,"t":9},  "jnan":{"m":0,"p":0,"t":11}, "moksh":{"m":0,"p":0,"t":11}}, "verify":true},
+      {"no":6,  "id":"padmaprabhu",   "h":"पद्मप्रभ",      "latin":"Padmaprabhu",       "k":{"garbh":{"m":8,"p":0,"t":12}, "janma":{"m":1,"p":0,"t":6},  "tap":{"m":0,"p":0,"t":14}, "jnan":{"m":10,"p":1,"t":13},"moksh":{"m":10,"p":1,"t":14}}},
+      {"no":7,  "id":"suparshvanath", "h":"सुपार्श्वनाथ",  "latin":"Suparshvanath",     "k":{"garbh":{"m":10,"p":0,"t":12},"janma":{"m":6,"p":0,"t":8},  "tap":{"m":11,"p":0,"t":12},"jnan":{"m":11,"p":1,"t":12},"moksh":{"m":0,"p":0,"t":14}}},
+      {"no":8,  "id":"chandraprabhu", "h":"चन्द्रप्रभ",    "latin":"Chandraprabhu",     "k":{"garbh":{"m":9,"p":0,"t":12}, "janma":{"m":9,"p":1,"t":12}, "tap":{"m":9,"p":1,"t":12}, "jnan":{"m":9,"p":0,"t":15}, "moksh":{"m":1,"p":0,"t":7}}},
+      {"no":9,  "id":"suvidhinath",   "h":"सुविधिनाथ",     "latin":"Suvidhinath",       "k":{"garbh":{"m":6,"p":0,"t":5},  "janma":{"m":11,"p":1,"t":6}, "tap":{"m":0,"p":0,"t":12}, "jnan":{"m":0,"p":0,"t":12}, "moksh":{"m":11,"p":0,"t":7}}, "verify":true},
+      {"no":10, "id":"shitalnath",    "h":"शीतलनाथ",       "latin":"Shitalnath",        "k":{"garbh":{"m":2,"p":0,"t":8},  "janma":{"m":1,"p":0,"t":5},  "tap":{"m":11,"p":1,"t":10},"jnan":{"m":10,"p":1,"t":8}, "moksh":{"m":0,"p":1,"t":12}}},
+      {"no":11, "id":"shreyansnath",  "h":"श्रेयांसनाथ",   "latin":"Shreyansnath",      "k":{"garbh":{"m":9,"p":1,"t":4},  "janma":{"m":1,"p":0,"t":4},  "tap":{"m":2,"p":0,"t":4},  "jnan":{"m":0,"p":0,"t":4},  "moksh":{"m":11,"p":0,"t":4}}},
+      {"no":12, "id":"vasupujya",     "h":"वासुपूज्य",     "latin":"Vasupujya",         "k":{"garbh":{"m":7,"p":1,"t":14}, "janma":{"m":9,"p":1,"t":14}, "tap":{"m":7,"p":1,"t":14}, "jnan":{"m":11,"p":1,"t":14},"moksh":{"m":11,"p":1,"t":14}}},
+      {"no":13, "id":"vimalnath",     "h":"विमलनाथ",       "latin":"Vimalnath",         "k":{"garbh":{"m":11,"p":1,"t":6}, "janma":{"m":0,"p":1,"t":3},  "tap":{"m":0,"p":0,"t":10}, "jnan":{"m":0,"p":0,"t":10}, "moksh":{"m":11,"p":1,"t":9}}},
+      {"no":14, "id":"anantnath",     "h":"अनन्तनाथ",      "latin":"Anantnath",         "k":{"garbh":{"m":4,"p":1,"t":13}, "janma":{"m":6,"p":1,"t":13}, "tap":{"m":7,"p":1,"t":13}, "jnan":{"m":0,"p":1,"t":13}, "moksh":{"m":1,"p":0,"t":13}}},
+      {"no":15, "id":"dharmanath",    "h":"धर्मनाथ",       "latin":"Dharmanath",        "k":{"garbh":{"m":9,"p":0,"t":3},  "janma":{"m":11,"p":0,"t":5}, "tap":{"m":11,"p":1,"t":9}, "jnan":{"m":1,"p":0,"t":10}, "moksh":{"m":1,"p":0,"t":7}}},
+      {"no":16, "id":"shantinath",    "h":"शान्तिनाथ",     "latin":"Shantinath",        "k":{"garbh":{"m":5,"p":0,"t":8},  "janma":{"m":7,"p":0,"t":10}, "tap":{"m":8,"p":0,"t":8},  "jnan":{"m":9,"p":1,"t":9},  "moksh":{"m":10,"p":0,"t":13}}},
+      {"no":17, "id":"kunthunath",    "h":"कुन्थुनाथ",     "latin":"Kunthunath",        "k":{"garbh":{"m":6,"p":0,"t":1},  "janma":{"m":0,"p":0,"t":1},  "tap":{"m":6,"p":0,"t":1},  "jnan":{"m":10,"p":0,"t":1}, "moksh":{"m":1,"p":0,"t":1}}},
+      {"no":18, "id":"aranath",       "h":"अरनाथ",         "latin":"Aranath",           "k":{"garbh":{"m":11,"p":1,"t":10},"janma":{"m":9,"p":1,"t":15}, "tap":{"m":10,"p":1,"t":10},"jnan":{"m":9,"p":0,"t":10}, "moksh":{"m":1,"p":1,"t":10}}, "verify":true},
+      {"no":19, "id":"mallinath",     "h":"मल्लिनाथ",      "latin":"Mallinath",         "k":{"garbh":{"m":11,"p":0,"t":2}, "janma":{"m":1,"p":0,"t":4},  "tap":{"m":9,"p":0,"t":2},  "jnan":{"m":11,"p":0,"t":2}, "moksh":{"m":11,"p":1,"t":2}}},
+      {"no":20, "id":"munisuvrat",    "h":"मुनिसुव्रत",    "latin":"Munisuvrat",        "k":{"garbh":{"m":5,"p":0,"t":6},  "janma":{"m":8,"p":1,"t":9},  "tap":{"m":11,"p":0,"t":6}, "jnan":{"m":11,"p":0,"t":12},"moksh":{"m":1,"p":0,"t":12}}, "verify":true},
+      {"no":21, "id":"naminath",      "h":"नमिनाथ",        "latin":"Naminath",          "k":{"garbh":{"m":4,"p":1,"t":8},  "janma":{"m":6,"p":1,"t":8},  "tap":{"m":7,"p":1,"t":8},  "jnan":{"m":10,"p":0,"t":8}, "moksh":{"m":0,"p":0,"t":8}}},
+      {"no":22, "id":"neminath",      "h":"नेमिनाथ",       "latin":"Neminath",          "k":{"garbh":{"m":4,"p":0,"t":5},  "janma":{"m":9,"p":1,"t":5},  "tap":{"m":9,"p":1,"t":6},  "jnan":{"m":9,"p":0,"t":10}, "moksh":{"m":6,"p":0,"t":8}}},
+      {"no":23, "id":"parshvanath",   "h":"पार्श्वनाथ",    "latin":"Parshvanath",       "k":{"garbh":{"m":10,"p":1,"t":10},"janma":{"m":9,"p":1,"t":10}, "tap":{"m":9,"p":1,"t":11}, "jnan":{"m":10,"p":0,"t":11},"moksh":{"m":9,"p":1,"t":7}}},
+      {"no":24, "id":"mahavir",       "h":"महावीर",        "latin":"Mahavir",           "k":{"garbh":{"m":6,"p":0,"t":6},  "janma":{"m":0,"p":0,"t":13}, "tap":{"m":10,"p":1,"t":10},"jnan":{"m":10,"p":0,"t":13},"moksh":{"m":7,"p":1,"t":15}}}
+    ]
+  }
+}

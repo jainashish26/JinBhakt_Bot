@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const { boot, ok, txt, wait, stats } = require('./harness.js');
 
 (async function run() {
@@ -6,8 +8,10 @@ const { boot, ok, txt, wait, stats } = require('./harness.js');
 
   console.log('\n[1] Boot + sidebar nav');
   ok('no uncaught JS errors on boot', jsErrors.length === 0, jsErrors.join(' | '));
+  const cats = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'content', 'categories.json'), 'utf8'));
   const nav = document.querySelectorAll('#category-list details.category-item');
-  ok('nav renders 9 accordions', nav.length === 9, 'got ' + nav.length);
+  // +1 = the Kids Learning menu section, always appended last
+  ok('nav renders ' + (cats.length + 1) + ' accordions', nav.length === cats.length + 1, 'got ' + nav.length);
   ok('nav has home shortcut', !!document.querySelector('.nav-home-link[href="#/"]'));
 
   const badges = {};
@@ -36,13 +40,20 @@ const { boot, ok, txt, wait, stats } = require('./harness.js');
   ok('hero heading renders', /जय जिनेन्द्र/.test(txt(document.querySelector('.home-hero h2'))),
      txt(document.querySelector('.home-hero h2')));
   const cards = document.querySelectorAll('.cat-grid .cat-card');
-  ok('home shows 9 cards', cards.length === 9, 'got ' + cards.length);
+  ok('home shows ' + cats.length + ' cards', cards.length === cats.length, 'got ' + cards.length);
   ok('cards link to hash routes', cards[0] && /^#\//.test(cards[0].getAttribute('href')),
      cards[0] && cards[0].getAttribute('href'));
   ok('no category card is empty', document.querySelectorAll('.cat-card-empty').length === 0,
      'empty cards: ' + document.querySelectorAll('.cat-card-empty').length);
   ok('readable cards show a peek title', !!document.querySelector('.cat-card-peek'));
-  ok('stat reports 1826 readable', /1826/.test(txt(document.querySelector('.hero-stat'))),
+  // Derive expected readable count from manifests on disk
+  let expectedReadable = 0;
+  cats.forEach(c => {
+    const arr = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'content', c.id + '.json'), 'utf8'));
+    expectedReadable += arr.filter(i => i.hasContent === true).length;
+  });
+  ok('stat reports ' + expectedReadable + ' readable',
+     new RegExp(String(expectedReadable)).test(txt(document.querySelector('.hero-stat'))),
      txt(document.querySelector('.hero-stat')));
 
   console.log('\n[3] Category view');
@@ -89,6 +100,8 @@ const { boot, ok, txt, wait, stats } = require('./harness.js');
      txt(document.querySelector('.reader-meta')));
 
   await require('./part2.js')({ window, document, jsErrors, ok, txt, wait });
+
+  await require('./part8.js')({ window, document, jsErrors, ok, txt, wait });
 
   const s = stats();
   console.log('\n======================================');

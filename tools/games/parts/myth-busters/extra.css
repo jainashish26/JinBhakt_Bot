@@ -1,0 +1,53 @@
+
+/* ---------- statement card ---------- */
+.g-qnum{text-align:center;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink2);opacity:.85;font-weight:700;margin:2px 0 8px}
+.g-statementcard{padding:22px 18px}
+.g-statement{font-family:var(--font-head);font-weight:700;color:var(--maroon);
+  font-size:clamp(1.05rem,4.2vw,1.4rem);line-height:1.45;text-align:center;
+  min-height:3.2em;display:flex;align-items:center;justify-content:center;margin:0 0 8px}
+.g-statementcard.is-shake{animation:g-sway .45s ease}
+.g-topic{text-align:center;font-size:.72rem;color:var(--ink2);opacity:.8;margin-bottom:16px;
+  letter-spacing:.04em}
+.g-tfrow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.g-tfbtn{flex:1 1 150px;max-width:230px;min-height:56px;border-radius:var(--r-md);
+  font-family:var(--font-head);font-weight:700;font-size:1.08rem;color:#fff;
+  letter-spacing:.04em;transition:transform var(--fast),box-shadow var(--fast),opacity var(--fast)}
+.g-tfbtn:active{transform:translateY(2px)}
+.g-tfbtn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.g-tf-true{background:linear-gradient(180deg,#3F7D4F,#2E6240);box-shadow:0 3px 0 #234E32}
+.g-tf-false{background:linear-gradient(180deg,#B23A3A,#8E2B2B);box-shadow:0 3px 0 #712121}
+.g-timerbar{margin-top:8px}
+.g-timerbar .g-progress-fill{background:linear-gradient(90deg,#3F7D4F,#6E9E5A)}
+.g-timerbar.is-warn .g-progress-fill{background:linear-gradient(90deg,#C8860A,#B23A3A)}
+
+/* ---------- teaching feedback (inline, not a modal) ---------- */
+.g-lesson{margin:4px 0 10px;padding:16px 16px;border-radius:var(--r-lg);background:#fff;
+  border:1px solid var(--card-line);border-left:6px solid var(--gold);
+  box-shadow:var(--sh-sm);text-align:left;animation:g-rise .35s ease}
+.g-lesson.is-correct{border-left-color:var(--success);background:#F3FAF3}
+.g-lesson.is-wrong{border-left-color:var(--rose);background:#FDF4F4}
+.g-lesson-head{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.g-lesson-mark{width:30px;height:30px;flex-shrink:0;color:var(--gold)}
+.g-lesson-mark svg{width:100%;height:100%}
+.g-lesson-title{font-family:var(--font-head);font-weight:700;font-size:1rem;color:var(--maroon)}
+.g-stamp{display:inline-block;margin:0 auto 10px;padding:4px 14px;border-radius:var(--r-sm);
+  border:2.4px solid var(--rose);color:var(--rose);font-family:var(--font-head);
+  font-weight:700;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;
+  animation:g-stampIn .45s cubic-bezier(.2,.8,.25,1)}
+@keyframes g-stampIn{from{opacity:0;transform:scale(2.4)}to{opacity:1;transform:scale(1)}}
+.g-stampwrap{text-align:center}
+.g-lesson-body{font-size:.9rem;line-height:1.65;color:#4A3C2C}
+.g-lesson-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+.g-lesson-tag{font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:var(--r-full);
+  background:#fff;border:1px solid var(--card-line);color:var(--ink2)}
+.g-lesson-next{margin-left:auto}
+@media (max-width:700px){.g-lesson-next{margin-left:0}}
+
+/* ---------- review list ---------- */
+.g-revitem{background:#FDFAF2;border:1px solid var(--card-line);border-radius:var(--r-md);
+  padding:10px 13px;margin-bottom:8px;font-size:.86rem;line-height:1.55;text-align:left}
+.g-revitem b{color:var(--saffron)}
+.g-revitem .g-revwhy{color:var(--ink2);display:block;margin-top:3px}
+.g-revitem .g-revtopic{display:inline-block;font-size:.66rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);opacity:.8;margin-bottom:4px}

@@ -12,6 +12,7 @@
   var isSpeaking = false;
   var utterance = null;
   var hindiVoice = null;
+  var englishVoice = null;
   var voicesReady = false;
   var initialized = false;
 
@@ -24,6 +25,9 @@
    * follows the script the reader picked — the narration itself never does
    * (see currentText(): it always speaks the Devanagari source). */
   function inEnglish() {
+    // Native English content has is-latin class; transliterated content has is-translit
+    var body = document.getElementById('prayer-body');
+    if (body && body.classList.contains('is-latin')) return true;
     var app = window.jinbhaktApp;
     return !!(app && typeof app.isTransliterated === 'function' && app.isTransliterated());
   }
@@ -38,10 +42,13 @@
 
     // Prefer an explicit hi-IN voice, then any Hindi variant
     hindiVoice = null;
+    englishVoice = null;
     for (var i = 0; i < voices.length; i++) {
       var lang = (voices[i].lang || '').toLowerCase();
-      if (lang === 'hi-in') { hindiVoice = voices[i]; break; }
-      if (!hindiVoice && lang.indexOf('hi') === 0) hindiVoice = voices[i];
+      if (lang === 'hi-in') { hindiVoice = voices[i]; }
+      else if (!hindiVoice && lang.indexOf('hi') === 0) { hindiVoice = voices[i]; }
+      if (lang === 'en-us') { englishVoice = voices[i]; }
+      else if (!englishVoice && lang.indexOf('en') === 0) { englishVoice = voices[i]; }
     }
     voicesReady = true;
   }
@@ -134,11 +141,19 @@
       if (index >= chunks.length) { stop(); return; }
 
       utterance = new SpeechSynthesisUtterance(chunks[index++]);
-      utterance.lang = 'hi-IN';
-      utterance.rate = 0.8;
+      // Auto-detect Latin text for English narration
+      var isLatin = /^[a-zA-Z0-9\s.,;:!?'"\-—()\[\]{}]+$/.test(chunks[index - 1].trim().slice(0, 40));
+      if (isLatin && englishVoice) {
+        utterance.lang = 'en-US';
+        utterance.voice = englishVoice;
+        utterance.rate = 0.9;
+      } else {
+        utterance.lang = 'hi-IN';
+        utterance.rate = 0.8;
+        if (hindiVoice) utterance.voice = hindiVoice;
+      }
       utterance.pitch = 1;
       utterance.volume = 1;
-      if (hindiVoice) utterance.voice = hindiVoice;
 
       utterance.onend = function () {
         if (!isSpeaking) return;   // cancelled mid-flight

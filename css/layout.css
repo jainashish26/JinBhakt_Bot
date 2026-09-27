@@ -179,8 +179,13 @@ body.nav-open .body-overlay { opacity: 1; pointer-events: auto; }
 
 /* Constrain very wide desktop lines for readability */
 @media (min-width: 1400px) {
-  .home-view, .cat-view, .reader, .empty-state {
+  .home-view, .cat-view, .reader, .empty-state, .path-view, .path-step-view, .index-view, .letter-view, .mine-view, .kids-view {
     max-width: 1100px;
+    margin-inline: auto;
+  }
+  /* The game frame is allowed to run wider — the games manage their own lines. */
+  .kids-game-view {
+    max-width: 1240px;
     margin-inline: auto;
   }
 }

@@ -31,12 +31,25 @@
   --color-success: #2E7D32;
   --color-info:    #1565C0;
 
+  /* Panchang / moon */
+  --color-patra-bg:      #3A0E1E;
+  --color-patra-surface: rgba(255, 248, 240, 0.08);
+  --color-patra-text:     #FFF8F0;
+  --color-patra-accent:   #E8A84C;
+  --color-moon-glow:      #F5E6C8;
+  --color-moon-shadow:    rgba(10, 5, 2, 0.85);
+
   /* --- Typography --- */
   --font-heading: 'Noto Serif Devanagari', Georgia, 'Times New Roman', serif;
   --font-body:    'Noto Sans Devanagari', system-ui, -apple-system, sans-serif;
   /* Used when the reader is switched to English (Roman) letters */
   --font-latin:        'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
   --font-latin-serif:  Georgia, 'Times New Roman', 'Noto Serif', serif;
+  /* IAST romanization needs Latin Extended-A/Additional glyphs (ṇ ā ś ṃ etc.)
+   * that the default serif font may lack.  These stacks pull in fonts that
+   * cover the full IAST character set. */
+  --font-iast:         'Charis SIL', 'Gentium Plus', 'Gentium', 'Noto Serif', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-iast-serif:   'Charis SIL', 'Gentium Plus', 'Gentium', 'Noto Serif', Georgia, 'Times New Roman', serif;
   --font-size-xs:  0.75rem;
   --font-size-sm:  0.875rem;
   --font-size-base: 1rem;

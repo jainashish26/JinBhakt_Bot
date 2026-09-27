@@ -1,0 +1,20 @@
+
+/* ---------- wheel ritual ---------- */
+.g-wheelwrap{position:relative;width:min(88vw,400px);aspect-ratio:1}
+.g-wheel{width:100%;height:100%;display:block;
+  filter:drop-shadow(0 8px 18px rgba(120,70,0,.22))}
+#wheelG{transform-box:view-box;transform-origin:200px 200px}
+.g-pointer{position:absolute;top:-2px;left:50%;width:0;height:0;z-index:3;
+  transform:translateX(-50%);
+  border-left:14px solid transparent;border-right:14px solid transparent;
+  border-top:26px solid var(--maroon);
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.28))}
+.g-hub{position:absolute;top:50%;left:50%;width:20%;aspect-ratio:1;border-radius:50%;
+  transform:translate(-50%,-50%);display:grid;place-items:center;z-index:2;
+  background:radial-gradient(circle at 35% 30%,#FFF6DD,#E8B64C 62%,#C8860A);
+  border:3px solid #FFF8F0;box-shadow:0 3px 9px rgba(0,0,0,.22);color:#6D1B2F}
+.g-hub svg{width:62%;height:62%}
+/* Glossy overlay on the wheel */
+.g-wheelwrap::after{content:'';position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.35) 0%,transparent 55%);
+  pointer-events:none;z-index:1}

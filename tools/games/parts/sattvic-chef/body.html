@@ -1,0 +1,191 @@
+<div class="g-wrap">
+
+  <header class="g-head">
+    <div class="g-brand">
+      <span class="g-mark" id="brandMark" aria-hidden="true"></span>
+      <span class="g-brand-txt">
+        <span class="g-brand-hi" id="brandHi"></span>
+        <span class="g-brand-en" id="brandEn"></span>
+      </span>
+    </div>
+    <div class="g-head-actions">
+      <button type="button" class="g-iconbtn" id="sndBtn" aria-pressed="true"></button>
+      <button type="button" class="g-pill" id="langBtn"></button>
+      <button type="button" class="g-pill" id="hubBtn"></button>
+      <button type="button" class="g-pill is-hidden" id="restartBtn"></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- S1 · LANGUAGE GATE -->
+    <section class="g-screen" id="scrLang">
+      <div class="g-card">
+        <span class="g-glyph" id="langGlyph" aria-hidden="true"></span>
+        <h1 class="g-title" id="s1Title"></h1>
+        <p class="g-sub" id="s1Sub"></p>
+        <div class="g-rule"></div>
+        <div class="g-choices">
+          <button type="button" class="g-choice" data-lang="en">
+            <span class="g-choice-name">English</span>
+            <span class="g-choice-note">Continue in English</span>
+          </button>
+          <button type="button" class="g-choice" data-lang="hi">
+            <span class="g-choice-name" lang="hi">हिंदी</span>
+            <span class="g-choice-note" lang="hi">हिंदी में जारी रखें</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 · AUDIENCE GATE -->
+    <section class="g-screen is-hidden" id="scrAud">
+      <div class="g-card">
+        <h1 class="g-title" id="s2Title"></h1>
+        <p class="g-sub" id="s2Sub"></p>
+        <div class="g-rule"></div>
+        <div class="g-choices">
+          <button type="button" class="g-choice" data-aud="kids">
+            <span class="g-choice-name" id="kidsLbl"></span>
+            <span class="g-choice-note" id="kidsNote"></span>
+          </button>
+          <button type="button" class="g-choice" data-aud="adults">
+            <span class="g-choice-name" id="adultsLbl"></span>
+            <span class="g-choice-note" id="adultsNote"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 · SETUP GATE -->
+    <section class="g-screen is-hidden" id="scrSetup">
+      <div class="g-card">
+        <h1 class="g-title" id="s3Title"></h1>
+        <p class="g-sub" id="s3Sub"></p>
+        <div class="g-rule"></div>
+
+        <div class="g-field">
+          <label class="g-label" for="nameInput" id="nameLabel"></label>
+          <input class="g-input" type="text" id="nameInput" maxlength="20"
+                 autocomplete="off" spellcheck="false">
+        </div>
+
+        <div class="g-field">
+          <span class="g-label" id="roundLabel"></span>
+          <div class="g-chips" id="roundChips" role="group"></div>
+        </div>
+
+        <p class="g-hint" id="setupHint"></p>
+        <div class="g-btn-row">
+          <button type="button" class="g-btn g-btn-primary" id="startBtn"></button>
+          <button type="button" class="g-btn" id="lbBtn"></button>
+        </div>
+      </div>
+
+      <div class="g-card g-lb is-hidden" id="lbPanel">
+        <div class="g-lb-head">
+          <span class="g-lb-title" id="lbTitle"></span>
+          <button type="button" class="g-btn g-btn-sm" id="lbClearBtn"></button>
+        </div>
+        <div id="lbBody"></div>
+      </div>
+    </section>
+
+    <!-- S4 · PLAY -->
+    <section class="g-screen is-hidden" id="scrPlay">
+      <div class="g-hud">
+        <div class="g-stat"><span class="g-stat-val" id="hudScore">0</span>
+          <span class="g-stat-lbl" id="hudScoreLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudStreak">0</span>
+          <span class="g-stat-lbl" id="hudStreakLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudCount">0/0</span>
+          <span class="g-stat-lbl" id="hudCountLbl"></span></div>
+        <span class="g-hud-sep" aria-hidden="true"></span>
+        <div class="g-stat"><span class="g-stat-val" id="hudTime">0:00</span>
+          <span class="g-stat-lbl" id="hudTimeLbl"></span></div>
+        <div class="g-progress"><div class="g-progress-fill" id="progFill"></div></div>
+      </div>
+
+      <div class="g-sortrow">
+        <button type="button" class="g-bin g-bin-yes" id="binYes">
+          <span class="g-bin-mark" id="binYesMark" aria-hidden="true"></span>
+          <span class="g-bin-name" id="binYesName"></span>
+          <span class="g-bin-note" id="binYesNote"></span>
+          <span class="g-bin-arrow" id="binYesArrow"></span>
+        </button>
+
+        <div class="g-foodcard" id="foodCard">
+          <span class="g-foodart" id="foodArt" aria-hidden="true"></span>
+          <span class="g-foodname" id="foodName"></span>
+          <span class="g-foodhint" id="foodHint"></span>
+        </div>
+
+        <button type="button" class="g-bin g-bin-no" id="binNo">
+          <span class="g-bin-mark" id="binNoMark" aria-hidden="true"></span>
+          <span class="g-bin-name" id="binNoName"></span>
+          <span class="g-bin-note" id="binNoNote"></span>
+          <span class="g-bin-arrow" id="binNoArrow"></span>
+        </button>
+      </div>
+
+      <div id="feedback"></div>
+
+      <div class="g-btn-row">
+        <button type="button" class="g-btn g-btn-sm" id="quitBtn"></button>
+      </div>
+      <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- S5 · RESULT -->
+    <section class="g-screen is-hidden" id="scrResult">
+      <div class="g-card">
+        <span class="g-medal" id="medalMark" aria-hidden="true"></span>
+        <h1 class="g-title" id="resTitle"></h1>
+        <p class="g-sub" id="resSub"></p>
+        <span class="g-rank is-hidden" id="resRank"></span>
+        <div class="g-stats">
+          <div class="g-statbox"><b id="stScore">0</b><span id="stScoreLbl"></span></div>
+          <div class="g-statbox"><b id="stCorrect">0</b><span id="stCorrectLbl"></span></div>
+          <div class="g-statbox"><b id="stBest">0</b><span id="stBestLbl"></span></div>
+          <div class="g-statbox"><b id="stTime">0:00</b><span id="stTimeLbl"></span></div>
+        </div>
+        <p class="g-note" id="cheerLine"></p>
+        <div class="g-btn-row">
+          <button type="button" class="g-btn g-btn-primary" id="againBtn"></button>
+          <button type="button" class="g-btn" id="changeBtn"></button>
+          <button type="button" class="g-btn" id="resLbBtn"></button>
+        </div>
+      </div>
+
+      <div class="g-card g-lb is-hidden" id="resLbPanel">
+        <div class="g-lb-head">
+          <span class="g-lb-title" id="resLbTitle"></span>
+          <button type="button" class="g-btn g-btn-sm" id="resLbClearBtn"></button>
+        </div>
+        <div id="resLbBody"></div>
+      </div>
+
+      <div class="g-card g-review">
+        <h2 class="g-review-title" id="reviewTitle"></h2>
+        <div id="reviewList"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="g-foot" id="footTxt"></footer>
+</div>
+
+<div class="g-toast" id="toast" role="status" aria-live="polite"></div>
+<div class="g-fx" id="fx" aria-hidden="true"></div>
+<div class="g-dialog is-hidden" id="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+  <div class="g-dialog-card">
+    <h2 id="dlgTitle"></h2>
+    <p id="dlgBody"></p>
+    <div class="g-btn-row">
+      <button type="button" class="g-btn g-btn-primary" id="dlgYes"></button>
+      <button type="button" class="g-btn" id="dlgNo"></button>
+    </div>
+  </div>
+</div>
+
